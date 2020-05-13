@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import actions from './actions.jsx'
 import apiClient from './apiClient.jsx'
 import UIBlocker from 'react-ui-blocker'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMobileAlt } from '@fortawesome/free-solid-svg-icons'
 
 class FormHeader extends Component {
     constructor(props) {
@@ -21,7 +23,9 @@ class FormHeader extends Component {
                     isVisible={this.props.isBlocking}
                     message="Loading..."
                 />
-                <h3>{this.props.htmlTitle}</h3>
+                <h3>
+                    <FontAwesomeIcon icon={faMobileAlt} />{' ' + this.props.htmlTitle}
+                </h3>
             </div>
         )
     }
