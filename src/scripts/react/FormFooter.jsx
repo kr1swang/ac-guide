@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import apiClient from './apiClient'
-import actions from './actions'
-import UIBlocker from 'react-ui-blocker'
+import actions from './actions.jsx'
+import apiClient from './apiClient.jsx'
 
-class FormHeader extends Component {
+class FormFooter extends Component {
     constructor(props) {
         super(props)
     }
@@ -12,19 +11,14 @@ class FormHeader extends Component {
     render() {
         return (
             <div>
-                <UIBlocker
-                    theme="cubeGrid"
-                    isVisible={this.props.isBlocking}
-                    message="Loading..."
-                />
-                <h1>動森圖鑑</h1>
+                <h1>{this.props.msg}</h1>
             </div>
         )
     }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    isBlocking: state.formHeader.isBlocking
+    msg: state.formFooter.msg
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -41,11 +35,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(actions.assignFormDataFooter({ formFooter: formFooter }))
     },
     handleAssignValue: (name, value) => {
-        dispatch(actions.assignValue(name, value, 'FormHeaderReducer'))
+        dispatch(actions.assignValue(name, value, 'formFooterReducer'))
     }
 })
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(FormHeader)
+)(FormFooter)

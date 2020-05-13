@@ -1,10 +1,10 @@
 import React, { Component } from "react"
 import ReactDOM from "react-dom"
 import { Provider } from 'react-redux'
-import store from './reducers/store'
-import FormHeader from './FormHeader'
-import FormMain from './FormMain'
-import FormFooter from './FormFooter'
+import store from './reducers/store.jsx'
+import FormHeader from './FormHeader.jsx'
+import FormMain from './FormMain.jsx'
+import FormFooter from './FormFooter.jsx'
 
 class App extends Component {
     constructor(props) {

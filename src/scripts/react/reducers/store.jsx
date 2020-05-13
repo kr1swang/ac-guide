@@ -1,7 +1,7 @@
 ﻿import { createStore, combineReducers } from 'redux'
-import formHeader from './formHeaderReducer'
-import formMain from './formMainReducer'
-import formFooter from './formFooterReducer'
+import formHeader from './formHeaderReducer.jsx'
+import formMain from './formMainReducer.jsx'
+import formFooter from './formFooterReducer.jsx'
 
 const rootReducer = combineReducers({
     formHeader,

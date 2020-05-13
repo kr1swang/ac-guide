@@ -1,4 +1,4 @@
-﻿import actions, { Ks } from '../actions'
+﻿import actions, { Ks } from '../actions.jsx'
 
 const initialState = {
     msg: 'Copyright © 2020 Kr1sWang'

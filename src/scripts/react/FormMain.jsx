@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import apiClient from './apiClient'
-import actions from './actions'
-import FishGuide from './widgets/FishGuide'
-import BugGuide from './widgets/BugGuide'
+import actions from './actions.jsx'
+import apiClient from './apiClient.jsx'
+import FishGuide from './widgets/FishGuide.jsx'
+import BugGuide from './widgets/BugGuide.jsx'
 
 class FormMain extends Component {
     constructor(props) {

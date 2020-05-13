@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import TimeBar from './TimeBar'
+import TimeBar from './TimeBar.jsx'
 
-export default class BugGuide extends Component {
+export default class FishGuide extends Component {
     constructor(props) {
         super(props)
     }
@@ -18,6 +18,7 @@ export default class BugGuide extends Component {
                                 <th>名稱</th>
                                 <th>價格</th>
                                 <th>地點</th>
+                                <th>魚影</th>
                                 <th>{this.props.hemisphere == 'northern' ? '北半球月份' : '南半球月份'}</th>
                                 <th>出現時間</th>
                                 <th>備註</th>
@@ -33,6 +34,7 @@ export default class BugGuide extends Component {
                                     </td>
                                     <td style={{ textAlign: 'right' }}>{item.price}</td>
                                     <td>{item.location}</td>
+                                    <td>{item.shadowSize}</td>
                                     <td><TimeBar type={'month'} data={this.props.hemisphere == 'northern' ? item.northernMonths : item.southernMonths} /></td>
                                     <td><TimeBar type={'hour'} data={item.appearanceTime} /></td>
                                     <td>{item.remark}</td>
@@ -46,12 +48,12 @@ export default class BugGuide extends Component {
     }
 }
 
-BugGuide.defaultProps = {
+FishGuide.defaultProps = {
     dataList: [],
     hemisphere: 'northern'
 }
 
-BugGuide.propTypes = {
+FishGuide.propTypes = {
     dataList: PropTypes.array,
     hemisphere: PropTypes.string
 }
