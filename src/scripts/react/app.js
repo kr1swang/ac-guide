@@ -15,7 +15,7 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <div className={'main'}>
-                    <FormHeader />
+                    <FormHeader/>
                     <hr />
                     <FormMain />
                     <hr />

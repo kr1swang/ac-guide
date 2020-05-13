@@ -2,9 +2,9 @@
 
 module.exports = {
     context: __dirname,
-    entry: './scripts/react/app.js',
+    entry: './src/scripts/react/app.js',
     output: {
-        path: path.resolve(__dirname, './scripts/bundle/'),
+        path: path.resolve(__dirname, './src/scripts/bundle/'),
         filename: 'app.js',
     },
     module: {
