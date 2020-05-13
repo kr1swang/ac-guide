@@ -18,8 +18,8 @@ export default class TimeBar extends Component {
             case 'month': {
                 for (let i = 1; i < maxMonth + 1; i++) {
                     let obj = {
-                        value: 10,  // all the same
-                        description: ((new Date().getMonth() + 1) == i ? '*' : '') + (i % 3 == 0 ? ('0' + i).slice(-2) : ' '),
+                        value: 10,  // size, all the same
+                        description: i % 3 == 0 ? ('0' + i).slice(-2) : ' ',
                         color: data.indexOf(i) != -1 ? '#007bff' : '#e9ecef'  // exist ? blue : gary
                     }
                     result.push(obj)
@@ -29,8 +29,8 @@ export default class TimeBar extends Component {
             case 'hour': {
                 for (let i = 1; i < maxHour + 1; i++) {
                     let obj = {
-                        value: 10,  // all the same
-                        description: ((new Date().getHours()) == i ? '*' : '') + (i % 6 == 0 ? ('0' + i).slice(-2) : ' '),
+                        value: 10,  // size, all the same
+                        description: i % 6 == 0 ? ('0' + i).slice(-2) : ' ',
                         color: data.indexOf(i) != -1 ? '#007bff' : '#e9ecef' // exist ? blue : gary
                     }
                     result.push(obj)

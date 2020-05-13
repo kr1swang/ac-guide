@@ -9,22 +9,27 @@ class FormHeader extends Component {
         super(props)
     }
 
+    componentDidMount() {
+        document.title = this.props.htmlTitle
+    }
+
     render() {
         return (
-            <div>
+            <div className={'header'}>
                 <UIBlocker
                     theme="cubeGrid"
                     isVisible={this.props.isBlocking}
                     message="Loading..."
                 />
-                <h1>動森圖鑑</h1>
+                <h3>{this.props.htmlTitle}</h3>
             </div>
         )
     }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    isBlocking: state.formHeader.isBlocking
+    isBlocking: state.formHeader.isBlocking,
+    htmlTitle: state.formHeader.htmlTitle
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

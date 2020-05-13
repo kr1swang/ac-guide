@@ -1,7 +1,7 @@
 ﻿import actions, { Ks } from '../actions.jsx'
 
 const initialState = {
-    msg: 'Copyright © 2020 Kr1sWang'
+    msg: 'Copyright © 2020 by Kr1sWang.'
 }
 
 const formFooterReducer = (state = initialState, action) => {
@@ -10,12 +10,15 @@ const formFooterReducer = (state = initialState, action) => {
     if (!match) return state
 
     switch (action.type) {
-        case Ks.ASSIGN_VALUE:
+        case Ks.ASSIGN_VALUE: {
             return Object.assign({}, state, { [action.name]: action.value })
-        case Ks.ASSIGN_FORM_DATA_FOOTER:
+        }
+        case Ks.ASSIGN_FORM_DATA_FOOTER: {
             return Object.assign({}, state, action.appForm)
-        default:
+        }
+        default: {
             return state
+        }
     }
 }
 

@@ -10,8 +10,8 @@ class FormFooter extends Component {
 
     render() {
         return (
-            <div>
-                <h1>{this.props.msg}</h1>
+            <div className={'footer'}>
+                <p>{this.props.msg}</p>
             </div>
         )
     }

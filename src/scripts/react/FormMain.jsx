@@ -41,7 +41,7 @@ class FormMain extends Component {
 
     render() {
         return (
-            <div>
+            <div className={'main'}>
                 <div>
                     <label>種類 : </label>
                     <button name='type' onClick={(e) => this.ajaxGetList('fish')}>魚類</button>

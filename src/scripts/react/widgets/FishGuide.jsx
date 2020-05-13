@@ -14,7 +14,7 @@ export default class FishGuide extends Component {
                     <table>
                         <thead>
                             <tr>
-                                <th>項次</th>
+                                {/* <th>項次</th> */}
                                 <th>名稱</th>
                                 <th>價格</th>
                                 <th>地點</th>
@@ -27,7 +27,7 @@ export default class FishGuide extends Component {
                         <tbody>
                             {this.props.dataList.map((item, index) =>
                                 <tr key={index}>
-                                    <td>{index + 1 + '.'}</td>
+                                    {/* <td>{index + 1 + '.'}</td> */}
                                     <td>
                                         <img style={{ margin: '0 20px', maxWidth: '50px' }} src={item.imageURL} />
                                         <h5 style={{ margin: '0px', textAlign: 'center' }}>{item.chineseName}</h5>
