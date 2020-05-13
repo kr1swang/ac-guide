@@ -17,9 +17,18 @@ body {
     padding: 5px;
 }
 
+.filter>tbody>tr>th {
+    text-align: center;
+    vertical-align: middle;
+}
+
 .dialog>tbody>tr>th {
     text-align: center;
     vertical-align: middle;
+}
+
+.modal-body {
+    padding-top: 0px;
 }
 
 span>button {

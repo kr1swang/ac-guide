@@ -22,9 +22,6 @@ export default class FishGuide extends Component {
             hourPicked: [],
             namePicked: ''
         }
-
-        this.handleFilterClick = this.handleFilterClick.bind(this)
-        this.handleItemClick = this.handleItemClick.bind(this)
     }
 
     render() {

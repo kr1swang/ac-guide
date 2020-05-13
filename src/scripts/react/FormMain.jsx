@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Table, Button } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBook, faFish, faBug, faGlobeAmericas, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import actions from './actions.jsx'
 import apiClient from './apiClient.jsx'
 import FishGuide from './widgets/FishGuide.jsx'
 import BugGuide from './widgets/BugGuide.jsx'
-import Table from 'react-bootstrap/Table'
-import Button from 'react-bootstrap/Button'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBook, faFish, faBug, faGlobeAmericas, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 class FormMain extends Component {
     constructor(props) {
@@ -47,9 +46,9 @@ class FormMain extends Component {
         return (
             <div className={'main'}>
                 <span className={'filterGroup'}>
-                    <Table className={'filter'} borderless={true} >
-                        {/* 種類 */}
+                    <Table className={'filter'}>
                         <tbody>
+                            {/* 種類 */}
                             <tr>
                                 <th style={{ width: '100px' }}>
                                     <FontAwesomeIcon icon={faBook} />{' 種類 : '}
@@ -63,10 +62,8 @@ class FormMain extends Component {
                                     </Button>{' '}
                                 </td>
                             </tr>
-                        </tbody>
 
-                        {/* 種類 */}
-                        <tbody>
+                            {/* 種類 */}
                             <tr>
                                 <th style={{ width: '100px' }}>
                                     <FontAwesomeIcon icon={faGlobeAmericas} />{' 地區 : '}

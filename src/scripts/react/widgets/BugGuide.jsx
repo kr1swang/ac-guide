@@ -1,15 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Table from 'react-bootstrap/Table'
-import Media from 'react-bootstrap/Media'
-import Badge from 'react-bootstrap/Badge'
-import Button from 'react-bootstrap/Button'
+import { Table, Media, Badge, Button, Image } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMapMarkerAlt, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons'
-
-import TimeBar from './TimeBar.jsx'
-import Modal from 'react-bootstrap/Modal'
-import Image from 'react-bootstrap/Image'
+import { faFont, faMapMarkerAlt, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons'
+import BugDialog from './BugDialog.jsx'
 
 export default class BugGuide extends Component {
     constructor(props) {
@@ -26,14 +20,15 @@ export default class BugGuide extends Component {
             hourOptions: [],
 
             // picked options
+            isNotFilter: true,
+            isTimeFilter: false,
+            filterName: '',
             locationPicked: [],
             monthPicked: [],
             hourPicked: [],
-            namePicked: ''
         }
 
         this.handleFilterClick = this.handleFilterClick.bind(this)
-        this.handleItemClick = this.handleItemClick.bind(this)
     }
 
     componentDidUpdate(prevProps) {
@@ -54,15 +49,26 @@ export default class BugGuide extends Component {
 
     handleFilterClick(name, value) {
         switch (name) {
+            case 'isNotFilter': {
+                console.log('------尚未實作------', name, value)
+                // 清除所有選項時, 需改變flag
+                break
+            }
+            case 'isTimeFilter': {
+                console.log('------尚未實作------', name, value)
+                // 每分鐘檢查
+                break
+            }
+            case 'filterName': {
+                console.log('------尚未實作------', name, value)
+                // 檢查'中文名稱'及'英文名稱'
+                break
+            }
             case 'locationPicked': {
                 let locationPicked = JSON.parse(JSON.stringify(this.state.locationPicked))
                 let index = locationPicked.indexOf(value)
 
-                if (index == -1) {
-                    locationPicked.push(value)
-                } else {
-                    locationPicked.splice(index, 1)
-                }
+                index == -1 ? locationPicked.push(value) : locationPicked.splice(index, 1)
 
                 this.setState({
                     locationPicked: locationPicked
@@ -73,11 +79,7 @@ export default class BugGuide extends Component {
                 let monthPicked = JSON.parse(JSON.stringify(this.state.monthPicked))
                 let index = monthPicked.indexOf(value)
 
-                if (index == -1) {
-                    monthPicked.push(value)
-                } else {
-                    monthPicked.splice(index, 1)
-                }
+                index == -1 ? monthPicked.push(value) : monthPicked.splice(index, 1)
 
                 this.setState({
                     monthPicked: monthPicked
@@ -88,11 +90,7 @@ export default class BugGuide extends Component {
                 let hourPicked = JSON.parse(JSON.stringify(this.state.hourPicked))
                 let index = hourPicked.indexOf(value)
 
-                if (index == -1) {
-                    hourPicked.push(value)
-                } else {
-                    hourPicked.splice(index, 1)
-                }
+                index == -1 ? hourPicked.push(value) : hourPicked.splice(index, 1)
 
                 this.setState({
                     hourPicked: hourPicked
@@ -105,22 +103,13 @@ export default class BugGuide extends Component {
         }
     }
 
-    handleItemClick(item) {
-        this.setState({
-            isDialogShow: true,
-            activeItem: item
-        })
-        // alert(item.chineseName + ' ' + item.englishName)
-        console.log('handleItemClick', item)
-    }
-
     render() {
         // get filter list
         let targetList = this.props.dataList
 
         // location
         targetList = this.state.locationPicked.length > 0 ? targetList.filter(x => this.state.locationPicked.includes(x.location)) : targetList
-        // month (hemisphere)
+        // month (and hemisphere)
         this.props.hemisphere == 'northern'
             ? (targetList = this.state.monthPicked.length > 0 ? targetList.filter(x => x.northernMonths.some(y => this.state.monthPicked.includes(y))) : targetList)
             : (targetList = this.state.monthPicked.length > 0 ? targetList.filter(x => x.southernMonths.some(y => this.state.monthPicked.includes(y))) : targetList)
@@ -129,73 +118,56 @@ export default class BugGuide extends Component {
 
         return (
             <div>
-                <Modal show={this.state.isDialogShow} onHide={(e) => this.setState({ isDialogShow: false, activeItem: {} })}>
-                    <Modal.Header closeButton>
-                        {/* <Modal.Title>{this.state.activeItem.chineseName}</Modal.Title> */}
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Table className={'dialog'} hover={true}>
-                            <tbody>
-                                <tr>
-                                    <th colSpan={'2'} style={{ textAlign: 'center' }} >
-                                        <Image src={this.state.activeItem.imageURL} fluid={true} />
-                                        <h4 className={'font-weight-bold'}>{this.state.activeItem.chineseName + ' ' + this.state.activeItem.englishName}</h4>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th style={{ width: '30%', textAlign: 'center' }}>
-                                        <h5>價錢 : </h5>
-                                    </th>
-                                    <td>
-                                        <h5>{this.state.activeItem.price}
-                                        <small>{' 鈴錢'}</small>
-                                        </h5>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style={{ textAlign: 'center' }}>
-                                        <h5>地點 : </h5>
-                                    </th>
-                                    <td>
-                                        <h5>{this.state.activeItem.location}</h5>
-                                        {this.state.activeItem.remark != '' ? <small>{'※ ' + this.state.activeItem.remark}</small> : ''}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style={{ textAlign: 'center' }}>
-                                        <label>北半球月份 : </label>
-                                    </th>
-                                    <td>
-                                        <TimeBar type={'month'} data={this.state.activeItem.northernMonths} />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style={{ textAlign: 'center' }}>
-                                        <label>南半球月份 : </label>
-                                    </th>
-                                    <td>
-                                        <TimeBar type={'month'} data={this.state.activeItem.southernMonths} />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style={{ textAlign: 'center' }}>
-                                        <h5>時間 : </h5>
-                                    </th>
-                                    <td>
-                                        <TimeBar type={'hour'} data={this.state.activeItem.appearanceTime} />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                    </Modal.Body>
-                </Modal>
+                <BugDialog
+                    isDialogShow={this.state.isDialogShow}
+                    onHide={(e) => this.setState({ isDialogShow: false, activeItem: {} })}
+                    activeItem={this.state.activeItem}
+                />
 
                 {this.props.dataList.length == 0 ? '' :
                     <div>
                         <span className={'filterGroup'}>
-                            <Table className={'filter'} borderless={true} >
-                                {/* 地點 */}
+                            <Table className={'filter'}>
                                 <tbody>
+                                    {/* 快速 */}
+                                    <tr>
+                                        <th style={{ width: '100px' }}>
+                                        </th>
+                                        <td>
+                                            <Button
+                                                name='isNotFilter'
+                                                variant='outline-secondary'
+                                                size='sm'
+                                                active={this.state.isNotFilter}
+                                                onClick={(e) => this.handleFilterClick(e.target.name, e.target.textContent)}
+                                            >{'全部清單'}</Button>{' '}
+                                            <Button
+                                                name='isTimeFilter'
+                                                variant='outline-secondary'
+                                                size='sm'
+                                                active={this.state.isTimeFilter}
+                                                onClick={(e) => this.handleFilterClick(e.target.name, e.target.textContent)}
+                                            >{'當前出沒'}</Button>{' '}
+                                        </td>
+                                    </tr>
+
+                                    {/* 名稱 */}
+                                    <tr>
+                                        <th style={{ width: '100px' }}>
+                                            <FontAwesomeIcon icon={faFont} />{' 名稱 : '}
+                                        </th>
+                                        <td>
+                                            <input
+                                                name='filterName'
+                                                value={this.state.filterName}
+                                                className={'form-control form-control-sm'}
+                                                placeholder={'請輸入中/英文蟲名...'}
+                                                onChange={(e) => this.handleFilterClick(e.target.name, e.target.value)}
+                                            />
+                                        </td>
+                                    </tr>
+
+                                    {/* 地點 */}
                                     <tr>
                                         <th style={{ width: '100px' }}>
                                             <FontAwesomeIcon icon={faMapMarkerAlt} />{' 地點 : '}
@@ -205,8 +177,8 @@ export default class BugGuide extends Component {
                                                 <span key={index}>
                                                     <Button
                                                         name='locationPicked'
-                                                        variant="outline-secondary"
-                                                        size="sm"
+                                                        variant='outline-secondary'
+                                                        size='sm'
                                                         active={this.state.locationPicked.includes(item)}
                                                         onClick={(e) => this.handleFilterClick(e.target.name, e.target.textContent)}
                                                     >{item}</Button>{' '}
@@ -214,10 +186,8 @@ export default class BugGuide extends Component {
                                             )}
                                         </td>
                                     </tr>
-                                </tbody>
 
-                                {/* 月份 */}
-                                <tbody>
+                                    {/* 月份 */}
                                     <tr>
                                         <th style={{ width: '100px' }}>
                                             <FontAwesomeIcon icon={faCalendarAlt} />{' 月份 : '}
@@ -227,8 +197,8 @@ export default class BugGuide extends Component {
                                                 <span key={index}>
                                                     <Button
                                                         name='monthOptions'
-                                                        variant="outline-secondary"
-                                                        size="sm"
+                                                        variant='outline-secondary'
+                                                        size='sm'
                                                         active={this.state.monthPicked.includes(item)}
                                                         onClick={(e) => this.handleFilterClick(e.target.name, parseInt(e.target.textContent, 10))}
                                                     >{item}</Button>{' '}
@@ -236,10 +206,8 @@ export default class BugGuide extends Component {
                                             )}
                                         </td>
                                     </tr>
-                                </tbody>
 
-                                {/* 時間 */}
-                                <tbody>
+                                    {/* 時間 */}
                                     <tr>
                                         <th style={{ width: '100px' }}>
                                             <FontAwesomeIcon icon={faClock} />{' 時間 : '}
@@ -249,8 +217,8 @@ export default class BugGuide extends Component {
                                                 <span key={index}>
                                                     <Button
                                                         name='hourOptions'
-                                                        variant="outline-secondary"
-                                                        size="sm"
+                                                        variant='outline-secondary'
+                                                        size='sm'
                                                         active={this.state.hourPicked.includes(item)}
                                                         onClick={(e) => this.handleFilterClick(e.target.name, parseInt(e.target.textContent, 10))}
                                                     >{item}</Button>{' '}
@@ -261,18 +229,20 @@ export default class BugGuide extends Component {
                                 </tbody>
                             </Table>
                         </span>
-
+                        <hr />
+                            {'共搜尋到 ' + targetList.length + ' 筆, 點擊搜尋結果可察看詳細資料...'}
+                        <hr />
                         <span className={'dataList'}>
                             {targetList.map((item, index) =>
-                                <Media key={index} onClick={(e) => this.handleItemClick(item)}>
-                                    <img
+                                <Media key={index} onClick={(e) => this.setState({ isDialogShow: true, activeItem: item })}>
+                                    <Image
                                         style={{ width: '20%', maxWidth: '80px', margin: '0 10px' }}
                                         src={item.imageURL}
                                     />
                                     <Media.Body>
                                         <h4>
                                             <span className={'font-weight-bold'} style={{ verticalAlign: 'middle' }}>{item.chineseName}</span>{' '}
-                                            <Badge pill variant="secondary">{item.price}</Badge>
+                                            <Badge pill variant='secondary'>{item.price}</Badge>
                                         </h4>
                                         <p style={{ marginBottom: '0px' }}>
                                             {item.location}

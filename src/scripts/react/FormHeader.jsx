@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import actions from './actions.jsx'
-import apiClient from './apiClient.jsx'
 import UIBlocker from 'react-ui-blocker'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMobileAlt } from '@fortawesome/free-solid-svg-icons'
+import actions from './actions.jsx'
 
 class FormHeader extends Component {
     constructor(props) {

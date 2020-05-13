@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import actions from './actions.jsx'
-import apiClient from './apiClient.jsx'
 
 class FormFooter extends Component {
     constructor(props) {
