@@ -1,0 +1,36 @@
+{
+    "name": "ac-guide",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "build": "webpack --mode production",
+        "watch": "webpack --watch --mode development"
+    },
+    "author": "Kr1sWang",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.18.1",
+        "babel-polyfill": "^6.26.0",
+        "glamor": "^2.20.40",
+        "glamorous": "^5.0.0",
+        "govuk-colours": "^1.1.0",
+        "react": "^16.3.2",
+        "react-dom": "^16.3.2",
+        "react-horizontal-stacked-bar-chart": "^8.15.2",
+        "react-redux": "^5.0.7",
+        "react-ui-blocker": "^1.0.3",
+        "redux": "^4.0.0"
+    },
+    "devDependencies": {
+        "babel-core": "^6.26.3",
+        "babel-loader": "^7.1.4",
+        "babel-plugin-transform-object-rest-spread": "^6.26.0",
+        "babel-preset-env": "^1.6.1",
+        "babel-preset-react": "^6.24.1",
+        "css-loader": "^3.5.3",
+        "style-loader": "^0.21.0",
+        "webpack": "^4.20.2",
+        "webpack-cli": "^3.1.2"
+    }
+}
