@@ -1,14 +1,14 @@
 {
     "name": "ac-guide",
     "version": "1.0.0",
-    "description": "",
+    "description": "Animal Crossing Guide",
     "main": "app.js",
     "scripts": {
         "build": "webpack --mode production",
         "watch": "webpack --watch --mode development"
     },
     "author": "Kr1sWang",
-    "license": "ISC",
+    "license": "MIT",
     "dependencies": {
         "axios": "^0.18.1",
         "babel-polyfill": "^6.26.0",
