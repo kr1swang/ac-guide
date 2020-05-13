@@ -7,12 +7,33 @@ body {
     background-color: #263238;
 }
 
-.footer {
-    color: #97A3AB;
-    text-align: right;
+.filter {
+    margin: 0;
 }
 
-th,
-td {
+.filter>tbody>tr>th,
+.filter>tbody>tr>td {
+    color: #97A3AB;
+    padding: 5px;
+}
+
+.dialog>tbody>tr>th {
     text-align: center;
+    vertical-align: middle;
+}
+
+span>button {
+    margin-bottom: 5px;
+}
+
+.media {
+    background-color: #222D32;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    padding: 5px;
+    border: 2px #97A3AB solid;
+}
+
+.footer {
+    text-align: right;
 }

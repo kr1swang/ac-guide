@@ -24,7 +24,8 @@ class FormHeader extends Component {
                     message="Loading..."
                 />
                 <h3>
-                    <FontAwesomeIcon icon={faMobileAlt} />{' ' + this.props.htmlTitle}
+                    <FontAwesomeIcon icon={faMobileAlt} />{' '}
+                    {this.props.htmlTitle}
                 </h3>
             </div>
         )

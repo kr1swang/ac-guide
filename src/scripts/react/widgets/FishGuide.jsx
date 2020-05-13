@@ -5,12 +5,32 @@ import TimeBar from './TimeBar.jsx'
 export default class FishGuide extends Component {
     constructor(props) {
         super(props)
+        
+        this.state = {
+            // control dialog show
+            isDialogShow: false,
+
+            // options
+            locationOptions: [],
+            shadowSizeOptions: [],
+            monthOptions: [],
+            hourOptions: [],
+
+            // picked options
+            locationPicked: [],
+            monthPicked: [],
+            hourPicked: [],
+            namePicked: ''
+        }
+
+        this.handleFilterClick = this.handleFilterClick.bind(this)
+        this.handleItemClick = this.handleItemClick.bind(this)
     }
 
     render() {
         return (
             <div>
-                {this.props.dataList.length == 0 ? <h4>Loding...</h4> :
+                {this.props.dataList.length == 0 ? '' :
                     <table>
                         <thead>
                             <tr>
