@@ -11,3 +11,8 @@ body {
     color: #97A3AB;
     text-align: right;
 }
+
+th,
+td {
+    text-align: center;
+}
