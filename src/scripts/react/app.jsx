@@ -5,6 +5,8 @@ import store from './reducers/store.jsx'
 import FormHeader from './FormHeader.jsx'
 import FormMain from './FormMain.jsx'
 import FormFooter from './FormFooter.jsx'
+import { Container } from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 class App extends Component {
     constructor(props) {
@@ -14,13 +16,13 @@ class App extends Component {
     render() {
         return (
             <Provider store={store}>
-                <div className={'main'}>
+                <Container>
                     <FormHeader/>
                     <hr />
                     <FormMain />
                     <hr />
                     <FormFooter />
-                </div>
+                </Container>
             </Provider>
         )
     }
