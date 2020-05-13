@@ -2,7 +2,7 @@
     "name": "ac-guide",
     "version": "1.0.0",
     "description": "Animal Crossing Guide",
-    "main": "app.js",
+    "main": "App.js",
     "scripts": {
         "build": "webpack --mode production",
         "watch": "webpack --watch --mode development"

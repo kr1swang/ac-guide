@@ -14,28 +14,31 @@ export default class BugGuide extends Component {
                     <table>
                         <thead>
                             <tr>
-                                {/* <th>項次</th> */}
-                                <th>名稱</th>
-                                <th>價格</th>
-                                <th>地點</th>
-                                <th>{this.props.hemisphere == 'northern' ? '北半球月份' : '南半球月份'}</th>
-                                <th>出現時間</th>
-                                <th>備註</th>
+                                <th style={{ width: '10%' }}>名稱</th>
+                                <th style={{ width: '16%' }}>價格</th>
+                                <th style={{ width: '24%' }}>地點</th>
+                                <th style={{ width: '25%' }}>{this.props.hemisphere == 'northern' ? '北半球月份' : '南半球月份'}</th>
+                                <th style={{ width: '25%' }}>出現時間</th>
                             </tr>
                         </thead>
                         <tbody>
                             {this.props.dataList.map((item, index) =>
                                 <tr key={index}>
-                                    {/* <td>{index + 1 + '.'}</td> */}
                                     <td>
-                                        <img style={{ margin: '0 20px', maxWidth: '50px' }} src={item.imageURL} />
-                                        <h5 style={{ margin: '0px', textAlign: 'center' }}>{item.chineseName}</h5>
+                                        <img style={{ maxWidth: '50px' }} src={item.imageURL} /><br />
+                                        <small>{item.chineseName}</small>
                                     </td>
-                                    <td style={{ textAlign: 'right' }}>{item.price}</td>
-                                    <td>{item.location}</td>
-                                    <td><TimeBar type={'month'} data={this.props.hemisphere == 'northern' ? item.northernMonths : item.southernMonths} /></td>
-                                    <td><TimeBar type={'hour'} data={item.appearanceTime} /></td>
-                                    <td>{item.remark}</td>
+                                    <td>{item.price}</td>
+                                    <td>
+                                        {item.location}
+                                        {item.remark != '' ? <small><br />{'※' + item.remark}</small> : ''}
+                                    </td>
+                                    <td>
+                                        <TimeBar type={'month'} data={this.props.hemisphere == 'northern' ? item.northernMonths : item.southernMonths} />
+                                    </td>
+                                    <td>
+                                        <TimeBar type={'hour'} data={item.appearanceTime} />
+                                    </td>
                                 </tr>
                             )}
                         </tbody>

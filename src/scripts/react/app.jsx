@@ -6,8 +6,6 @@ import FormHeader from './FormHeader.jsx'
 import FormMain from './FormMain.jsx'
 import FormFooter from './FormFooter.jsx'
 import { Container } from 'react-bootstrap'
-import '../../styles/bootstrap.min.css'
-import '../../styles/style.css'
 
 class App extends Component {
     constructor(props) {

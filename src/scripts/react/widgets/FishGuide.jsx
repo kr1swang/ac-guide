@@ -26,8 +26,7 @@ export default class FishGuide extends Component {
                             {this.props.dataList.map((item, index) =>
                                 <tr key={index}>
                                     <td>
-                                        <img style={{ maxWidth: '50px' }} src={item.imageURL} />
-                                        <br />
+                                        <img style={{ maxWidth: '50px' }} src={item.imageURL} /><br />
                                         <small>{item.chineseName}</small>
                                     </td>
                                     <td>{item.price}</td>
@@ -36,8 +35,12 @@ export default class FishGuide extends Component {
                                         {item.remark != '' ? <small><br />{'※' + item.remark}</small> : ''}
                                     </td>
                                     <td>{item.shadowSize}</td>
-                                    <td><TimeBar type={'month'} data={this.props.hemisphere == 'northern' ? item.northernMonths : item.southernMonths} /></td>
-                                    <td><TimeBar type={'hour'} data={item.appearanceTime} /></td>
+                                    <td>
+                                        <TimeBar type={'month'} data={this.props.hemisphere == 'northern' ? item.northernMonths : item.southernMonths} />
+                                    </td>
+                                    <td>
+                                        <TimeBar type={'hour'} data={item.appearanceTime} />
+                                    </td>
                                 </tr>
                             )}
                         </tbody>

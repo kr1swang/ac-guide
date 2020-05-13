@@ -2,14 +2,13 @@
 
 module.exports = {
     context: __dirname,
-    entry: './src/scripts/react/app.jsx',
+    entry: './src/scripts/react/App.jsx',
     output: {
         path: path.resolve(__dirname, './src/scripts/bundle/'),
-        filename: 'app.js',
+        filename: 'App.js',
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: {
