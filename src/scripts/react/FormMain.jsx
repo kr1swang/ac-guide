@@ -4,6 +4,7 @@ import actions from './actions.jsx'
 import apiClient from './apiClient.jsx'
 import FishGuide from './widgets/FishGuide.jsx'
 import BugGuide from './widgets/BugGuide.jsx'
+import Button from 'react-bootstrap/Button'
 
 class FormMain extends Component {
     constructor(props) {
@@ -43,16 +44,16 @@ class FormMain extends Component {
         return (
             <div className={'main'}>
                 <div>
-                    <label>種類 : </label>
-                    <button name='type' onClick={(e) => this.ajaxGetList('fish')}>魚類</button>
-                    <button name='type' onClick={(e) => this.ajaxGetList('bug')}>蟲類</button>
-                    <br />
-                    <label>地區 : </label>
-                    <button name='hemisphere' onClick={(e) => this.props.handleAssignValue(e.target.name, 'northern')}>北半球</button>
-                    <button name='hemisphere' onClick={(e) => this.props.handleAssignValue(e.target.name, 'southern')}>南半球</button>
-                    <br />
-                    <br />
+                    <label>種類 : </label>{' '}
+                    <Button name='type' variant="outline-primary" size="sm" active={this.props.type == 'fish' ? true : false} onClick={(e) => this.ajaxGetList('fish')}>魚類</Button>{' '}
+                    <Button name='type' variant="outline-primary" size="sm" active={this.props.type == 'bug' ? true : false} onClick={(e) => this.ajaxGetList('bug')}>蟲類</Button><br />
+
+                    <label>地區 : </label>{' '}
+                    <Button name='hemisphere' variant="outline-primary" size="sm" active={this.props.hemisphere == 'northern' ? true : false} onClick={(e) => this.props.handleAssignValue(e.target.name, 'northern')}                    >北半球</Button>{' '}
+                    <Button name='hemisphere' variant="outline-primary" size="sm" active={this.props.hemisphere == 'southern' ? true : false} onClick={(e) => this.props.handleAssignValue(e.target.name, 'southern')}
+                    >南半球</Button>{' '}
                 </div>
+                <br />
                 <div>
                     {this.props.type == 'fish' ? <FishGuide dataList={this.props.dataList} hemisphere={this.props.hemisphere} /> : ''}
                     {this.props.type == 'bug' ? <BugGuide dataList={this.props.dataList} hemisphere={this.props.hemisphere} /> : ''}
