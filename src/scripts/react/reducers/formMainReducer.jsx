@@ -1,7 +1,7 @@
 ﻿import actions, { Ks } from '../actions.jsx'
 
 const initialState = {
-    type: 'bug',
+    type: 'fish',
     hemisphere: 'northern',
     dataList: []
 }

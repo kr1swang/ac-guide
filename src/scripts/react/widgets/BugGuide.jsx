@@ -43,7 +43,7 @@ export default class BugGuide extends Component {
             hourOptions: [],
 
             // picked options
-            isNotFilter: true,
+            isNoneFilter: true,
             isTimeFilter: false,
             filterName: '',
             locationPicked: [],
@@ -69,9 +69,9 @@ export default class BugGuide extends Component {
 
     handleFilterClick(name, value) {
         switch (name) {
-            case 'isNotFilter': {
+            case 'isNoneFilter': {
                 this.setState({
-                    isNotFilter: true,
+                    isNoneFilter: true,
                     isTimeFilter: false,
                     filterName: '',
                     locationPicked: [],
@@ -84,7 +84,7 @@ export default class BugGuide extends Component {
                 let dateNow = new Date()
 
                 this.setState({
-                    isNotFilter: false,
+                    isNoneFilter: false,
                     isTimeFilter: true,
                     filterName: this.state.filterName,
                     locationPicked: this.state.locationPicked,
@@ -97,7 +97,7 @@ export default class BugGuide extends Component {
                 let filterName = value
 
                 this.setState({
-                    isNotFilter: false,
+                    isNoneFilter: false,
                     filterName: filterName
                 })
                 break
@@ -109,7 +109,7 @@ export default class BugGuide extends Component {
                 index == -1 ? locationPicked.push(value) : locationPicked.splice(index, 1)
 
                 this.setState({
-                    isNotFilter: false,
+                    isNoneFilter: false,
                     locationPicked: locationPicked
                 })
                 break
@@ -124,7 +124,7 @@ export default class BugGuide extends Component {
                 let isMonthNowExitst = monthPicked.includes(dateNow.getMonth() + 1)
 
                 this.setState({
-                    isNotFilter: false,
+                    isNoneFilter: false,
                     isTimeFilter: isMonthNowExitst ? this.state.isTimeFilter : false,
                     monthPicked: monthPicked
                 })
@@ -140,7 +140,7 @@ export default class BugGuide extends Component {
                 let isHourNowExitst = hourPicked.includes(dateNow.getHours() + 1)
 
                 this.setState({
-                    isNotFilter: false,
+                    isNoneFilter: false,
                     isTimeFilter: isHourNowExitst ? this.state.isTimeFilter : false,
                     hourPicked: hourPicked
                 })
@@ -162,7 +162,7 @@ export default class BugGuide extends Component {
 
         // location
         if (this.state.locationPicked.length > 0) {
-            result = result.filter(x => this.state.locationPicked.some(y => x.location.indexOf(y) != -1))
+            result = result.filter(x => this.state.locationPicked.some(y => y.includes(x.location)))
         }
 
         // month
@@ -208,10 +208,10 @@ export default class BugGuide extends Component {
                                             </th>
                                             <td>
                                                 <Button
-                                                    name='isNotFilter'
+                                                    name='isNoneFilter'
                                                     variant='outline-secondary'
                                                     size='sm'
-                                                    active={this.state.isNotFilter}
+                                                    active={this.state.isNoneFilter}
                                                     onClick={(e) => this.handleFilterClick(e.target.name, true)}
                                                 >{'全部清單'}</Button>{' '}
                                                 <Button
@@ -318,6 +318,7 @@ export default class BugGuide extends Component {
                                 </Accordion.Collapse>
                             </Accordion>
                         </span>
+                        
                         <hr />
                         {'共 ' + targetList.length + ' 筆資料符合, 點擊可查看詳細資料...'}
                         <hr />

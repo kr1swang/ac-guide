@@ -63,7 +63,7 @@ class FormMain extends Component {
                                 </td>
                             </tr>
 
-                            {/* 種類 */}
+                            {/* 地區 */}
                             <tr>
                                 <th style={{ width: '100px' }}>
                                     <FontAwesomeIcon icon={faGlobeAmericas} />{' 地區 : '}

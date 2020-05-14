@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Table, Image, Modal } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle, faMoneyBillAlt, faMapMarkerAlt, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faMoneyBillAlt, faMapMarkerAlt, faFish, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons'
 import TimeBar from './TimeBar.jsx'
 
 export default class CustomDialog extends Component {
@@ -77,6 +77,16 @@ export default class CustomDialog extends Component {
                                     {this.props.activeItem.remark != '' ? <small>{'※ ' + this.props.activeItem.remark}</small> : ''}
                                 </td>
                             </tr>
+                            {this.props.type == 'fish' ?
+                                <tr>
+                                    <th style={{ textAlign: 'center' }}>
+                                        <h5><FontAwesomeIcon icon={faFish} />{' 魚影'}</h5>
+                                    </th>
+                                    <td>
+                                        <h5>{this.props.activeItem.shadowSize}</h5>
+                                    </td>
+                                </tr>
+                                : ''}
                             <tr>
                                 <th style={{ textAlign: 'center' }}>
                                     <label><FontAwesomeIcon icon={faCalendarAlt} />{' 北半球月份'}</label>

@@ -21,6 +21,7 @@ export default class CustomCard extends Component {
                         <Badge pill variant='secondary'>{'$ ' + this.props.object.price}</Badge>
                     </h4>
                     <p style={{ marginBottom: '0px' }}>
+                        {this.props.type == 'fish' ? this.props.object.shadowSize + ' / ' : ''}
                         {this.props.object.location}
                         {this.props.object.remark != '' ? <small><br />{'※ ' + this.props.object.remark}</small> : ''}
                     </p>

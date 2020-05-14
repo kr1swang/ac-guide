@@ -1,14 +1,43 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import TimeBar from './TimeBar.jsx'
+import { Accordion, Table, Media, Badge, Button, Image } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFilter, faFont, faMapMarkerAlt, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons'
+import CustomDialog from './CustomDialog.jsx'
+import CustomCard from './CustomCard.jsx'
 
 export default class FishGuide extends Component {
     constructor(props) {
         super(props)
-        
+
         this.state = {
             // control dialog show
+            isCollapseShow: false,
             isDialogShow: false,
+            activeItem: {
+                imageURL: '',
+                chineseName: '',
+                englishName: '',
+                price: 0,
+                location: '',
+                shadowSize: '',
+                northernMonths: [],
+                southernMonths: [],
+                appearanceTime: [],
+                remark: ''
+            },
+            emptyItem: {
+                imageURL: '',
+                chineseName: '',
+                englishName: '',
+                price: 0,
+                location: '',
+                shadowSize: '',
+                northernMonths: [],
+                southernMonths: [],
+                appearanceTime: [],
+                remark: ''
+            },
 
             // options
             locationOptions: [],
@@ -17,51 +46,338 @@ export default class FishGuide extends Component {
             hourOptions: [],
 
             // picked options
+            isNoneFilter: true,
+            isTimeFilter: false,
+            filterName: '',
             locationPicked: [],
+            shadowSizePicked: [],
             monthPicked: [],
-            hourPicked: [],
-            namePicked: ''
+            hourPicked: []
+        }
+
+        this.handleFilterClick = this.handleFilterClick.bind(this)
+        this.handleConvertFilter = this.handleConvertFilter.bind(this)
+    }
+
+    componentDidMount() {
+        const locationOptions = ['河川', '池塘', '懸崖上', '出海口', '大海', '碼頭']
+        const shadowSizeOptions = ['特小', '稍小', '中', '稍大', '大', '特大', '細長', '背鰭']
+        const monthOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        const hourOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+
+        this.setState({
+            locationOptions: locationOptions,
+            shadowSizeOptions: shadowSizeOptions,
+            monthOptions: monthOptions,
+            hourOptions: hourOptions
+        })
+    }
+
+    handleFilterClick(name, value) {
+        switch (name) {
+            case 'isNoneFilter': {
+                this.setState({
+                    isNoneFilter: true,
+                    isTimeFilter: false,
+                    filterName: '',
+                    locationPicked: [],
+                    shadowSizePicked: [],
+                    monthPicked: [],
+                    hourPicked: []
+                })
+                break
+            }
+            case 'isTimeFilter': {
+                let dateNow = new Date()
+
+                this.setState({
+                    isNoneFilter: false,
+                    isTimeFilter: true,
+                    filterName: this.state.filterName,
+                    locationPicked: this.state.locationPicked,
+                    shadowSizePicked: this.state.shadowSizePicked,
+                    monthPicked: [dateNow.getMonth() + 1],
+                    hourPicked: [dateNow.getHours()]
+                })
+                break
+            }
+            case 'filterName': {
+                let filterName = value
+
+                this.setState({
+                    isNoneFilter: false,
+                    filterName: filterName
+                })
+                break
+            }
+            case 'locationPicked': {
+                let locationPicked = JSON.parse(JSON.stringify(this.state.locationPicked))
+                let index = locationPicked.indexOf(value)
+
+                index == -1 ? locationPicked.push(value) : locationPicked.splice(index, 1)
+
+                this.setState({
+                    isNoneFilter: false,
+                    locationPicked: locationPicked
+                })
+                break
+            }
+            case 'shadowSizePicked': {
+                let shadowSizePicked = JSON.parse(JSON.stringify(this.state.shadowSizePicked))
+                let index = shadowSizePicked.indexOf(value)
+
+                index == -1 ? shadowSizePicked.push(value) : shadowSizePicked.splice(index, 1)
+
+                this.setState({
+                    isNoneFilter: false,
+                    shadowSizePicked: shadowSizePicked
+                })
+                break
+            }
+            case 'monthOptions': {
+                let monthPicked = JSON.parse(JSON.stringify(this.state.monthPicked))
+                let index = monthPicked.indexOf(value)
+
+                index == -1 ? monthPicked.push(value) : monthPicked.splice(index, 1)
+
+                let dateNow = new Date()
+                let isMonthNowExitst = monthPicked.includes(dateNow.getMonth() + 1)
+
+                this.setState({
+                    isNoneFilter: false,
+                    isTimeFilter: isMonthNowExitst ? this.state.isTimeFilter : false,
+                    monthPicked: monthPicked
+                })
+                break
+            }
+            case 'hourOptions': {
+                let hourPicked = JSON.parse(JSON.stringify(this.state.hourPicked))
+                let index = hourPicked.indexOf(value)
+
+                index == -1 ? hourPicked.push(value) : hourPicked.splice(index, 1)
+
+                let dateNow = new Date()
+                let isHourNowExitst = hourPicked.includes(dateNow.getHours() + 1)
+
+                this.setState({
+                    isNoneFilter: false,
+                    isTimeFilter: isHourNowExitst ? this.state.isTimeFilter : false,
+                    hourPicked: hourPicked
+                })
+                break
+            }
+            default: {
+                break
+            }
         }
     }
 
+    handleConvertFilter(oriList) {
+        let result = oriList
+
+        // name (chineseName / englishName)
+        if (this.state.filterName.length > 0) {
+            result = result.filter(x => x.chineseName.indexOf(this.state.filterName) != -1 || x.englishName.indexOf(this.state.filterName) != -1)
+        }
+
+        // location
+        if (this.state.locationPicked.length > 0) {
+            result = result.filter(x => this.state.locationPicked.some(y => y.includes(x.location)))
+        }
+
+        // shadowSize
+        if (this.state.shadowSizePicked.length > 0) {
+            result = result.filter(x => this.state.shadowSizePicked.some(y => y.includes(x.shadowSize)))
+        }
+
+        // month
+        if (this.state.monthPicked.length > 0) {
+            // hemisphere
+            if (this.props.hemisphere == 'northern') {
+                result = result.filter(x => x.northernMonths.some(y => this.state.monthPicked.includes(y)))
+            } else {
+                result = result.filter(x => x.southernMonths.some(y => this.state.monthPicked.includes(y)))
+            }
+        }
+
+        // hour
+        if (this.state.hourPicked.length > 0) {
+            result = result.filter(x => x.appearanceTime.some(y => this.state.hourPicked.includes(y)))
+        }
+
+        return result
+    }
+
     render() {
+        // get filter list
+        let targetList = this.handleConvertFilter(this.props.dataList)
+
         return (
             <div>
+                <CustomDialog
+                    type={'fish'}
+                    isDialogShow={this.state.isDialogShow}
+                    onHide={(e) => this.setState({ isDialogShow: false, activeItem: this.state.emptyItem })}
+                    activeItem={this.state.activeItem}
+                />
+
                 {this.props.dataList.length == 0 ? '' :
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style={{ width: '10%' }}>名稱</th>
-                                <th style={{ width: '16%' }}>價格</th>
-                                <th style={{ width: '12%' }}>地點</th>
-                                <th style={{ width: '12%' }}>魚影</th>
-                                <th style={{ width: '25%' }}>{this.props.hemisphere == 'northern' ? '北半球月份' : '南半球月份'}</th>
-                                <th style={{ width: '25%' }}>出現時間</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.props.dataList.map((item, index) =>
-                                <tr key={index}>
-                                    <td>
-                                        <img style={{ maxWidth: '50px' }} src={item.imageURL} /><br />
-                                        <small>{item.chineseName}</small>
-                                    </td>
-                                    <td>{item.price}</td>
-                                    <td>
-                                        {item.location}
-                                        {item.remark != '' ? <small><br />{'※' + item.remark}</small> : ''}
-                                    </td>
-                                    <td>{item.shadowSize}</td>
-                                    <td>
-                                        <TimeBar type={'month'} data={this.props.hemisphere == 'northern' ? item.northernMonths : item.southernMonths} />
-                                    </td>
-                                    <td>
-                                        <TimeBar type={'hour'} data={item.appearanceTime} />
-                                    </td>
-                                </tr>
+                    <div>
+                        <span className={'filterGroup'}>
+                            <Accordion>
+                                <Table className={'filter'}>
+                                    <tbody>
+                                        {/* 快速 */}
+                                        <tr>
+                                            <th style={{ width: '100px' }}>
+                                            </th>
+                                            <td>
+                                                <Button
+                                                    name='isNoneFilter'
+                                                    variant='outline-secondary'
+                                                    size='sm'
+                                                    active={this.state.isNoneFilter}
+                                                    onClick={(e) => this.handleFilterClick(e.target.name, true)}
+                                                >{'全部清單'}</Button>{' '}
+                                                <Button
+                                                    name='isTimeFilter'
+                                                    variant='outline-secondary'
+                                                    size='sm'
+                                                    active={this.state.isTimeFilter}
+                                                    onClick={(e) => this.handleFilterClick(e.target.name, true)}
+                                                >{'當前出沒'}</Button>{' '}
+
+                                                {/* toggle more filter */}
+                                                <Accordion.Toggle
+                                                    eventKey="0"
+                                                    as={Button}
+                                                    variant='outline-secondary'
+                                                    size='sm'
+                                                    style={{ float: 'right' }}
+                                                    onClick={(e) => this.setState({ isCollapseShow: !this.state.isCollapseShow })}
+                                                ><FontAwesomeIcon icon={faFilter} />{' 更多條件'}</Accordion.Toggle>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                                <Accordion.Collapse eventKey="0">
+                                    <Table className={'filter'}>
+                                        <tbody>
+                                            {/* 名稱 */}
+                                            <tr>
+                                                <th style={{ width: '100px' }}>
+                                                    <FontAwesomeIcon icon={faFont} />{' 名稱 : '}
+                                                </th>
+                                                <td>
+                                                    <input
+                                                        name='filterName'
+                                                        value={this.state.filterName}
+                                                        className={'form-control form-control-sm'}
+                                                        placeholder={'請輸入中/英文蟲名...'}
+                                                        onChange={(e) => this.handleFilterClick(e.target.name, e.target.value)}
+                                                    />
+                                                </td>
+                                            </tr>
+
+                                            {/* 地點 */}
+                                            <tr>
+                                                <th style={{ width: '100px' }}>
+                                                    <FontAwesomeIcon icon={faMapMarkerAlt} />{' 地點 : '}
+                                                </th>
+                                                <td>
+                                                    {this.state.locationOptions.map((item, index) =>
+                                                        <span key={index}>
+                                                            <Button
+                                                                name='locationPicked'
+                                                                variant='outline-secondary'
+                                                                size='sm'
+                                                                active={this.state.locationPicked.includes(item)}
+                                                                onClick={(e) => this.handleFilterClick(e.target.name, e.target.textContent)}
+                                                            >{item}</Button>{' '}
+                                                        </span>
+                                                    )}
+                                                </td>
+                                            </tr>
+
+                                            {/* 魚影 */}
+                                            <tr>
+                                                <th style={{ width: '100px' }}>
+                                                    <FontAwesomeIcon icon={faMapMarkerAlt} />{' 魚影 : '}
+                                                </th>
+                                                <td>
+                                                    {this.state.shadowSizeOptions.map((item, index) =>
+                                                        <span key={index}>
+                                                            <Button
+                                                                name='shadowSizePicked'
+                                                                variant='outline-secondary'
+                                                                size='sm'
+                                                                active={this.state.shadowSizePicked.includes(item)}
+                                                                onClick={(e) => this.handleFilterClick(e.target.name, e.target.textContent)}
+                                                            >{item}</Button>{' '}
+                                                        </span>
+                                                    )}
+                                                </td>
+                                            </tr>
+
+                                            {/* 月份 */}
+                                            <tr>
+                                                <th style={{ width: '100px' }}>
+                                                    <FontAwesomeIcon icon={faCalendarAlt} />{' 月份 : '}
+                                                </th>
+                                                <td>
+                                                    {this.state.monthOptions.map((item, index) =>
+                                                        <span key={index}>
+                                                            <Button
+                                                                name='monthOptions'
+                                                                variant='outline-secondary'
+                                                                size='sm'
+                                                                active={this.state.monthPicked.includes(item)}
+                                                                onClick={(e) => this.handleFilterClick(e.target.name, parseInt(e.target.textContent, 10))}
+                                                            >{item}</Button>{' '}
+                                                        </span>
+                                                    )}
+                                                </td>
+                                            </tr>
+
+                                            {/* 時間 */}
+                                            <tr>
+                                                <th style={{ width: '100px' }}>
+                                                    <FontAwesomeIcon icon={faClock} />{' 時間 : '}
+                                                </th>
+                                                <td>
+                                                    {this.state.hourOptions.map((item, index) =>
+                                                        <span key={index}>
+                                                            <Button
+                                                                name='hourOptions'
+                                                                variant='outline-secondary'
+                                                                size='sm'
+                                                                active={this.state.hourPicked.includes(item)}
+                                                                onClick={(e) => this.handleFilterClick(e.target.name, parseInt(e.target.textContent, 10))}
+                                                            >{item}</Button>{' '}
+                                                        </span>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                </Accordion.Collapse>
+                            </Accordion>
+                        </span>
+
+                        <hr />
+                        {'共 ' + targetList.length + ' 筆資料符合, 點擊可查看詳細資料...'}
+                        <hr />
+                        <span className={'dataList'}>
+                            {targetList.map((item, index) =>
+                                <CustomCard
+                                    key={index}
+                                    type={'fish'}
+                                    onClick={(e) => this.setState({ isDialogShow: true, activeItem: item })}
+                                    object={item}
+                                />
                             )}
-                        </tbody>
-                    </table>
+                        </span>
+                    </div>
                 }
             </div>
         )
