@@ -164,7 +164,7 @@ export default class BugGuide extends Component {
 
 		// location
 		if (this.state.locationPicked.length > 0) {
-			result = result.filter(x => this.state.locationPicked.some(y => y.includes(x.location)))
+			result = result.filter(x => this.state.locationPicked.some(y => x.location.indexOf(y) != -1))
 		}
 
 		// month

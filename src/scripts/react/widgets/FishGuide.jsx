@@ -184,12 +184,12 @@ export default class FishGuide extends Component {
 
 		// location
 		if (this.state.locationPicked.length > 0) {
-			result = result.filter(x => this.state.locationPicked.some(y => y.includes(x.location)))
+			result = result.filter(x => this.state.locationPicked.some(y => x.location.indexOf(y) != -1))
 		}
 
 		// shadowSize
 		if (this.state.shadowSizePicked.length > 0) {
-			result = result.filter(x => this.state.shadowSizePicked.some(y => y.includes(x.shadowSize)))
+			result = result.filter(x => this.state.shadowSizePicked.some(y => x.shadowSize.indexOf(y) != -1))
 		}
 
 		// month
