@@ -77,100 +77,100 @@ export default class FishGuide extends Component {
 
 	handleFilterClick(name, value) {
 		switch (name) {
-		case 'isNoneFilter': {
-			this.setState({
-				isNoneFilter: true,
-				isTimeFilter: false,
-				filterName: '',
-				locationPicked: [],
-				shadowSizePicked: [],
-				monthPicked: [],
-				hourPicked: []
-			})
-			break
-		}
-		case 'isTimeFilter': {
-			let dateNow = new Date()
+			case 'isNoneFilter': {
+				this.setState({
+					isNoneFilter: true,
+					isTimeFilter: false,
+					filterName: '',
+					locationPicked: [],
+					shadowSizePicked: [],
+					monthPicked: [],
+					hourPicked: []
+				})
+				break
+			}
+			case 'isTimeFilter': {
+				let dateNow = new Date()
 
-			this.setState({
-				isNoneFilter: false,
-				isTimeFilter: true,
-				filterName: this.state.filterName,
-				locationPicked: this.state.locationPicked,
-				shadowSizePicked: this.state.shadowSizePicked,
-				monthPicked: [dateNow.getMonth() + 1],
-				hourPicked: [dateNow.getHours()]
-			})
-			break
-		}
-		case 'filterName': {
-			let filterName = value
+				this.setState({
+					isNoneFilter: false,
+					isTimeFilter: true,
+					filterName: this.state.filterName,
+					locationPicked: this.state.locationPicked,
+					shadowSizePicked: this.state.shadowSizePicked,
+					monthPicked: [dateNow.getMonth() + 1],
+					hourPicked: [dateNow.getHours()]
+				})
+				break
+			}
+			case 'filterName': {
+				let filterName = value
 
-			this.setState({
-				isNoneFilter: false,
-				filterName: filterName
-			})
-			break
-		}
-		case 'locationPicked': {
-			let locationPicked = JSON.parse(JSON.stringify(this.state.locationPicked))
-			let index = locationPicked.indexOf(value)
+				this.setState({
+					isNoneFilter: false,
+					filterName: filterName
+				})
+				break
+			}
+			case 'locationPicked': {
+				let locationPicked = JSON.parse(JSON.stringify(this.state.locationPicked))
+				let index = locationPicked.indexOf(value)
 
-			index == -1 ? locationPicked.push(value) : locationPicked.splice(index, 1)
+				index == -1 ? locationPicked.push(value) : locationPicked.splice(index, 1)
 
-			this.setState({
-				isNoneFilter: false,
-				locationPicked: locationPicked
-			})
-			break
-		}
-		case 'shadowSizePicked': {
-			let shadowSizePicked = JSON.parse(JSON.stringify(this.state.shadowSizePicked))
-			let index = shadowSizePicked.indexOf(value)
+				this.setState({
+					isNoneFilter: false,
+					locationPicked: locationPicked
+				})
+				break
+			}
+			case 'shadowSizePicked': {
+				let shadowSizePicked = JSON.parse(JSON.stringify(this.state.shadowSizePicked))
+				let index = shadowSizePicked.indexOf(value)
 
-			index == -1 ? shadowSizePicked.push(value) : shadowSizePicked.splice(index, 1)
+				index == -1 ? shadowSizePicked.push(value) : shadowSizePicked.splice(index, 1)
 
-			this.setState({
-				isNoneFilter: false,
-				shadowSizePicked: shadowSizePicked
-			})
-			break
-		}
-		case 'monthOptions': {
-			let monthPicked = JSON.parse(JSON.stringify(this.state.monthPicked))
-			let index = monthPicked.indexOf(value)
+				this.setState({
+					isNoneFilter: false,
+					shadowSizePicked: shadowSizePicked
+				})
+				break
+			}
+			case 'monthOptions': {
+				let monthPicked = JSON.parse(JSON.stringify(this.state.monthPicked))
+				let index = monthPicked.indexOf(value)
 
-			index == -1 ? monthPicked.push(value) : monthPicked.splice(index, 1)
+				index == -1 ? monthPicked.push(value) : monthPicked.splice(index, 1)
 
-			let dateNow = new Date()
-			let isMonthNowExitst = monthPicked.includes(dateNow.getMonth() + 1)
+				let dateNow = new Date()
+				let isMonthNowExitst = monthPicked.includes(dateNow.getMonth() + 1)
 
-			this.setState({
-				isNoneFilter: false,
-				isTimeFilter: isMonthNowExitst ? this.state.isTimeFilter : false,
-				monthPicked: monthPicked
-			})
-			break
-		}
-		case 'hourOptions': {
-			let hourPicked = JSON.parse(JSON.stringify(this.state.hourPicked))
-			let index = hourPicked.indexOf(value)
+				this.setState({
+					isNoneFilter: false,
+					isTimeFilter: isMonthNowExitst ? this.state.isTimeFilter : false,
+					monthPicked: monthPicked
+				})
+				break
+			}
+			case 'hourOptions': {
+				let hourPicked = JSON.parse(JSON.stringify(this.state.hourPicked))
+				let index = hourPicked.indexOf(value)
 
-			index == -1 ? hourPicked.push(value) : hourPicked.splice(index, 1)
+				index == -1 ? hourPicked.push(value) : hourPicked.splice(index, 1)
 
-			let dateNow = new Date()
-			let isHourNowExitst = hourPicked.includes(dateNow.getHours() + 1)
+				let dateNow = new Date()
+				let isHourNowExitst = hourPicked.includes(dateNow.getHours() + 1)
 
-			this.setState({
-				isNoneFilter: false,
-				isTimeFilter: isHourNowExitst ? this.state.isTimeFilter : false,
-				hourPicked: hourPicked
-			})
-			break
-		}
-		default: {
-			break
-		}
+				this.setState({
+					isNoneFilter: false,
+					isTimeFilter: isHourNowExitst ? this.state.isTimeFilter : false,
+					hourPicked: hourPicked
+				})
+				break
+			}
+			default: {
+				break
+			}
 		}
 	}
 
