@@ -11,7 +11,12 @@ class FormFooter extends Component {
 	render() {
 		return (
 			<div className={'footer'}>
-				<p>{this.props.msg}</p>
+				<a
+					href={this.props.githubUrl}
+					className={'stretched-link'}
+					target={'_blank'}
+					rel={'noreferrer'}
+				>{this.props.msg}</a>
 			</div>
 		)
 	}
@@ -19,7 +24,8 @@ class FormFooter extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
 	ownProps: ownProps,		// for eslint
-	msg: state.formFooter.msg
+	msg: state.formFooter.msg,
+	githubUrl: state.formFooter.githubUrl
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -47,5 +53,6 @@ export default connect(
 )(FormFooter)
 
 FormFooter.propTypes = {
-	msg: PropTypes.string
+	msg: PropTypes.string,
+	githubUrl: PropTypes.string
 }

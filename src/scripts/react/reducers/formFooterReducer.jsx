@@ -1,7 +1,8 @@
 ﻿import { Ks } from '../actions.jsx'
 
 const initialState = {
-	msg: 'Copyright © 2020 by Kr1sWang.'
+	msg: 'Copyright © 2020 by Kr1sWang.',
+	githubUrl: 'https://github.com/kris19960712/ac-guide'
 }
 
 const formFooterReducer = (state = initialState, action) => {

@@ -50,3 +50,11 @@ span>button {
 .footer {
     text-align: right;
 }
+
+a:hover {
+    color: #97A3AB;
+}
+
+a {
+    color: #97A3AB;
+}
