@@ -3852,7 +3852,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _axios = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n\nvar _axios2 = _interopRequireDefault(_axios);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nexports.default = {\n    // get ac-guide sheet data\n    GetList: function GetList(args) {\n        var url = 'https://script.google.com/macros/s/AKfycbz59fQboc4DbvelUIua8H8ANCvqRTqjG042hhdHdzHyzwY8kqo/exec';\n        return _axios2.default.get(url, { params: args });\n    }\n};\n\n//# sourceURL=webpack:///./src/scripts/react/apiClient.jsx?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _axios = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n\nvar _axios2 = _interopRequireDefault(_axios);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nexports.default = {\n    // get ac-guide sheet data\n    GetList: function GetList(args) {\n        var url = 'https://script.google.com/macros/s/AKfycbz59fQboc4DbvelUIua8H8ANCvqRTqjG042hhdHdzHyzwY8kqo/exec';\n        return _axios2.default.post(url, args);\n        //return axios.get(url, { params: args })\n    }\n};\n\n//# sourceURL=webpack:///./src/scripts/react/apiClient.jsx?");
 
 /***/ }),
 
