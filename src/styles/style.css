@@ -66,4 +66,9 @@ a {
 svg#hsbar {
     border: 1px solid #222D32;
     border-radius: 5px;
+    margin-top: -15px;
+}
+
+#hsbar_text>div {
+    text-align: center;
 }
