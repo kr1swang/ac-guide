@@ -50,10 +50,10 @@ class FormMain extends Component {
                         <tbody>
                             {/* 種類 */}
                             <tr>
-                                <th style={{ width: '100px' }}>
+                                <th style={{ width: '100px', borderTop: '0px' }}>
                                     <FontAwesomeIcon icon={faBook} />{' 種類 : '}
                                 </th>
-                                <td>
+                                <td style={{ borderTop: '0px' }}>
                                     <Button name='type' variant="outline-secondary" size="sm" active={this.props.type == 'fish' ? true : false} onClick={(e) => this.ajaxGetList('fish')}>
                                         <FontAwesomeIcon icon={faFish} />{' 魚類'}
                                     </Button>{' '}

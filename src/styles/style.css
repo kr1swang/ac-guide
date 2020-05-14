@@ -7,6 +7,10 @@ body {
     background-color: #263238;
 }
 
+hr {
+    border-top: 1px solid #DEE2E6;
+}
+
 .filter {
     margin: 0;
 }

@@ -5,22 +5,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faMoneyBillAlt, faMapMarkerAlt, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons'
 import TimeBar from './TimeBar.jsx'
 
-export default class BugDialog extends Component {
+export default class CustomDialog extends Component {
     constructor(props) {
         super(props)
 
-        this.handelCheckIsOnline = this.handelCheckIsOnline.bind(this)
+        this.handelConvertColorCode = this.handelConvertColorCode.bind(this)
     }
 
-    handelCheckIsOnline(hemisphere, item) {
-        let result = false
+    handelConvertColorCode(hemisphere, item) {
+        let result = '#E9EBEE'
         let dateNow = new Date()
 
-        let itemMonths = hemisphere == 'northern' ? (item.northernMonths || []) : (item.southernMonths || [])
-        let itemHours = (item.appearanceTime || [])
+        let itemMonths = hemisphere == 'northern' ? item.northernMonths : item.southernMonths
+        let itemHours = item.appearanceTime
 
         if (itemMonths.includes(dateNow.getMonth() + 1) && itemHours.includes(dateNow.getHours())) {
-            result = true
+            result = '#42B72A'
+        } else {
+            result = '#FF0000'
+        }
+
+        if (item.chineseName == '') {
+            result = '#E9EBEE'
         }
 
         return result
@@ -31,14 +37,13 @@ export default class BugDialog extends Component {
             <Modal show={this.props.isDialogShow} onHide={(e) => this.props.onHide()}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        {this.handelCheckIsOnline('northern', this.props.activeItem)
-                            ? <FontAwesomeIcon icon={faCircle} style={{ color: '#42B72A', verticalAlign: 'middle', fontSize: 'x-small' }} />
-                            : <FontAwesomeIcon icon={faCircle} style={{ color: '#E9EBEE', verticalAlign: 'middle', fontSize: 'x-small' }} />
-                        }{' 北半球 / '}
-                        {this.handelCheckIsOnline('southern', this.props.activeItem)
-                            ? <FontAwesomeIcon icon={faCircle} style={{ color: '#42B72A', verticalAlign: 'middle', fontSize: 'x-small' }} />
-                            : <FontAwesomeIcon icon={faCircle} style={{ color: '#E9EBEE', verticalAlign: 'middle', fontSize: 'x-small' }} />
-                        }{' 南半球'}
+                        <label style={{ color: this.handelConvertColorCode('northern', this.props.activeItem) }}>
+                            <FontAwesomeIcon icon={faCircle} style={{ verticalAlign: 'middle', fontSize: 'x-small' }} />{' 北半球'}
+                        </label>
+                        {' / '}
+                        <label style={{ color: this.handelConvertColorCode('southern', this.props.activeItem) }}>
+                            <FontAwesomeIcon icon={faCircle} style={{ verticalAlign: 'middle', fontSize: 'x-small' }} />{' 南半球'}
+                        </label>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -104,7 +109,8 @@ export default class BugDialog extends Component {
     }
 }
 
-BugDialog.defaultProps = {
+CustomDialog.defaultProps = {
+    type: 'bug',
     isDialogShow: false,
     onHide: () => { },
     activeItem: {
@@ -120,7 +126,8 @@ BugDialog.defaultProps = {
     }
 }
 
-BugDialog.propTypes = {
+CustomDialog.propTypes = {
+    type: PropTypes.string,
     isDialogShow: PropTypes.bool,
     onHide: PropTypes.func,
     activeItem: PropTypes.object
