@@ -46,7 +46,7 @@ export default class FishGuide extends Component {
 			hourOptions: [],
 
 			// picked options
-			isNoneFilter: true,
+			isNoneFilter: false,
 			isTimeFilter: false,
 			filterName: '',
 			locationPicked: [],
@@ -71,6 +71,8 @@ export default class FishGuide extends Component {
 			monthOptions: monthOptions,
 			hourOptions: hourOptions
 		})
+
+		this.handleFilterClick('isTimeFilter', true)
 	}
 
 	handleFilterClick(name, value) {
