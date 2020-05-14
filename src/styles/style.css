@@ -58,3 +58,7 @@ a:hover {
 a {
     color: #97A3AB;
 }
+
+.btn:hover {
+    background-color: inherit;
+}
