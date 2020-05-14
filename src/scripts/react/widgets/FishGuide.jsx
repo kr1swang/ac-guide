@@ -275,7 +275,7 @@ export default class FishGuide extends Component {
 														name='filterName'
 														value={this.state.filterName}
 														className={'form-control form-control-sm'}
-														placeholder={'請輸入中/英文蟲名...'}
+														placeholder={'請輸入中/英文魚名...'}
 														onChange={(e) => this.handleFilterClick(e.target.name, e.target.value)}
 													/>
 												</td>
