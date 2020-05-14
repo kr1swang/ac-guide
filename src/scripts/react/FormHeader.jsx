@@ -17,6 +17,7 @@ class FormHeader extends Component {
 
         // init google analytics
         ReactGA.initialize(this.props.trackingID)
+        ReactGA.pageview(window.location.pathname + window.location.search)
     }
 
     render() {
