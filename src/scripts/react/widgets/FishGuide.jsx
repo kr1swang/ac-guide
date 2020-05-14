@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Accordion, Table, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFilter, faFont, faMapMarkerAlt, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons'
+import { faFilter, faFont, faMapMarkerAlt, faFish, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons'
 import CustomDialog from './CustomDialog.jsx'
 import CustomCard from './CustomCard.jsx'
 
@@ -304,7 +304,7 @@ export default class FishGuide extends Component {
 											{/* 魚影 */}
 											<tr>
 												<th style={{ width: '100px' }}>
-													<FontAwesomeIcon icon={faMapMarkerAlt} />{' 魚影 : '}
+													<FontAwesomeIcon icon={faFish} />{' 魚影 : '}
 												</th>
 												<td>
 													{this.state.shadowSizeOptions.map((item, index) =>
