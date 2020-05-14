@@ -2,7 +2,8 @@
 
 const initialState = {
     isBlocking: false,
-    htmlTitle: 'ac-Guide 動森圖鑑'
+    htmlTitle: 'ac-Guide 動森圖鑑',
+    trackingID: 'UA-166623029-1'
 }
 
 const formHeaderReducer = (state = initialState, action) => {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import ReactGA from 'react-ga'
 import UIBlocker from 'react-ui-blocker'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMobileAlt } from '@fortawesome/free-solid-svg-icons'
@@ -11,7 +12,11 @@ class FormHeader extends Component {
     }
 
     componentDidMount() {
+        // set web title
         document.title = this.props.htmlTitle
+
+        // init google analytics
+        ReactGA.initialize(this.props.trackingID)
     }
 
     render() {
@@ -33,7 +38,8 @@ class FormHeader extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
     isBlocking: state.formHeader.isBlocking,
-    htmlTitle: state.formHeader.htmlTitle
+    htmlTitle: state.formHeader.htmlTitle,
+    trackingID: state.formHeader.trackingID
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
