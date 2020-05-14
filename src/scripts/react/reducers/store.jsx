@@ -4,9 +4,9 @@ import formMain from './formMainReducer.jsx'
 import formFooter from './formFooterReducer.jsx'
 
 const rootReducer = combineReducers({
-    formHeader,
-    formMain,
-    formFooter
+	formHeader,
+	formMain,
+	formFooter
 })
 
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
