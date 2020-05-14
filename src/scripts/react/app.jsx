@@ -8,26 +8,26 @@ import FormMain from './FormMain.jsx'
 import FormFooter from './FormFooter.jsx'
 
 class App extends Component {
-    constructor(props) {
-        super(props)
-    }
+	constructor(props) {
+		super(props)
+	}
 
-    render() {
-        return (
-            <Provider store={store}>
-                <Container>
-                    <FormHeader />
-                    <hr />
-                    <FormMain />
-                    <hr />
-                    <FormFooter />
-                </Container>
-            </Provider>
-        )
-    }
+	render() {
+		return (
+			<Provider store={store}>
+				<Container>
+					<FormHeader />
+					<hr />
+					<FormMain />
+					<hr />
+					<FormFooter />
+				</Container>
+			</Provider>
+		)
+	}
 }
 
 ReactDOM.render(
-    <App />,
-    document.getElementById('app')
+	<App />,
+	document.getElementById('app')
 )

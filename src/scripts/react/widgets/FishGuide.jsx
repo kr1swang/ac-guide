@@ -255,7 +255,7 @@ export default class FishGuide extends Component {
 													size='sm'
 													style={{ float: 'right' }}
 													onClick={() => this.setState({ isCollapseShow: !this.state.isCollapseShow })}
-												><FontAwesomeIcon icon={faFilter} />{' 更多條件'}</Accordion.Toggle>
+												><FontAwesomeIcon icon={faFilter} /></Accordion.Toggle>
 											</td>
 										</tr>
 									</tbody>
