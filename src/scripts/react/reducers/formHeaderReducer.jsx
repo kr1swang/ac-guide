@@ -12,18 +12,18 @@ const formHeaderReducer = (state = initialState, action) => {
 	if (!match) return state
 
 	switch (action.type) {
-	case Ks.SET_BLOCKING: {
-		return Object.assign({}, state, { isBlocking: action.flag })
-	}
-	case Ks.ASSIGN_VALUE: {
-		return Object.assign({}, state, { [action.name]: action.value })
-	}
-	case Ks.ASSIGN_FORM_DATA_HEADER: {
-		return Object.assign({}, state, action.appForm)
-	}
-	default: {
-		return state
-	}
+		case Ks.SET_BLOCKING: {
+			return Object.assign({}, state, { isBlocking: action.flag })
+		}
+		case Ks.ASSIGN_VALUE: {
+			return Object.assign({}, state, { [action.name]: action.value })
+		}
+		case Ks.ASSIGN_FORM_DATA_HEADER: {
+			return Object.assign({}, state, action.appForm)
+		}
+		default: {
+			return state
+		}
 	}
 }
 

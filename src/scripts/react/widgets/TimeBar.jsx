@@ -15,31 +15,31 @@ export default class TimeBar extends Component {
 		const maxHour = 24
 
 		switch (type) {
-		case 'month': {
-			for (let i = 1; i < maxMonth + 1; i++) {
-				let obj = {
-					value: 100,  // size, all the same
-					description: i % 3 == 0 ? ('0' + i).slice(-2) : ' ',
-					color: data.indexOf(i) != -1 ? '#007bff' : '#e9ecef'  // exist ? blue : gary
+			case 'month': {
+				for (let i = 1; i < maxMonth + 1; i++) {
+					let obj = {
+						value: 100,  // size, all the same
+						description: i % 3 == 0 ? ('0' + i).slice(-2) : ' ',
+						color: data.indexOf(i) != -1 ? '#007bff' : '#e9ecef'  // exist ? blue : gary
+					}
+					result.push(obj)
 				}
-				result.push(obj)
+				break
 			}
-			break
-		}
-		case 'hour': {
-			for (let i = 1; i < maxHour + 1; i++) {
-				let obj = {
-					value: 100,  // size, all the same
-					description: i % 6 == 0 ? ('0' + i).slice(-2) : ' ',
-					color: data.indexOf(i) != -1 ? '#007bff' : '#e9ecef' // exist ? blue : gary
+			case 'hour': {
+				for (let i = 1; i < maxHour + 1; i++) {
+					let obj = {
+						value: 100,  // size, all the same
+						description: i % 6 == 0 ? ('0' + i).slice(-2) : ' ',
+						color: data.indexOf(i) != -1 ? '#007bff' : '#e9ecef' // exist ? blue : gary
+					}
+					result.push(obj)
 				}
-				result.push(obj)
+				break
 			}
-			break
-		}
-		default: {
-			break
-		}
+			default: {
+				break
+			}
 		}
 
 		return result
