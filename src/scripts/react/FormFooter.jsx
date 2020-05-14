@@ -11,12 +11,13 @@ class FormFooter extends Component {
 	render() {
 		return (
 			<div className={'footer'}>
-				<a
+				<p>{this.props.msg}</p>
+				{/* <a
 					href={this.props.githubUrl}
 					className={'stretched-link'}
 					target={'_blank'}
 					rel={'noreferrer'}
-				>{this.props.msg}</a>
+				>{this.props.msg}</a> */}
 			</div>
 		)
 	}
