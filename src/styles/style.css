@@ -62,3 +62,8 @@ a {
 .btn:hover {
     background-color: inherit;
 }
+
+svg#hsbar {
+    border: 1px solid #222D32;
+    border-radius: 5px;
+}

@@ -18,7 +18,7 @@ export default class TimeBar extends Component {
 		case 'month': {
 			for (let i = 1; i < maxMonth + 1; i++) {
 				let obj = {
-					value: 10,  // size, all the same
+					value: 100,  // size, all the same
 					description: i % 3 == 0 ? ('0' + i).slice(-2) : ' ',
 					color: data.indexOf(i) != -1 ? '#007bff' : '#e9ecef'  // exist ? blue : gary
 				}
@@ -29,7 +29,7 @@ export default class TimeBar extends Component {
 		case 'hour': {
 			for (let i = 1; i < maxHour + 1; i++) {
 				let obj = {
-					value: 10,  // size, all the same
+					value: 100,  // size, all the same
 					description: i % 6 == 0 ? ('0' + i).slice(-2) : ' ',
 					color: data.indexOf(i) != -1 ? '#007bff' : '#e9ecef' // exist ? blue : gary
 				}
@@ -50,10 +50,10 @@ export default class TimeBar extends Component {
 			<div>
 				<HSBar
 					data={this.handleConverter(this.props.type, this.props.data)}
-					height={10}
+					height={12}
 					showTextUp={true}
 					fontColor='#282c34'
-					outlineWidth={0.1}
+					outlineWidth={0.5}
 				/>
 			</div>
 		)
