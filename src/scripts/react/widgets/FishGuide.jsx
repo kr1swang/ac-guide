@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Accordion, Table, Button } from 'react-bootstrap'
+import { Snackbar } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFilter, faFont, faMapMarkerAlt, faFish, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faFilter, faFont, faMapMarkerAlt, faFish, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons'
 import CustomDialog from './CustomDialog.jsx'
 import CustomCard from './CustomCard.jsx'
 
@@ -11,7 +12,9 @@ export default class FishGuide extends Component {
 		super(props)
 
 		this.state = {
-			// control dialog show
+			// control flag
+			isSnackbarShow: false,
+			snackbarMsg: '',
 			isCollapseShow: false,
 			isDialogShow: false,
 			activeItem: {
@@ -56,6 +59,7 @@ export default class FishGuide extends Component {
 		}
 
 		this.handleFilterClick = this.handleFilterClick.bind(this)
+		this.handleWatchingTimeFilterUpdate = this.handleWatchingTimeFilterUpdate.bind(this)
 		this.handleConvertFilter = this.handleConvertFilter.bind(this)
 	}
 
@@ -72,6 +76,10 @@ export default class FishGuide extends Component {
 			hourOptions: hourOptions
 		})
 
+		// watching time filter on the hour update
+		setInterval(() => this.handleWatchingTimeFilterUpdate(), 1000)
+
+		// default option
 		this.handleFilterClick('isTimeFilter', true)
 	}
 
@@ -95,9 +103,6 @@ export default class FishGuide extends Component {
 				this.setState({
 					isNoneFilter: false,
 					isTimeFilter: true,
-					filterName: this.state.filterName,
-					locationPicked: this.state.locationPicked,
-					shadowSizePicked: this.state.shadowSizePicked,
 					monthPicked: [dateNow.getMonth() + 1],
 					hourPicked: [dateNow.getHours()]
 				})
@@ -174,6 +179,24 @@ export default class FishGuide extends Component {
 		}
 	}
 
+	handleWatchingTimeFilterUpdate() {
+		let dateNow = new Date()
+
+		if (this.state.isTimeFilter && dateNow.getMinutes() == 0 && dateNow.getSeconds() == 0) {
+			let msg = '目前時間為 ' + dateNow.getHours() + ' 點整, 自動更新\'當前出沒\'條件...'
+
+			this.setState({
+				isSnackbarShow: true,
+				snackbarMsg: msg,
+
+				isNoneFilter: false,
+				isTimeFilter: true,
+				monthPicked: [dateNow.getMonth() + 1],
+				hourPicked: [dateNow.getHours()]
+			})
+		}
+	}
+
 	handleConvertFilter(oriList) {
 		let result = oriList
 
@@ -215,7 +238,24 @@ export default class FishGuide extends Component {
 		let targetList = this.handleConvertFilter(this.props.dataList)
 
 		return (
-			<div>
+			<React.Fragment>
+				<Snackbar
+					open={this.state.isSnackbarShow}
+					onClose={() => this.setState({ isSnackbarShow: false })}
+					autoHideDuration={1000 * 10}
+					message={this.state.snackbarMsg}
+					action={
+						<React.Fragment>
+							<Button
+								variant='outline-secondary'
+								size='sm'
+								style={{ float: 'right' }}
+								onClick={() => this.setState({ isSnackbarShow: false })}
+							><FontAwesomeIcon icon={faTimes} /></Button>
+						</React.Fragment>
+					}
+				/>
+
 				<CustomDialog
 					type={'fish'}
 					isDialogShow={this.state.isDialogShow}
@@ -223,165 +263,161 @@ export default class FishGuide extends Component {
 					activeItem={this.state.activeItem}
 				/>
 
-				{this.props.dataList.length == 0 ? '' :
-					<div>
-						<span className={'filterGroup'}>
-							<Accordion>
-								<Table className={'filter'}>
-									<tbody>
-										{/* 快速 */}
-										<tr>
-											<th style={{ width: '100px' }}>
-											</th>
-											<td>
-												<Button
-													name='isNoneFilter'
-													variant='outline-secondary'
-													size='sm'
-													active={this.state.isNoneFilter}
-													onClick={(e) => this.handleFilterClick(e.target.name, true)}
-												>{'全部清單'}</Button>{' '}
-												<Button
-													name='isTimeFilter'
-													variant='outline-secondary'
-													size='sm'
-													active={this.state.isTimeFilter}
-													onClick={(e) => this.handleFilterClick(e.target.name, true)}
-												>{'當前出沒'}</Button>{' '}
+				<span className={'filterGroup'}>
+					<Accordion>
+						<Table className={'filter'}>
+							<tbody>
+								{/* 快速 */}
+								<tr>
+									<th style={{ width: '100px' }}>
+									</th>
+									<td>
+										<Button
+											name='isNoneFilter'
+											variant='outline-secondary'
+											size='sm'
+											active={this.state.isNoneFilter}
+											onClick={(e) => this.handleFilterClick(e.target.name, true)}
+										>{'全部清單'}</Button>{' '}
+										<Button
+											name='isTimeFilter'
+											variant='outline-secondary'
+											size='sm'
+											active={this.state.isTimeFilter}
+											onClick={(e) => this.handleFilterClick(e.target.name, true)}
+										>{'當前出沒'}</Button>{' '}
 
-												{/* toggle more filter */}
-												<Accordion.Toggle
-													eventKey="0"
-													as={Button}
-													variant='outline-secondary'
-													size='sm'
-													style={{ float: 'right' }}
-													onClick={() => this.setState({ isCollapseShow: !this.state.isCollapseShow })}
-												><FontAwesomeIcon icon={faFilter} /></Accordion.Toggle>
-											</td>
-										</tr>
-									</tbody>
-								</Table>
-								<Accordion.Collapse eventKey="0">
-									<Table className={'filter'}>
-										<tbody>
-											{/* 名稱 */}
-											<tr>
-												<th style={{ width: '100px' }}>
-													<FontAwesomeIcon icon={faFont} />{' 名稱 : '}
-												</th>
-												<td>
-													<input
-														name='filterName'
-														value={this.state.filterName}
-														className={'form-control form-control-sm'}
-														placeholder={'請輸入中/英文魚名...'}
-														onChange={(e) => this.handleFilterClick(e.target.name, e.target.value)}
-													/>
-												</td>
-											</tr>
+										{/* toggle more filter */}
+										<Accordion.Toggle
+											eventKey="0"
+											as={Button}
+											variant='outline-secondary'
+											size='sm'
+											style={{ float: 'right' }}
+											onClick={() => this.setState({ isCollapseShow: !this.state.isCollapseShow })}
+										><FontAwesomeIcon icon={faFilter} /></Accordion.Toggle>
+									</td>
+								</tr>
+							</tbody>
+						</Table>
+						<Accordion.Collapse eventKey="0">
+							<Table className={'filter'}>
+								<tbody>
+									{/* 名稱 */}
+									<tr>
+										<th style={{ width: '100px' }}>
+											<FontAwesomeIcon icon={faFont} />{' 名稱 : '}
+										</th>
+										<td>
+											<input
+												name='filterName'
+												value={this.state.filterName}
+												className={'form-control form-control-sm'}
+												placeholder={'請輸入中/英文魚名...'}
+												onChange={(e) => this.handleFilterClick(e.target.name, e.target.value)}
+											/>
+										</td>
+									</tr>
 
-											{/* 地點 */}
-											<tr>
-												<th style={{ width: '100px' }}>
-													<FontAwesomeIcon icon={faMapMarkerAlt} />{' 地點 : '}
-												</th>
-												<td>
-													{this.state.locationOptions.map((item, index) =>
-														<span key={index}>
-															<Button
-																name='locationPicked'
-																variant='outline-secondary'
-																size='sm'
-																active={this.state.locationPicked.includes(item)}
-																onClick={(e) => this.handleFilterClick(e.target.name, e.target.textContent)}
-															>{item}</Button>{' '}
-														</span>
-													)}
-												</td>
-											</tr>
+									{/* 地點 */}
+									<tr>
+										<th style={{ width: '100px' }}>
+											<FontAwesomeIcon icon={faMapMarkerAlt} />{' 地點 : '}
+										</th>
+										<td>
+											{this.state.locationOptions.map((item, index) =>
+												<span key={index}>
+													<Button
+														name='locationPicked'
+														variant='outline-secondary'
+														size='sm'
+														active={this.state.locationPicked.includes(item)}
+														onClick={(e) => this.handleFilterClick(e.target.name, e.target.textContent)}
+													>{item}</Button>{' '}
+												</span>
+											)}
+										</td>
+									</tr>
 
-											{/* 魚影 */}
-											<tr>
-												<th style={{ width: '100px' }}>
-													<FontAwesomeIcon icon={faFish} />{' 魚影 : '}
-												</th>
-												<td>
-													{this.state.shadowSizeOptions.map((item, index) =>
-														<span key={index}>
-															<Button
-																name='shadowSizePicked'
-																variant='outline-secondary'
-																size='sm'
-																active={this.state.shadowSizePicked.includes(item)}
-																onClick={(e) => this.handleFilterClick(e.target.name, e.target.textContent)}
-															>{item}</Button>{' '}
-														</span>
-													)}
-												</td>
-											</tr>
+									{/* 魚影 */}
+									<tr>
+										<th style={{ width: '100px' }}>
+											<FontAwesomeIcon icon={faFish} />{' 魚影 : '}
+										</th>
+										<td>
+											{this.state.shadowSizeOptions.map((item, index) =>
+												<span key={index}>
+													<Button
+														name='shadowSizePicked'
+														variant='outline-secondary'
+														size='sm'
+														active={this.state.shadowSizePicked.includes(item)}
+														onClick={(e) => this.handleFilterClick(e.target.name, e.target.textContent)}
+													>{item}</Button>{' '}
+												</span>
+											)}
+										</td>
+									</tr>
 
-											{/* 月份 */}
-											<tr>
-												<th style={{ width: '100px' }}>
-													<FontAwesomeIcon icon={faCalendarAlt} />{' 月份 : '}
-												</th>
-												<td>
-													{this.state.monthOptions.map((item, index) =>
-														<span key={index}>
-															<Button
-																name='monthOptions'
-																variant='outline-secondary'
-																size='sm'
-																active={this.state.monthPicked.includes(item)}
-																onClick={(e) => this.handleFilterClick(e.target.name, parseInt(e.target.textContent, 10))}
-															>{item}</Button>{' '}
-														</span>
-													)}
-												</td>
-											</tr>
+									{/* 月份 */}
+									<tr>
+										<th style={{ width: '100px' }}>
+											<FontAwesomeIcon icon={faCalendarAlt} />{' 月份 : '}
+										</th>
+										<td>
+											{this.state.monthOptions.map((item, index) =>
+												<span key={index}>
+													<Button
+														name='monthOptions'
+														variant='outline-secondary'
+														size='sm'
+														active={this.state.monthPicked.includes(item)}
+														onClick={(e) => this.handleFilterClick(e.target.name, parseInt(e.target.textContent, 10))}
+													>{item}</Button>{' '}
+												</span>
+											)}
+										</td>
+									</tr>
 
-											{/* 時間 */}
-											<tr>
-												<th style={{ width: '100px' }}>
-													<FontAwesomeIcon icon={faClock} />{' 時間 : '}
-												</th>
-												<td>
-													{this.state.hourOptions.map((item, index) =>
-														<span key={index}>
-															<Button
-																name='hourOptions'
-																variant='outline-secondary'
-																size='sm'
-																active={this.state.hourPicked.includes(item)}
-																onClick={(e) => this.handleFilterClick(e.target.name, parseInt(e.target.textContent, 10))}
-															>{item}</Button>{' '}
-														</span>
-													)}
-												</td>
-											</tr>
-										</tbody>
-									</Table>
-								</Accordion.Collapse>
-							</Accordion>
-						</span>
+									{/* 時間 */}
+									<tr>
+										<th style={{ width: '100px' }}>
+											<FontAwesomeIcon icon={faClock} />{' 時間 : '}
+										</th>
+										<td>
+											{this.state.hourOptions.map((item, index) =>
+												<span key={index}>
+													<Button
+														name='hourOptions'
+														variant='outline-secondary'
+														size='sm'
+														active={this.state.hourPicked.includes(item)}
+														onClick={(e) => this.handleFilterClick(e.target.name, parseInt(e.target.textContent, 10))}
+													>{item}</Button>{' '}
+												</span>
+											)}
+										</td>
+									</tr>
+								</tbody>
+							</Table>
+						</Accordion.Collapse>
+					</Accordion>
+				</span>
 
-						<hr />
-						{'共 ' + targetList.length + ' 筆資料符合, 點擊可查看詳細資料...'}
-						<hr />
-						<span className={'dataList'}>
-							{targetList.map((item, index) =>
-								<CustomCard
-									key={index}
-									type={'fish'}
-									onClick={() => this.setState({ isDialogShow: true, activeItem: item })}
-									object={item}
-								/>
-							)}
-						</span>
-					</div>
-				}
-			</div>
+				<span className={'dataList'}>
+					<hr />
+					{'共 ' + targetList.length + ' 筆資料符合, 點擊可查看詳細資料...'}
+					<hr />
+					{targetList.map((item, index) =>
+						<CustomCard
+							key={index}
+							type={'fish'}
+							onClick={() => this.setState({ isDialogShow: true, activeItem: item })}
+							object={item}
+						/>
+					)}
+				</span>
+			</React.Fragment>
 		)
 	}
 }

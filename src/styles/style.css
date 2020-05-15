@@ -72,3 +72,11 @@ svg#hsbar {
 #hsbar_text>div {
     text-align: center;
 }
+
+.MuiSnackbarContent-action {
+    color: #97A3AB;
+}
+
+.MuiSnackbarContent-action>button>svg {
+    margin-bottom: -2px;
+}
