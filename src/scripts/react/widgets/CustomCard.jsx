@@ -18,7 +18,7 @@ export default class CustomCard extends Component {
 		let itemMonths = hemisphere == 'northern' ? item.northernMonths : item.southernMonths
 		let itemHours = item.appearanceTime
 
-		if (itemMonths.includes(dateNow.getMonth() + 1) && itemHours.includes(dateNow.getHours())) {
+		if (itemMonths.includes(dateNow.getMonth() + 1) && itemHours.includes(dateNow.getHours() == 0 ? 24 : dateNow.getHours())) {
 			result = '#42B72A'
 		} else {
 			result = '#FF0000'

@@ -19,7 +19,7 @@ export default class CustomDialog extends Component {
 		let itemMonths = hemisphere == 'northern' ? item.northernMonths : item.southernMonths
 		let itemHours = item.appearanceTime
 
-		if (itemMonths.includes(dateNow.getMonth() + 1) && itemHours.includes(dateNow.getHours())) {
+		if (itemMonths.includes(dateNow.getMonth() + 1) && itemHours.includes(dateNow.getHours() == 0 ? 24 : dateNow.getHours())) {
 			result = '#42B72A'
 		} else {
 			result = '#FF0000'
@@ -86,7 +86,7 @@ export default class CustomDialog extends Component {
 										<h5>{this.props.activeItem.shadowSize}</h5>
 									</td>
 								</tr>
-								: ''}
+								: <React.Fragment />}
 							<tr>
 								<th style={{ textAlign: 'center' }}>
 									<label><FontAwesomeIcon icon={faCalendarAlt} />{' 北半球月份'}</label>

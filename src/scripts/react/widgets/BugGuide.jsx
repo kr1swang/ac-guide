@@ -87,7 +87,7 @@ export default class BugGuide extends Component {
 					isNoneFilter: false,
 					isTimeFilter: true,
 					monthPicked: [dateNow.getMonth() + 1],
-					hourPicked: [dateNow.getHours()]
+					hourPicked: [dateNow.getHours() == 0 ? 24 : dateNow.getHours()]
 				})
 				break
 			}
@@ -135,7 +135,7 @@ export default class BugGuide extends Component {
 				index == -1 ? hourPicked.push(value) : hourPicked.splice(index, 1)
 
 				let dateNow = new Date()
-				let isHourNowExitst = hourPicked.includes(dateNow.getHours() + 1)
+				let isHourNowExitst = hourPicked.includes(dateNow.getHours() == 0 ? 24 : dateNow.getHours())
 
 				this.setState({
 					isNoneFilter: false,
@@ -154,7 +154,7 @@ export default class BugGuide extends Component {
 		let dateNow = new Date()
 
 		if (this.state.isTimeFilter && dateNow.getMinutes() == 0 && dateNow.getSeconds() == 0) {
-			let msg = '目前時間為 ' + dateNow.getHours() + ' 點整, 自動更新\'當前出沒\'條件...'
+			let msg = '目前時間為 ' + (dateNow.getHours() == 0 ? 24 : dateNow.getHours()) + ' 點整, 自動更新\'當前出沒\'條件...'
 
 			this.setState({
 				isSnackbarShow: true,
@@ -163,7 +163,7 @@ export default class BugGuide extends Component {
 				isNoneFilter: false,
 				isTimeFilter: true,
 				monthPicked: [dateNow.getMonth() + 1],
-				hourPicked: [dateNow.getHours()]
+				hourPicked: [dateNow.getHours() == 0 ? 24 : dateNow.getHours()]
 			})
 		}
 	}
