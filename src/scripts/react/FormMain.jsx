@@ -42,31 +42,24 @@ class FormMain extends Component {
 	}
 
 	render() {
+		let mainFilter = <MainFilter
+			type={this.props.type}
+			hemisphere={this.props.hemisphere}
+			onChaneType={(type) => this.ajaxGetList(type)}
+			onChaneHemisphere={(name, value) => this.props.handleAssignValue(name, value)}
+		/>
+
 		return (
 			<div className={'main'}>
 				{
 					{
 						'fish': <FishGuide
-							mainFilter={
-								<MainFilter
-									type={this.props.type}
-									hemisphere={this.props.hemisphere}
-									onChaneType={(type) => this.ajaxGetList(type)}
-									onChaneHemisphere={(name, value) => this.props.handleAssignValue(name, value)}
-								/>
-							}
+							mainFilter={mainFilter}
 							dataList={this.props.dataList}
 							hemisphere={this.props.hemisphere}
 						/>,
 						'bug': <BugGuide
-							mainFilter={
-								<MainFilter
-									type={this.props.type}
-									hemisphere={this.props.hemisphere}
-									onChaneType={(type) => this.ajaxGetList(type)}
-									onChaneHemisphere={(name, value) => this.props.handleAssignValue(name, value)}
-								/>
-							}
+							mainFilter={mainFilter}
 							dataList={this.props.dataList}
 							hemisphere={this.props.hemisphere}
 						/>

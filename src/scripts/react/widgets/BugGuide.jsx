@@ -373,11 +373,13 @@ export default class BugGuide extends Component {
 }
 
 BugGuide.defaultProps = {
+	mainFilter: <br />,
 	dataList: [],
 	hemisphere: 'northern'
 }
 
 BugGuide.propTypes = {
+	mainFilter: PropTypes.element,
 	dataList: PropTypes.array,
 	hemisphere: PropTypes.string
 }

@@ -415,11 +415,13 @@ export default class FishGuide extends Component {
 }
 
 FishGuide.defaultProps = {
+	mainFilter: <br />,
 	dataList: [],
 	hemisphere: 'northern'
 }
 
 FishGuide.propTypes = {
+	mainFilter: PropTypes.element,
 	dataList: PropTypes.array,
 	hemisphere: PropTypes.string
 }
