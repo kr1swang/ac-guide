@@ -3,7 +3,10 @@
 const initialState = {
 	type: 'fish',
 	hemisphere: 'northern',
-	dataList: []
+	dataLists: {
+		fish: [],
+		bug: []
+	}
 }
 
 const formMainReducer = (state = initialState, action) => {

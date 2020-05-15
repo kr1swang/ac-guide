@@ -19,26 +19,33 @@ class FormMain extends Component {
 	}
 
 	ajaxGetList(type) {
-		this.props.setBlocking(true)
+		if (this.props.dataLists[type].length == 0) {
+			// if dataList is empty, do call api
+			this.props.setBlocking(true)
 
-		const args = {
-			type: type
-		}
+			const args = { type: type }
 
-		apiClient.GetList(args).then((resp) => {
-			const result = resp.data
+			apiClient.GetList(args).then((resp) => {
+				const result = resp.data
+				let dataLists = JSON.parse(JSON.stringify(this.props.dataLists))
+				dataLists[type] = result
 
-			this.props.handleAssignFormMain({
-				type: type,
-				hemisphere: this.props.hemisphere,
-				dataList: result
+				this.props.handleAssignFormMain({
+					type: type,
+					dataLists: dataLists
+				})
+			}).catch((err) => {
+				console.log('Fail! ' + err)
+				alert('載入失敗😥\n請嘗試重新整理!!')
+			}).finally(() => {
+				setTimeout(() => this.props.setBlocking(false), 100)
 			})
-
-			setTimeout(() => this.props.setBlocking(false), 100)
-		}).catch((err) => {
-			console.log('Fail! ' + err)
-			alert('Fail!')
-		})
+		} else {
+			// already get dataList, do change flag
+			this.props.handleAssignFormMain({
+				type: type
+			})
+		}
 	}
 
 	render() {
@@ -55,12 +62,12 @@ class FormMain extends Component {
 					{
 						'fish': <FishGuide
 							mainFilter={mainFilter}
-							dataList={this.props.dataList}
+							dataList={this.props.dataLists[this.props.type]}
 							hemisphere={this.props.hemisphere}
 						/>,
 						'bug': <BugGuide
 							mainFilter={mainFilter}
-							dataList={this.props.dataList}
+							dataList={this.props.dataLists[this.props.type]}
 							hemisphere={this.props.hemisphere}
 						/>
 					}[this.props.type] || <div className={'accordion'}>{mainFilter}</div>
@@ -74,7 +81,7 @@ const mapStateToProps = (state, ownProps) => ({
 	ownProps: ownProps,		// for eslint
 	type: state.formMain.type,
 	hemisphere: state.formMain.hemisphere,
-	dataList: state.formMain.dataList,
+	dataLists: state.formMain.dataLists,
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -98,7 +105,7 @@ export default connect(
 FormMain.propTypes = {
 	type: PropTypes.string,
 	hemisphere: PropTypes.string,
-	dataList: PropTypes.array,
+	dataLists: PropTypes.object,
 
 	setBlocking: PropTypes.func,
 	handleAssignFormMain: PropTypes.func,
