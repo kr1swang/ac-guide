@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Table, Button } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBook, faFish, faBug, faGlobeAmericas, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import actions from './actions.jsx'
 import apiClient from './apiClient.jsx'
+import MainFilter from './widgets/MainFilter.jsx'
 import FishGuide from './widgets/FishGuide.jsx'
 import BugGuide from './widgets/BugGuide.jsx'
 
@@ -46,45 +44,34 @@ class FormMain extends Component {
 	render() {
 		return (
 			<div className={'main'}>
-				<span className={'filterGroup'}>
-					<Table className={'filter'}>
-						<tbody>
-							{/* 種類 */}
-							<tr>
-								<th style={{ width: '100px', borderTop: '0px' }}>
-									<FontAwesomeIcon icon={faBook} />{' 種類 : '}
-								</th>
-								<td style={{ borderTop: '0px' }}>
-									<Button name='type' variant="outline-secondary" size="sm" active={this.props.type == 'fish' ? true : false} onClick={() => this.ajaxGetList('fish')}>
-										<FontAwesomeIcon icon={faFish} />{' 魚類'}
-									</Button>{' '}
-									<Button name='type' variant="outline-secondary" size="sm" active={this.props.type == 'bug' ? true : false} onClick={() => this.ajaxGetList('bug')}>
-										<FontAwesomeIcon icon={faBug} />{' 蟲類'}
-									</Button>{' '}
-								</td>
-							</tr>
-
-							{/* 地區 */}
-							<tr>
-								<th style={{ width: '100px' }}>
-									<FontAwesomeIcon icon={faGlobeAmericas} />{' 地區 : '}
-								</th>
-								<td>
-									<Button name='hemisphere' variant="outline-secondary" size="sm" active={this.props.hemisphere == 'northern' ? true : false} onClick={(e) => this.props.handleAssignValue(e.target.name, 'northern')}>
-										<FontAwesomeIcon icon={faChevronUp} />{' 北半球'}
-									</Button>{' '}
-									<Button name='hemisphere' variant="outline-secondary" size="sm" active={this.props.hemisphere == 'southern' ? true : false} onClick={(e) => this.props.handleAssignValue(e.target.name, 'southern')}>
-										<FontAwesomeIcon icon={faChevronDown} />{' 南半球'}
-									</Button>{' '}
-								</td>
-							</tr>
-						</tbody>
-					</Table>
-				</span>
-				<span>
-					{this.props.type == 'fish' ? <FishGuide dataList={this.props.dataList} hemisphere={this.props.hemisphere} /> : ''}
-					{this.props.type == 'bug' ? <BugGuide dataList={this.props.dataList} hemisphere={this.props.hemisphere} /> : ''}
-				</span>
+				{
+					{
+						'fish': <FishGuide
+							mainFilter={
+								<MainFilter
+									type={this.props.type}
+									hemisphere={this.props.hemisphere}
+									onChaneType={(type) => this.ajaxGetList(type)}
+									onChaneHemisphere={(name, value) => this.props.handleAssignValue(name, value)}
+								/>
+							}
+							dataList={this.props.dataList}
+							hemisphere={this.props.hemisphere}
+						/>,
+						'bug': <BugGuide
+							mainFilter={
+								<MainFilter
+									type={this.props.type}
+									hemisphere={this.props.hemisphere}
+									onChaneType={(type) => this.ajaxGetList(type)}
+									onChaneHemisphere={(name, value) => this.props.handleAssignValue(name, value)}
+								/>
+							}
+							dataList={this.props.dataList}
+							hemisphere={this.props.hemisphere}
+						/>
+					}[this.props.type]
+				}
 			</div>
 		)
 	}

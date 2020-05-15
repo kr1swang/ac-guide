@@ -41,9 +41,9 @@ export default class BugGuide extends Component {
 			},
 
 			// options
-			locationOptions: [],
-			monthOptions: [],
-			hourOptions: [],
+			locationOptions: ['草地', '花朵', '樹幹', '樹樁', '石頭', '水邊', '水面', '沙灘', '腐爛大頭菜', '居民身上', '雪球', '燈光', '隨機出現'],
+			monthOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+			hourOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
 
 			// picked options
 			isNoneFilter: false,
@@ -60,16 +60,6 @@ export default class BugGuide extends Component {
 	}
 
 	componentDidMount() {
-		const locationOptions = ['草地', '花朵', '樹幹', '樹樁', '石頭', '水邊', '水面', '沙灘', '腐爛大頭菜', '居民身上', '雪球', '燈光', '隨機出現']
-		const monthOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-		const hourOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-
-		this.setState({
-			locationOptions: locationOptions,
-			monthOptions: monthOptions,
-			hourOptions: hourOptions
-		})
-
 		// watching time filter on the hour update
 		setInterval(() => this.handleWatchingTimeFilterUpdate(), 1000)
 
@@ -241,6 +231,10 @@ export default class BugGuide extends Component {
 
 				<span className={'filterGroup'}>
 					<Accordion>
+						{/* mainFilter */}
+						{this.props.mainFilter}
+
+						{/* fishFilter */}
 						<Table className={'filter'}>
 							<tbody>
 								{/* 快速 */}

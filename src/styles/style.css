@@ -39,7 +39,8 @@ span>button {
     margin-bottom: 5px;
 }
 
-.media {
+.media,
+.accordion {
     background-color: #222D32;
     border-radius: 8px;
     margin-bottom: 5px;

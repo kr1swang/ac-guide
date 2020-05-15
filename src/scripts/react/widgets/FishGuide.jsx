@@ -43,10 +43,10 @@ export default class FishGuide extends Component {
 			},
 
 			// options
-			locationOptions: [],
-			shadowSizeOptions: [],
-			monthOptions: [],
-			hourOptions: [],
+			locationOptions: ['河川', '池塘', '懸崖上', '出海口', '大海', '碼頭'],
+			shadowSizeOptions: ['特小', '稍小', '中', '稍大', '大', '特大', '細長', '背鰭'],
+			monthOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+			hourOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
 
 			// picked options
 			isNoneFilter: false,
@@ -64,18 +64,6 @@ export default class FishGuide extends Component {
 	}
 
 	componentDidMount() {
-		const locationOptions = ['河川', '池塘', '懸崖上', '出海口', '大海', '碼頭']
-		const shadowSizeOptions = ['特小', '稍小', '中', '稍大', '大', '特大', '細長', '背鰭']
-		const monthOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-		const hourOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-
-		this.setState({
-			locationOptions: locationOptions,
-			shadowSizeOptions: shadowSizeOptions,
-			monthOptions: monthOptions,
-			hourOptions: hourOptions
-		})
-
 		// watching time filter on the hour update
 		setInterval(() => this.handleWatchingTimeFilterUpdate(), 1000)
 
@@ -265,6 +253,10 @@ export default class FishGuide extends Component {
 
 				<span className={'filterGroup'}>
 					<Accordion>
+						{/* mainFilter */}
+						{this.props.mainFilter}
+
+						{/* fishFilter */}
 						<Table className={'filter'}>
 							<tbody>
 								{/* 快速 */}

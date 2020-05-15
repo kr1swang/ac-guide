@@ -1,11 +1,9 @@
 var doGet = (e) => {
     // declare variable
+    let acGuideSheetURL = 'https://docs.google.com/spreadsheets/d/1YzjMlPvnycCMN0CVDGu4xNlAUtx1M0K6wIMdwS0J0zA'
+    let result = []
     let params = e.parameter
     let type = params.type
-
-    let result = []
-
-    let acGuideSheetURL = 'https://docs.google.com/spreadsheets/d/1YzjMlPvnycCMN0CVDGu4xNlAUtx1M0K6wIMdwS0J0zA'
 
     switch (type) {
         case 'fish': {
@@ -39,7 +37,8 @@ var getFishGuide = (url) => {
 
     // rebuild data to result
     listAll.forEach(function (itm, idx) {
-        let obj = {
+        result.push({
+            index: idx,
             imageURL: itm[0],
             chineseName: itm[1],
             englishName: itm[2],
@@ -51,9 +50,7 @@ var getFishGuide = (url) => {
             southernMonths: JSON.parse(itm[6] || '[]').map(x => (x + 6) % 12 == 0 ? 12 : (x + 6) % 12).sort((a, b) => a - b),
             appearanceTime: JSON.parse(itm[7] || '[]'),
             remark: itm[8]
-        }
-
-        result.push(obj)
+        })
     })
 
     return result
@@ -73,7 +70,8 @@ var getBugGuide = (url) => {
 
     // rebuild data to result
     listAll.forEach(function (itm, idx) {
-        let obj = {
+        result.push({
+            index: idx,
             imageURL: itm[0],
             chineseName: itm[1],
             englishName: itm[2],
@@ -84,9 +82,7 @@ var getBugGuide = (url) => {
             southernMonths: JSON.parse(itm[5] || '[]').map(x => (x + 6) % 12 == 0 ? 12 : (x + 6) % 12).sort((a, b) => a - b),
             appearanceTime: JSON.parse(itm[6] || '[]'),
             remark: itm[7]
-        }
-
-        result.push(obj)
+        })
     })
 
     return result
