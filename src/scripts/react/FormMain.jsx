@@ -63,7 +63,7 @@ class FormMain extends Component {
 							dataList={this.props.dataList}
 							hemisphere={this.props.hemisphere}
 						/>
-					}[this.props.type]
+					}[this.props.type] || <div className={'accordion'}>{mainFilter}</div>
 				}
 			</div>
 		)
