@@ -364,6 +364,7 @@ export default class BugGuide extends Component {
 							type={'bug'}
 							onClick={() => this.setState({ isDialogShow: true, activeItem: item })}
 							object={item}
+							hemisphere={this.props.hemisphere}
 						/>
 					)}
 				</span>

@@ -406,6 +406,7 @@ export default class FishGuide extends Component {
 							type={'fish'}
 							onClick={() => this.setState({ isDialogShow: true, activeItem: item })}
 							object={item}
+							hemisphere={this.props.hemisphere}
 						/>
 					)}
 				</span>

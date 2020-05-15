@@ -1,15 +1,43 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Media, Badge, Image } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
 export default class CustomCard extends Component {
 	constructor(props) {
 		super(props)
+
+		this.handelConvertColorCode = this.handelConvertColorCode.bind(this)
+	}
+
+	handelConvertColorCode(hemisphere, item) {
+		let result = '#E9EBEE'
+		let dateNow = new Date()
+
+		let itemMonths = hemisphere == 'northern' ? item.northernMonths : item.southernMonths
+		let itemHours = item.appearanceTime
+
+		if (itemMonths.includes(dateNow.getMonth() + 1) && itemHours.includes(dateNow.getHours())) {
+			result = '#42B72A'
+		} else {
+			result = '#FF0000'
+		}
+
+		if (item.chineseName == '') {
+			result = '#E9EBEE'
+		}
+
+		return result
 	}
 
 	render() {
 		return (
 			<Media onClick={() => this.props.onClick()}>
+				<FontAwesomeIcon
+					icon={faCircle}
+					style={{ position: 'absolute', fontSize: 'x-small', float: 'left', color: this.handelConvertColorCode(this.props.hemisphere, this.props.object) }}
+				/>
 				<Image
 					style={{ width: '20%', maxWidth: '80px', margin: '5px 20px', backgroundColor: '#FFF8DC' }}
 					src={this.props.object.imageURL}
@@ -44,11 +72,13 @@ CustomCard.defaultProps = {
 		southernMonths: [],
 		appearanceTime: [],
 		remark: ''
-	}
+	},
+	hemisphere: 'northern'
 }
 
 CustomCard.propTypes = {
 	type: PropTypes.string,
 	onClick: PropTypes.func,
-	object: PropTypes.object
+	object: PropTypes.object,
+	hemisphere: PropTypes.string
 }
