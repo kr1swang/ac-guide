@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import Cookies from 'universal-cookie'
 import actions from './actions.jsx'
 import apiClient from './apiClient.jsx'
 import MainFilter from './widgets/MainFilter.jsx'
@@ -11,39 +12,73 @@ class FormMain extends Component {
 	constructor(props) {
 		super(props)
 
-		this.ajaxGetList = this.ajaxGetList.bind(this)
+		this.handleChangeType = this.handleChangeType.bind(this)
 	}
 
 	componentDidMount() {
-		this.ajaxGetList(this.props.type)
+		this.handleChangeType(this.props.type)
 	}
 
-	ajaxGetList(type) {
-		if (this.props.dataLists[type].length == 0) {
-			// if dataList is empty, do call api
+	handleChangeType(type) {
+		// step 0. compare cookie timestamp to clear localStorage
+		// step 1. try get value (reduxStore > localStorage > api)
+		// step 2. update typeFlag value (reduxStore)
+		// step 3. update dataList value (reduxStore, localStorage)
+		// step 4. update timestamp value (cookie)
+
+		let dataLists = JSON.parse(JSON.stringify(this.props.dataLists))
+		let storage = window.localStorage
+		let cookies = new Cookies(document.cookie)
+		let dateNow = new Date()
+
+		// compare timestamp to clear localStorage (diff more than 2 hour clear) 
+		if (cookies.get('timestamp') && (dateNow.getTime() - parseInt(cookies.get('timestamp')) > 1000 * 60 * 60 * 2)) {
+			storage.clear()
+		}
+
+		// try get value by reduxStore (objectArray)
+		if (dataLists[type].length > 0) {
+			// update reduxStore (typeFlag)
+			this.props.handleAssignFormMain({
+				type: type
+			})
+		}
+		// try get value by localStorage (jsonString)
+		else if (storage[type] && storage[type].length > 0) {
+			dataLists[type] = JSON.parse(storage[type])
+
+			// update reduxStore (typeFlag, dataList)
+			this.props.handleAssignFormMain({
+				type: type,
+				dataLists: dataLists
+			})
+		}
+		// try get value by api (objectArray)
+		else {
 			this.props.setBlocking(true)
 
 			const args = { type: type }
 
 			apiClient.GetList(args).then((resp) => {
 				const result = resp.data
-				let dataLists = JSON.parse(JSON.stringify(this.props.dataLists))
 				dataLists[type] = result
 
+				// update reduxStore (typeFlag, dataList)
 				this.props.handleAssignFormMain({
 					type: type,
 					dataLists: dataLists
 				})
+
+				// update localStorage (dataList)
+				storage.setItem(type, JSON.stringify(result))
+
+				// update cookie (timestamp)
+				cookies.set('timestamp', dateNow.getTime().toString())
 			}).catch((err) => {
 				console.log('Fail! ' + err)
 				alert('載入失敗😥\n請嘗試重新整理!!')
 			}).finally(() => {
 				setTimeout(() => this.props.setBlocking(false), 100)
-			})
-		} else {
-			// already get dataList, do change flag
-			this.props.handleAssignFormMain({
-				type: type
 			})
 		}
 	}
@@ -52,7 +87,7 @@ class FormMain extends Component {
 		let mainFilter = <MainFilter
 			type={this.props.type}
 			hemisphere={this.props.hemisphere}
-			onChaneType={(type) => this.ajaxGetList(type)}
+			onChaneType={(type) => this.handleChangeType(type)}
 			onChaneHemisphere={(name, value) => this.props.handleAssignValue(name, value)}
 		/>
 
