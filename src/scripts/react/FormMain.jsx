@@ -80,7 +80,7 @@ class FormMain extends Component {
 				storage.setItem(type, JSON.stringify(result))
 
 				// update cookie (timestamp)
-				cookies.set('timestamp', dateNow.getTime().toString(), { expires: new Date(dateNow.setDate(dateNow.getDate() + 7)), sameSite: 'none' })
+				cookies.set('timestamp', dateNow.getTime().toString(), { expires: new Date(dateNow.setDate(dateNow.getDate() + 7)), sameSite: 'lax' })
 
 				console.log('by api')
 			}).catch((err) => {
