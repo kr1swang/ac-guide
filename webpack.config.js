@@ -1,4 +1,4 @@
-﻿const path = require('path');
+﻿const path = require('path')
 
 module.exports = {
     context: __dirname,
@@ -8,7 +8,8 @@ module.exports = {
         filename: 'App.js',
     },
     module: {
-        rules: [{
+        rules: [
+            {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: {

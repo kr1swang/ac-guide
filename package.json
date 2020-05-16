@@ -6,7 +6,7 @@
     "scripts": {
         "build": "webpack --mode production",
         "watch": "webpack --watch --mode development",
-        "lint": "eslint --fix ./src/scripts/**/*.jsx"
+        "lint": "eslint --fix --ext .jsx ./src/scripts"
     },
     "author": "Kr1sWang",
     "license": "MIT",
