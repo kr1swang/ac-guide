@@ -31,9 +31,15 @@ class FormMain extends Component {
 		let cookies = new Cookies(document.cookie)
 		let dateNow = new Date()
 
+		console.log(cookies)
+		console.log(cookies.get('timestamp'))
+
 		// compare timestamp to clear localStorage (diff more than 2 hour clear) 
-		if (cookies.get('timestamp') && (dateNow.getTime() - parseInt(cookies.get('timestamp')) > 1000 * 60 * 60 * 2)) {
+		if (cookies.get('timestamp') && ((dateNow.getTime() - parseInt(cookies.get('timestamp'))) > 1000 * 60 * 2)) {
 			storage.clear()
+			console.log('storage clear', Math.floor((dateNow.getTime() - parseInt(cookies.get('timestamp'))) / 1000))
+		} else {
+			console.log('storage not clear', Math.floor((dateNow.getTime() - parseInt(cookies.get('timestamp'))) / 1000))
 		}
 
 		// try get value by reduxStore (objectArray)
@@ -42,6 +48,8 @@ class FormMain extends Component {
 			this.props.handleAssignFormMain({
 				type: type
 			})
+
+			console.log('by reduxStore')
 		}
 		// try get value by localStorage (jsonString)
 		else if (storage[type] && storage[type].length > 0) {
@@ -52,6 +60,8 @@ class FormMain extends Component {
 				type: type,
 				dataLists: dataLists
 			})
+
+			console.log('by localStorage')
 		}
 		// try get value by api (objectArray)
 		else {
@@ -74,6 +84,8 @@ class FormMain extends Component {
 
 				// update cookie (timestamp)
 				cookies.set('timestamp', dateNow.getTime().toString())
+
+				console.log('by api')
 			}).catch((err) => {
 				console.log('Fail! ' + err)
 				alert('載入失敗😥\n請嘗試重新整理!!')
