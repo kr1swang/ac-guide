@@ -401,7 +401,7 @@ export default class BugGuide extends Component {
 
 				<span className={'dataList'}>
 					<hr />
-					{'共 ' + targetList.length + ' 筆資料符合, 點擊可查看詳細資料並新增標記😄'}
+					{'共 ' + targetList.length + ' 筆資料符合, 點擊可查看詳細資料並標記!'}
 					<hr />
 					{targetList.map((item, index) =>
 						<CustomCard
