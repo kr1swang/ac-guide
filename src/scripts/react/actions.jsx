@@ -1,4 +1,4 @@
-﻿//== constants - string ==========================================
+﻿// set action type
 export const Ks = {
 	ASSIGN_VALUE: 'ASSIGN_VALUE',
 	SET_BLOCKING: 'SET_BLOCKING',
@@ -7,7 +7,7 @@ export const Ks = {
 	ASSIGN_FORM_DATA_FOOTER: 'ASSIGN_FORM_DATA_FOOTER'
 }
 
-//== actions =====================================================
+// set action object
 export default {
 	assignValue: (name, value, targetReducer) => ({
 		type: Ks.ASSIGN_VALUE,

@@ -1,9 +1,10 @@
 ﻿import axios from 'axios'
+import ApiConfig from '../../asset/acGuideApi.jsx'
 
 export default {
-	// get ac-guide sheet data
+	// set api method
 	GetList: (args) => {
-		const url = 'https://script.google.com/macros/s/AKfycbz59fQboc4DbvelUIua8H8ANCvqRTqjG042hhdHdzHyzwY8kqo/exec'
+		const url = ApiConfig['GetList']
 		return axios.get(url, { params: args })
 	}
 }

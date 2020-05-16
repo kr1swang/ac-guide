@@ -5,6 +5,7 @@ body {
     font-family: Consolas, "微軟正黑體";
     color: #97A3AB;
     background-color: #263238;
+    min-width: 360px;
 }
 
 hr {

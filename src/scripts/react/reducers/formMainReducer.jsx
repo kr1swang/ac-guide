@@ -5,7 +5,17 @@ const initialState = {
 	hemisphere: 'northern',
 	dataLists: {
 		fish: [],
-		bug: []
+		bug: [],
+		fossil: [],
+		art: [],
+		song: []
+	},
+	markedList: {
+		fish: [],
+		bug: [],
+		fossil: [],
+		art: [],
+		song: []
 	}
 }
 
