@@ -31,13 +31,10 @@ class FormMain extends Component {
 		let cookies = new Cookies(document.cookie)
 		let dateNow = new Date()
 
-		console.log(cookies)
-		console.log(cookies.get('timestamp', { sameSite: 'lax' }))
-
 		// compare timestamp to clear localStorage (diff more than 2 hour clear) 
-		if (!cookies.get('timestamp', { sameSite: 'lax' }) || ((dateNow.getTime() - parseInt(cookies.get('timestamp', { sameSite: 'lax' }))) > 1000 * 60 * 2)) {
+		if (!cookies.get('timestamp') || ((dateNow.getTime() - parseInt(cookies.get('timestamp'))) > 1000 * 60 * 60 * 2)) {
 			storage.clear()
-			console.log('storage clear', Math.floor((dateNow.getTime() - parseInt(cookies.get('timestamp'))) / 1000))
+			console.log('storage is clear', Math.floor((dateNow.getTime() - parseInt(cookies.get('timestamp'))) / 1000))
 		} else {
 			console.log('storage not clear', Math.floor((dateNow.getTime() - parseInt(cookies.get('timestamp'))) / 1000))
 		}
@@ -83,7 +80,7 @@ class FormMain extends Component {
 				storage.setItem(type, JSON.stringify(result))
 
 				// update cookie (timestamp)
-				cookies.set('timestamp', dateNow.getTime().toString(), { sameSite: 'lax' })
+				cookies.set('timestamp', dateNow.getTime().toString(), { expires: new Date(dateNow.setDate(dateNow.getDate() + 7)), sameSite: 'none' })
 
 				console.log('by api')
 			}).catch((err) => {
