@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Media, Badge, Image } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faStar } from '@fortawesome/free-solid-svg-icons'
 
 export default class CustomCard extends Component {
 	constructor(props) {
@@ -38,6 +38,13 @@ export default class CustomCard extends Component {
 					icon={faCircle}
 					style={{ position: 'absolute', fontSize: 'x-small', float: 'left', color: this.handelConvertColorCode(this.props.hemisphere, this.props.object) }}
 				/>
+				{this.props.isMarked ?
+					<FontAwesomeIcon
+						icon={faStar}
+						style={{ position: 'absolute', fontSize: 'x-small', float: 'left', marginTop: '20px', color: '#FFC107' }}
+					/>
+					: <React.Fragment />
+				}
 				<Image
 					style={{ width: '20%', maxWidth: '80px', margin: '5px 20px', backgroundColor: '#FFF8DC' }}
 					src={this.props.object.imageURL}
@@ -61,7 +68,7 @@ export default class CustomCard extends Component {
 
 CustomCard.defaultProps = {
 	type: 'bug',
-	onClick: () => { },
+	hemisphere: 'northern',
 	object: {
 		imageURL: '',
 		chineseName: '',
@@ -73,12 +80,14 @@ CustomCard.defaultProps = {
 		appearanceTime: [],
 		remark: ''
 	},
-	hemisphere: 'northern'
+	onClick: () => { },
+	isMarked: false
 }
 
 CustomCard.propTypes = {
 	type: PropTypes.string,
-	onClick: PropTypes.func,
+	hemisphere: PropTypes.string,
 	object: PropTypes.object,
-	hemisphere: PropTypes.string
+	onClick: PropTypes.func,
+	isMarked: PropTypes.bool
 }

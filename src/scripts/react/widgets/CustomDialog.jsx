@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Image, Modal } from 'react-bootstrap'
+import { Table, Image, Modal, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle, faMoneyBillAlt, faMapMarkerAlt, faFish, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faMoneyBillAlt, faMapMarkerAlt, faFish, faCalendarAlt, faClock, faStar } from '@fortawesome/free-solid-svg-icons'
 import TimeBar from './TimeBar.jsx'
 
 export default class CustomDialog extends Component {
@@ -51,6 +51,13 @@ export default class CustomDialog extends Component {
 						<tbody>
 							<tr>
 								<th colSpan={'2'} style={{ textAlign: 'center' }} >
+									{this.props.isMarked ?
+										<FontAwesomeIcon
+											icon={faStar}
+											style={{ position: 'absolute', left: '15px', color: '#FFC107' }}
+										/>
+										: <React.Fragment />
+									}
 									<Image src={this.props.activeItem.imageURL} fluid={true} />
 									<h4 className={'font-weight-bold'}>
 										{this.props.activeItem.chineseName}<br />
@@ -114,6 +121,13 @@ export default class CustomDialog extends Component {
 						</tbody>
 					</Table>
 				</Modal.Body>
+				<Modal.Footer>
+					<Button
+						variant='primary'
+						active={this.props.isMarked}
+						onClick={() => this.props.handleSetMarked(this.props.type, this.props.activeItem.index)}
+					><FontAwesomeIcon icon={faStar} />{this.props.isMarked ? ' 取消標記' : ' 標記'}</Button>
+				</Modal.Footer>
 			</Modal>
 		)
 	}
@@ -124,6 +138,7 @@ CustomDialog.defaultProps = {
 	isDialogShow: false,
 	onHide: () => { },
 	activeItem: {
+		index: 0,
 		imageURL: '',
 		chineseName: '',
 		englishName: '',
@@ -133,12 +148,16 @@ CustomDialog.defaultProps = {
 		southernMonths: [],
 		appearanceTime: [],
 		remark: ''
-	}
+	},
+	isMarked: false,
+	handleSetMarked: () => { }
 }
 
 CustomDialog.propTypes = {
 	type: PropTypes.string,
 	isDialogShow: PropTypes.bool,
 	onHide: PropTypes.func,
-	activeItem: PropTypes.object
+	activeItem: PropTypes.object,
+	isMarked: PropTypes.bool,
+	handleSetMarked: PropTypes.func
 }

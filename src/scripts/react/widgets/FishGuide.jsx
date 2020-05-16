@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Accordion, Table, Button } from 'react-bootstrap'
 import { Snackbar } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes, faFilter, faFont, faMapMarkerAlt, faFish, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons'
+import { faStar, faTimes, faFilter, faFont, faMapMarkerAlt, faFish, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons'
 import CustomDialog from './CustomDialog.jsx'
 import CustomCard from './CustomCard.jsx'
 
@@ -18,6 +18,7 @@ export default class FishGuide extends Component {
 			isCollapseShow: false,
 			isDialogShow: false,
 			activeItem: {
+				index: 0,
 				imageURL: '',
 				chineseName: '',
 				englishName: '',
@@ -30,6 +31,7 @@ export default class FishGuide extends Component {
 				remark: ''
 			},
 			emptyItem: {
+				index: 0,
 				imageURL: '',
 				chineseName: '',
 				englishName: '',
@@ -43,6 +45,7 @@ export default class FishGuide extends Component {
 			},
 
 			// options
+			markedOptions: ['已標記', '未標記'],
 			locationOptions: ['河川', '池塘', '懸崖上', '出海口', '大海', '碼頭'],
 			shadowSizeOptions: ['特小', '稍小', '中', '稍大', '大', '特大', '細長', '背鰭'],
 			monthOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -51,6 +54,7 @@ export default class FishGuide extends Component {
 			// picked options
 			isNoneFilter: false,
 			isTimeFilter: false,
+			markedPicked: [],
 			filterName: '',
 			locationPicked: [],
 			shadowSizePicked: [],
@@ -77,6 +81,7 @@ export default class FishGuide extends Component {
 				this.setState({
 					isNoneFilter: true,
 					isTimeFilter: false,
+					markedPicked: [],
 					filterName: '',
 					locationPicked: [],
 					shadowSizePicked: [],
@@ -93,6 +98,18 @@ export default class FishGuide extends Component {
 					isTimeFilter: true,
 					monthPicked: [dateNow.getMonth() + 1],
 					hourPicked: [dateNow.getHours() == 0 ? 24 : dateNow.getHours()]
+				})
+				break
+			}
+			case 'markedPicked': {
+				let markedPicked = JSON.parse(JSON.stringify(this.state.markedPicked))
+				let index = markedPicked.indexOf(value)
+
+				index == -1 ? markedPicked.push(value) : markedPicked.splice(index, 1)
+
+				this.setState({
+					isNoneFilter: false,
+					markedPicked: markedPicked
 				})
 				break
 			}
@@ -188,6 +205,12 @@ export default class FishGuide extends Component {
 	handleConvertFilter(oriList) {
 		let result = oriList
 
+		// marked
+		if (this.state.markedPicked.length > 0) {
+			result = result.filter(x => this.props.markedList.includes(x.index) && this.state.markedPicked.includes('已標記')
+				|| !this.props.markedList.includes(x.index) && this.state.markedPicked.includes('未標記'))
+		}
+
 		// name (chineseName / englishName)
 		if (this.state.filterName.length > 0) {
 			result = result.filter(x => x.chineseName.indexOf(this.state.filterName) != -1 || x.englishName.indexOf(this.state.filterName) != -1)
@@ -249,6 +272,8 @@ export default class FishGuide extends Component {
 					isDialogShow={this.state.isDialogShow}
 					onHide={() => this.setState({ isDialogShow: false, activeItem: this.state.emptyItem })}
 					activeItem={this.state.activeItem}
+					isMarked={this.props.markedList.includes(this.state.activeItem.index)}
+					handleSetMarked={(type, id) => this.props.handleSetMarked(type, id)}
 				/>
 
 				<span className={'filterGroup'}>
@@ -295,9 +320,29 @@ export default class FishGuide extends Component {
 						<Accordion.Collapse eventKey="0">
 							<Table className={'filter'}>
 								<tbody>
-									{/* 名稱 */}
+									{/* 標記 */}
 									<tr>
 										<th style={{ width: '100px' }}>
+											<FontAwesomeIcon icon={faStar} />{' 標記 : '}
+										</th>
+										<td>
+											{this.state.markedOptions.map((item, index) =>
+												<span key={index}>
+													<Button
+														name='markedPicked'
+														variant='outline-secondary'
+														size='sm'
+														active={this.state.markedPicked.includes(item)}
+														onClick={(e) => this.handleFilterClick(e.target.name, e.target.textContent)}
+													>{item}</Button>{' '}
+												</span>
+											)}
+										</td>
+									</tr>
+
+									{/* 名稱 */}
+									<tr>
+										<th>
 											<FontAwesomeIcon icon={faFont} />{' 名稱 : '}
 										</th>
 										<td>
@@ -313,7 +358,7 @@ export default class FishGuide extends Component {
 
 									{/* 地點 */}
 									<tr>
-										<th style={{ width: '100px' }}>
+										<th>
 											<FontAwesomeIcon icon={faMapMarkerAlt} />{' 地點 : '}
 										</th>
 										<td>
@@ -333,7 +378,7 @@ export default class FishGuide extends Component {
 
 									{/* 魚影 */}
 									<tr>
-										<th style={{ width: '100px' }}>
+										<th>
 											<FontAwesomeIcon icon={faFish} />{' 魚影 : '}
 										</th>
 										<td>
@@ -353,7 +398,7 @@ export default class FishGuide extends Component {
 
 									{/* 月份 */}
 									<tr>
-										<th style={{ width: '100px' }}>
+										<th>
 											<FontAwesomeIcon icon={faCalendarAlt} />{' 月份 : '}
 										</th>
 										<td>
@@ -373,7 +418,7 @@ export default class FishGuide extends Component {
 
 									{/* 時間 */}
 									<tr>
-										<th style={{ width: '100px' }}>
+										<th>
 											<FontAwesomeIcon icon={faClock} />{' 時間 : '}
 										</th>
 										<td>
@@ -398,15 +443,16 @@ export default class FishGuide extends Component {
 
 				<span className={'dataList'}>
 					<hr />
-					{'共 ' + targetList.length + ' 筆資料符合, 點擊可查看詳細資料...'}
+					{'共 ' + targetList.length + ' 筆資料符合, 點擊可查看詳細資料並新增標記😄'}
 					<hr />
 					{targetList.map((item, index) =>
 						<CustomCard
 							key={index}
 							type={'fish'}
-							onClick={() => this.setState({ isDialogShow: true, activeItem: item })}
-							object={item}
 							hemisphere={this.props.hemisphere}
+							object={item}
+							onClick={() => this.setState({ isDialogShow: true, activeItem: item })}
+							isMarked={this.props.markedList.includes(item.index)}
 						/>
 					)}
 				</span>
@@ -417,12 +463,16 @@ export default class FishGuide extends Component {
 
 FishGuide.defaultProps = {
 	mainFilter: <br />,
+	hemisphere: 'northern',
 	dataList: [],
-	hemisphere: 'northern'
+	markedList: [],
+	handleSetMarked: () => { }
 }
 
 FishGuide.propTypes = {
 	mainFilter: PropTypes.element,
+	hemisphere: PropTypes.string,
 	dataList: PropTypes.array,
-	hemisphere: PropTypes.string
+	markedList: PropTypes.array,
+	handleSetMarked: PropTypes.func
 }

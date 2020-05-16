@@ -10,7 +10,7 @@ const initialState = {
 		art: [],
 		song: []
 	},
-	markedList: {
+	markedLists: {
 		fish: [],
 		bug: [],
 		fossil: [],

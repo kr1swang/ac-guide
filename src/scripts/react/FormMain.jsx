@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Cookies from 'universal-cookie'
 import actions from './actions.jsx'
 import apiClient from './apiClient.jsx'
 import MainFilter from './widgets/MainFilter.jsx'
@@ -13,30 +12,26 @@ class FormMain extends Component {
 		super(props)
 
 		this.handleChangeType = this.handleChangeType.bind(this)
+		this.handleGetMarked = this.handleGetMarked.bind(this)
+		this.handleSetMarked = this.handleSetMarked.bind(this)
 	}
 
 	componentDidMount() {
+		// init marked by localStorage
+		this.handleGetMarked()
+
+		// init default option
 		this.handleChangeType(this.props.type)
 	}
 
 	handleChangeType(type) {
-		// step 0. compare cookie timestamp to clear localStorage
-		// step 1. try get value (reduxStore > localStorage > api)
-		// step 2. update typeFlag value (reduxStore)
-		// step 3. update dataList value (reduxStore, localStorage)
-		// step 4. update timestamp value (cookie)
-
 		let dataLists = JSON.parse(JSON.stringify(this.props.dataLists))
 		let storage = window.localStorage
-		let cookies = new Cookies(document.cookie)
 		let dateNow = new Date()
 
-		// compare timestamp to clear localStorage (diff more than 2 hour clear) 
-		if (!cookies.get('timestamp') || ((dateNow.getTime() - parseInt(cookies.get('timestamp'))) > 1000 * 60 * 60 * 2)) {
-			storage.clear()
-			console.log('storage is clear', Math.floor((dateNow.getTime() - parseInt(cookies.get('timestamp'))) / 1000))
-		} else {
-			console.log('storage not clear', Math.floor((dateNow.getTime() - parseInt(cookies.get('timestamp'))) / 1000))
+		// check timestamp to clear localStorage (diff more than 2 hour(1000 * 60 * 60 * 2) clear) 
+		if (!storage.getItem('timestamp') || ((dateNow.getTime() - parseInt(storage.getItem('timestamp'))) > 1000 * 60 * 60 * 2)) {
+			storage.removeItem(type)
 		}
 
 		// try get value by reduxStore (objectArray)
@@ -45,20 +40,16 @@ class FormMain extends Component {
 			this.props.handleAssignFormMain({
 				type: type
 			})
-
-			console.log('by reduxStore')
 		}
 		// try get value by localStorage (jsonString)
-		else if (storage[type] && storage[type].length > 0) {
-			dataLists[type] = JSON.parse(storage[type])
+		else if (storage.getItem(type) && JSON.parse(storage.getItem(type)).length > 0) {
+			dataLists[type] = JSON.parse(storage.getItem(type))
 
 			// update reduxStore (typeFlag, dataList)
 			this.props.handleAssignFormMain({
 				type: type,
 				dataLists: dataLists
 			})
-
-			console.log('by localStorage')
 		}
 		// try get value by api (objectArray)
 		else {
@@ -76,13 +67,9 @@ class FormMain extends Component {
 					dataLists: dataLists
 				})
 
-				// update localStorage (dataList)
-				storage.setItem(type, JSON.stringify(result))
-
-				// update cookie (timestamp)
-				cookies.set('timestamp', dateNow.getTime().toString(), { expires: new Date(dateNow.setDate(dateNow.getDate() + 7)), sameSite: 'lax' })
-
-				console.log('by api')
+				// update localStorage (dataList, timestamp)
+				storage.setItem(type, JSON.stringify(dataLists[type]))
+				storage.setItem('timestamp', dateNow.getTime().toString())
 			}).catch((err) => {
 				console.log('Fail! ' + err)
 				alert('載入失敗😥\n請嘗試重新整理!!')
@@ -90,6 +77,35 @@ class FormMain extends Component {
 				setTimeout(() => this.props.setBlocking(false), 100)
 			})
 		}
+	}
+
+	handleGetMarked() {
+		let storage = window.localStorage
+
+		if (storage.getItem('markedLists')) {
+			// assign to reduxStore
+			this.props.handleAssignFormMain({
+				markedLists: JSON.parse(storage.getItem('markedLists'))
+			})
+		}
+	}
+
+	handleSetMarked(type, id) {
+		let storage = window.localStorage
+
+		// creat mirror obj and update value
+		let markedLists = JSON.parse(JSON.stringify(this.props.markedLists))
+		let index = markedLists[type].indexOf(id)
+
+		index == -1 ? markedLists[type].push(id) : markedLists[type].splice(index, 1)
+
+		// assign to reduxStore
+		this.props.handleAssignFormMain({
+			markedLists: markedLists
+		})
+
+		// update localStorage (markedLists)
+		storage.setItem('markedLists', JSON.stringify(markedLists))
 	}
 
 	render() {
@@ -106,13 +122,17 @@ class FormMain extends Component {
 					{
 						'fish': <FishGuide
 							mainFilter={mainFilter}
-							dataList={this.props.dataLists[this.props.type]}
 							hemisphere={this.props.hemisphere}
+							dataList={this.props.dataLists[this.props.type]}
+							markedList={this.props.markedLists[this.props.type]}
+							handleSetMarked={(type, id) => this.handleSetMarked(type, id)}
 						/>,
 						'bug': <BugGuide
 							mainFilter={mainFilter}
-							dataList={this.props.dataLists[this.props.type]}
 							hemisphere={this.props.hemisphere}
+							dataList={this.props.dataLists[this.props.type]}
+							markedList={this.props.markedLists[this.props.type]}
+							handleSetMarked={(type, id) => this.handleSetMarked(type, id)}
 						/>
 					}[this.props.type] || <div className={'accordion'}>{mainFilter}</div>
 				}
@@ -126,6 +146,7 @@ const mapStateToProps = (state, ownProps) => ({
 	type: state.formMain.type,
 	hemisphere: state.formMain.hemisphere,
 	dataLists: state.formMain.dataLists,
+	markedLists: state.formMain.markedLists
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -150,6 +171,7 @@ FormMain.propTypes = {
 	type: PropTypes.string,
 	hemisphere: PropTypes.string,
 	dataLists: PropTypes.object,
+	markedLists: PropTypes.object,
 
 	setBlocking: PropTypes.func,
 	handleAssignFormMain: PropTypes.func,

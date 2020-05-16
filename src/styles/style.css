@@ -65,6 +65,10 @@ a {
     background-color: inherit;
 }
 
+.btn-primary:hover {
+    background-color: #0069d9;
+}
+
 svg#hsbar {
     border: 1px solid #222D32;
     border-radius: 5px;

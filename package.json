@@ -27,8 +27,7 @@
         "react-horizontal-stacked-bar-chart": "^8.15.2",
         "react-redux": "^5.0.7",
         "react-ui-blocker": "^1.0.3",
-        "redux": "^4.0.0",
-        "universal-cookie": "^4.0.3"
+        "redux": "^4.0.0"
     },
     "devDependencies": {
         "babel-core": "^6.26.3",
