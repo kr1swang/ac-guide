@@ -32,10 +32,10 @@ class FormMain extends Component {
 		let dateNow = new Date()
 
 		console.log(cookies)
-		console.log(cookies.get('timestamp'))
+		console.log(cookies.get('timestamp', { sameSite: true }))
 
 		// compare timestamp to clear localStorage (diff more than 2 hour clear) 
-		if (cookies.get('timestamp') && ((dateNow.getTime() - parseInt(cookies.get('timestamp'))) > 1000 * 60 * 2)) {
+		if (!cookies.get('timestamp', { sameSite: true }) && ((dateNow.getTime() - parseInt(cookies.get('timestamp', { sameSite: true }))) > 1000 * 60 * 2)) {
 			storage.clear()
 			console.log('storage clear', Math.floor((dateNow.getTime() - parseInt(cookies.get('timestamp'))) / 1000))
 		} else {
@@ -52,7 +52,7 @@ class FormMain extends Component {
 			console.log('by reduxStore')
 		}
 		// try get value by localStorage (jsonString)
-		else if (storage[type] && storage[type].length > 0) {
+		else if (!storage[type] && storage[type].length > 0) {
 			dataLists[type] = JSON.parse(storage[type])
 
 			// update reduxStore (typeFlag, dataList)
@@ -83,7 +83,7 @@ class FormMain extends Component {
 				storage.setItem(type, JSON.stringify(result))
 
 				// update cookie (timestamp)
-				cookies.set('timestamp', dateNow.getTime().toString())
+				cookies.set('timestamp', dateNow.getTime().toString(), { sameSite: true })
 
 				console.log('by api')
 			}).catch((err) => {
