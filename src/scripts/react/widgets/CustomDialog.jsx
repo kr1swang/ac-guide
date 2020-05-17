@@ -125,7 +125,7 @@ export default class CustomDialog extends Component {
 					<Button
 						variant='primary'
 						active={this.props.isMarked}
-						onClick={() => this.props.handleSetMarked(this.props.type, this.props.activeItem.index)}
+						onClick={() => this.props.onChangeMarked(this.props.type, this.props.activeItem.index)}
 					><FontAwesomeIcon icon={faStar} />{this.props.isMarked ? ' 取消標記' : ' 標記'}</Button>
 				</Modal.Footer>
 			</Modal>
@@ -150,7 +150,7 @@ CustomDialog.defaultProps = {
 		remark: ''
 	},
 	isMarked: false,
-	handleSetMarked: () => { }
+	onChangeMarked: () => { }
 }
 
 CustomDialog.propTypes = {
@@ -159,5 +159,5 @@ CustomDialog.propTypes = {
 	onHide: PropTypes.func,
 	activeItem: PropTypes.object,
 	isMarked: PropTypes.bool,
-	handleSetMarked: PropTypes.func
+	onChangeMarked: PropTypes.func
 }

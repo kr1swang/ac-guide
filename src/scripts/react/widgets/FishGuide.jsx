@@ -273,7 +273,7 @@ export default class FishGuide extends Component {
 					onHide={() => this.setState({ isDialogShow: false, activeItem: this.state.emptyItem })}
 					activeItem={this.state.activeItem}
 					isMarked={this.props.markedList.includes(this.state.activeItem.index)}
-					handleSetMarked={(type, id) => this.props.handleSetMarked(type, id)}
+					onChangeMarked={(type, id) => this.props.onChangeMarked(type, id)}
 				/>
 
 				<span className={'filterGroup'}>
@@ -466,7 +466,7 @@ FishGuide.defaultProps = {
 	hemisphere: 'northern',
 	dataList: [],
 	markedList: [],
-	handleSetMarked: () => { }
+	onChangeMarked: () => { }
 }
 
 FishGuide.propTypes = {
@@ -474,5 +474,5 @@ FishGuide.propTypes = {
 	hemisphere: PropTypes.string,
 	dataList: PropTypes.array,
 	markedList: PropTypes.array,
-	handleSetMarked: PropTypes.func
+	onChangeMarked: PropTypes.func
 }

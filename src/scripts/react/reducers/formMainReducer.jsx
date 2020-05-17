@@ -1,7 +1,7 @@
 ﻿import { Ks } from '../actions.jsx'
 
 const initialState = {
-	type: 'fish',
+	type: '',
 	hemisphere: 'northern',
 	dataLists: {
 		fish: [],

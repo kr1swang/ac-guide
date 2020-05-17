@@ -251,7 +251,7 @@ export default class BugGuide extends Component {
 					onHide={() => this.setState({ isDialogShow: false, activeItem: this.state.emptyItem })}
 					activeItem={this.state.activeItem}
 					isMarked={this.props.markedList.includes(this.state.activeItem.index)}
-					handleSetMarked={(type, id) => this.props.handleSetMarked(type, id)}
+					onChangeMarked={(type, id) => this.props.onChangeMarked(type, id)}
 				/>
 
 				<span className={'filterGroup'}>
@@ -424,7 +424,7 @@ BugGuide.defaultProps = {
 	hemisphere: 'northern',
 	dataList: [],
 	markedList: [],
-	handleSetMarked: () => { }
+	onChangeMarked: () => { }
 }
 
 BugGuide.propTypes = {
@@ -432,5 +432,5 @@ BugGuide.propTypes = {
 	hemisphere: PropTypes.string,
 	dataList: PropTypes.array,
 	markedList: PropTypes.array,
-	handleSetMarked: PropTypes.func
+	onChangeMarked: PropTypes.func
 }

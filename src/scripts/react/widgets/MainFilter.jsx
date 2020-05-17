@@ -24,14 +24,14 @@ export default class MainFilter extends Component {
 								variant="outline-secondary"
 								size="sm"
 								active={this.props.type == 'fish' ? true : false}
-								onClick={() => this.props.onChaneType('fish')}
+								onClick={(e) => this.props.onChangeValue(e.target.name, 'fish')}
 							><FontAwesomeIcon icon={faFish} />{' 魚類'}</Button>{' '}
 							<Button
 								name='type'
 								variant="outline-secondary"
 								size="sm"
 								active={this.props.type == 'bug' ? true : false}
-								onClick={() => this.props.onChaneType('bug')}
+								onClick={(e) => this.props.onChangeValue(e.target.name, 'bug')}
 							><FontAwesomeIcon icon={faBug} />{' 蟲類'}</Button>{' '}
 						</td>
 					</tr>
@@ -47,14 +47,14 @@ export default class MainFilter extends Component {
 								variant="outline-secondary"
 								size="sm"
 								active={this.props.hemisphere == 'northern' ? true : false}
-								onClick={(e) => this.props.onChaneHemisphere(e.target.name, 'northern')}
+								onClick={(e) => this.props.onChangeValue(e.target.name, 'northern')}
 							><FontAwesomeIcon icon={faChevronUp} />{' 北半球'}</Button>{' '}
 							<Button
 								name='hemisphere'
 								variant="outline-secondary"
 								size="sm"
 								active={this.props.hemisphere == 'southern' ? true : false}
-								onClick={(e) => this.props.onChaneHemisphere(e.target.name, 'southern')}
+								onClick={(e) => this.props.onChangeValue(e.target.name, 'southern')}
 							><FontAwesomeIcon icon={faChevronDown} />{' 南半球'}</Button>{' '}
 						</td>
 					</tr>
@@ -67,13 +67,11 @@ export default class MainFilter extends Component {
 MainFilter.defaultProps = {
 	type: 'fish',
 	hemisphere: 'northern',
-	onChaneType: () => { },
-	onChaneHemisphere: () => { }
+	onChangeValue: () => { }
 }
 
 MainFilter.propTypes = {
 	type: PropTypes.string,
 	hemisphere: PropTypes.string,
-	onChaneType: PropTypes.func,
-	onChaneHemisphere: PropTypes.func
+	onChangeValue: PropTypes.func
 }

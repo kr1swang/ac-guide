@@ -11,75 +11,21 @@ class FormMain extends Component {
 	constructor(props) {
 		super(props)
 
-		this.handleChangeType = this.handleChangeType.bind(this)
-		this.handleGetMarked = this.handleGetMarked.bind(this)
-		this.handleSetMarked = this.handleSetMarked.bind(this)
+		this.handleInitMarked = this.handleInitMarked.bind(this)
+		this.handleChangeMarked = this.handleChangeMarked.bind(this)
+		this.handleInitValue = this.handleInitValue.bind(this)
+		this.handleChangeValue = this.handleChangeValue.bind(this)
 	}
 
 	componentDidMount() {
 		// init marked by localStorage
-		this.handleGetMarked()
+		this.handleInitMarked()
 
 		// init default option
-		this.handleChangeType(this.props.type)
+		this.handleInitValue()
 	}
 
-	handleChangeType(type) {
-		let dataLists = JSON.parse(JSON.stringify(this.props.dataLists))
-		let storage = window.localStorage
-		let dateNow = new Date()
-
-		// check timestamp to clear localStorage (diff more than 2 hour(1000 * 60 * 60 * 2) clear) 
-		if (!storage.getItem('timestamp') || ((dateNow.getTime() - parseInt(storage.getItem('timestamp'))) > 1000 * 60 * 60 * 2)) {
-			storage.removeItem(type)
-		}
-
-		// try get value by reduxStore (objectArray)
-		if (dataLists[type].length > 0) {
-			// update reduxStore (typeFlag)
-			this.props.handleAssignFormMain({
-				type: type
-			})
-		}
-		// try get value by localStorage (jsonString)
-		else if (storage.getItem(type) && JSON.parse(storage.getItem(type)).length > 0) {
-			dataLists[type] = JSON.parse(storage.getItem(type))
-
-			// update reduxStore (typeFlag, dataList)
-			this.props.handleAssignFormMain({
-				type: type,
-				dataLists: dataLists
-			})
-		}
-		// try get value by api (objectArray)
-		else {
-			this.props.setBlocking(true)
-
-			const args = { type: type }
-
-			apiClient.GetList(args).then((resp) => {
-				const result = resp.data
-				dataLists[type] = result
-
-				// update reduxStore (typeFlag, dataList)
-				this.props.handleAssignFormMain({
-					type: type,
-					dataLists: dataLists
-				})
-
-				// update localStorage (dataList, timestamp)
-				storage.setItem(type, JSON.stringify(dataLists[type]))
-				storage.setItem('timestamp', dateNow.getTime().toString())
-			}).catch((err) => {
-				console.log('Fail! ' + err)
-				alert('載入失敗😥\n請嘗試重新整理!!')
-			}).finally(() => {
-				setTimeout(() => this.props.setBlocking(false), 100)
-			})
-		}
-	}
-
-	handleGetMarked() {
+	handleInitMarked() {
 		let storage = window.localStorage
 
 		if (storage.getItem('markedLists')) {
@@ -90,7 +36,7 @@ class FormMain extends Component {
 		}
 	}
 
-	handleSetMarked(type, id) {
+	handleChangeMarked(type, id) {
 		let storage = window.localStorage
 
 		// creat mirror obj and update value
@@ -108,13 +54,134 @@ class FormMain extends Component {
 		storage.setItem('markedLists', JSON.stringify(markedLists))
 	}
 
+	handleInitValue() {
+		let storage = window.localStorage
+
+		let type = this.props.type
+		let hemisphere = this.props.hemisphere
+
+		if (storage.getItem('type')) {
+			type = storage.getItem('type')
+
+			// assign to reduxStore
+			this.props.handleAssignFormMain({
+				type: type
+			})
+		}
+
+		if (storage.getItem('hemisphere')) {
+			hemisphere = storage.getItem('hemisphere')
+
+			// assign to reduxStore
+			this.props.handleAssignFormMain({
+				hemisphere: hemisphere
+			})
+		}
+
+		this.handleChangeValue('type', type)
+		this.handleChangeValue('hemisphere', hemisphere)
+	}
+
+	handleChangeValue(name, value) {
+		switch (name) {
+			case 'type': {
+				if (value) {
+
+					let dataLists = JSON.parse(JSON.stringify(this.props.dataLists))
+					let storage = window.localStorage
+					let dateNow = new Date()
+
+					// check timestamp to clear localStorage (diff more than 2 hour(1000 * 60 * 60 * 2) clear) 
+					if (!storage.getItem('timestamp') || ((dateNow.getTime() - parseInt(storage.getItem('timestamp'))) > 1000 * 60 * 60 * 2)) {
+						storage.removeItem(value)
+					}
+
+					// try get value by reduxStore (objectArray)
+					if (dataLists[value] && dataLists[value].length > 0) {
+						// update reduxStore (typeFlag)
+						this.props.handleAssignFormMain({
+							type: value
+						})
+
+						// update localStorage (type)
+						storage.setItem('type', value)
+					}
+					// try get value by localStorage (jsonString)
+					else if (storage.getItem(value) && JSON.parse(storage.getItem(value)).length > 0) {
+						dataLists[value] = JSON.parse(storage.getItem(value))
+
+						// update reduxStore (typeFlag, dataList)
+						this.props.handleAssignFormMain({
+							type: value,
+							dataLists: dataLists
+						})
+
+						// update localStorage (type)
+						storage.setItem('type', value)
+					}
+					// try get value by api (objectArray)
+					else {
+						this.props.setBlocking(true)
+
+						const args = { type: value }
+
+						apiClient.GetList(args).then((resp) => {
+							const result = resp.data
+							dataLists[value] = result
+
+							// update reduxStore (typeFlag, dataList)
+							this.props.handleAssignFormMain({
+								type: value,
+								dataLists: dataLists
+							})
+
+							// update localStorage (type, dataList, timestamp)
+							storage.setItem('type', value)
+							storage.setItem(value, JSON.stringify(dataLists[value]))
+							storage.setItem('timestamp', dateNow.getTime().toString())
+						}).catch((err) => {
+							console.log('Fail! ' + err)
+							alert('載入失敗😥\n請嘗試重新整理!!')
+						}).finally(() => {
+							setTimeout(() => this.props.setBlocking(false), 100)
+						})
+					}
+				}
+
+				break
+			}
+			case 'hemisphere': {
+				let storage = window.localStorage
+
+				// update reduxStore (hemisphere)
+				this.props.handleAssignValue(name, value)
+
+				// update localStorage (hemisphere)
+				storage.setItem('hemisphere', value)
+
+				break
+			}
+			default: {
+				break
+			}
+		}
+	}
+
 	render() {
 		let mainFilter = <MainFilter
 			type={this.props.type}
 			hemisphere={this.props.hemisphere}
-			onChaneType={(type) => this.handleChangeType(type)}
-			onChaneHemisphere={(name, value) => this.props.handleAssignValue(name, value)}
+			onChangeValue={(name, value) => this.handleChangeValue(name, value)}
 		/>
+
+		let defaultView = <React.Fragment>
+			<div className={'accordion'}>{mainFilter}</div>
+			<hr />
+			<h5>{'Hello!!'}</h5>
+			<p>{'歡迎使用 ac-Guide 動森圖鑑, '}</p>
+			<p>{'點選上方種類, 及選擇預設地區開始!'}</p>
+			<p>{'點擊查詢結果會顯示詳細資料, 並可添加標記~'}</p>
+		</React.Fragment>
 
 		return (
 			<div className={'main'}>
@@ -125,16 +192,16 @@ class FormMain extends Component {
 							hemisphere={this.props.hemisphere}
 							dataList={this.props.dataLists[this.props.type]}
 							markedList={this.props.markedLists[this.props.type]}
-							handleSetMarked={(type, id) => this.handleSetMarked(type, id)}
+							onChangeMarked={(type, id) => this.handleChangeMarked(type, id)}
 						/>,
 						'bug': <BugGuide
 							mainFilter={mainFilter}
 							hemisphere={this.props.hemisphere}
 							dataList={this.props.dataLists[this.props.type]}
 							markedList={this.props.markedLists[this.props.type]}
-							handleSetMarked={(type, id) => this.handleSetMarked(type, id)}
+							onChangeMarked={(type, id) => this.handleChangeMarked(type, id)}
 						/>
-					}[this.props.type] || <div className={'accordion'}>{mainFilter}</div>
+					}[this.props.type] || defaultView
 				}
 			</div>
 		)
