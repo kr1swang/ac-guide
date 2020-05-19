@@ -14,6 +14,10 @@ var doGet = (e) => {
             result = getBugGuide(acGuideSheetURL)
             break
         }
+        case 'fossil': {
+            result = getFossilGuide(acGuideSheetURL)
+            break
+        }
         default: {
             break
         }
@@ -33,7 +37,7 @@ var getFishGuide = (url) => {
     let sheet = spreadSheet.getSheets()[0]
 
     // get all data as array, and without header
-    let listAll = sheet.getSheetValues(2, 1, sheet.getLastRow() - 1, 9)
+    let listAll = sheet.getSheetValues(2, 1, sheet.getLastRow() - 1, 10)
 
     // rebuild data to result
     listAll.forEach(function (itm, idx) {
@@ -49,7 +53,8 @@ var getFishGuide = (url) => {
             //southernMonths = northernMonths + 6 months, then sort
             southernMonths: JSON.parse(itm[6] || '[]').map(x => (x + 6) % 12 == 0 ? 12 : (x + 6) % 12).sort((a, b) => a - b),
             appearanceTime: JSON.parse(itm[7] || '[]'),
-            remark: itm[8]
+            remark: itm[8],
+            description: itm[9]
         })
     })
 
@@ -66,7 +71,7 @@ var getBugGuide = (url) => {
     let sheet = spreadSheet.getSheets()[1]
 
     // get all data as array, and without header
-    let listAll = sheet.getSheetValues(2, 1, sheet.getLastRow() - 1, 8)
+    let listAll = sheet.getSheetValues(2, 1, sheet.getLastRow() - 1, 9)
 
     // rebuild data to result
     listAll.forEach(function (itm, idx) {
@@ -81,7 +86,37 @@ var getBugGuide = (url) => {
             //southernMonths = northernMonths + 6 months, then sort
             southernMonths: JSON.parse(itm[5] || '[]').map(x => (x + 6) % 12 == 0 ? 12 : (x + 6) % 12).sort((a, b) => a - b),
             appearanceTime: JSON.parse(itm[6] || '[]'),
-            remark: itm[7]
+            remark: itm[7],
+            description: itm[8]
+        })
+    })
+
+    return result
+}
+
+var getFossilGuide = (url) => {
+    // declare variable
+    let result = []
+
+    // get target sheet
+    let sheetID = url.split('/').pop()
+    let spreadSheet = SpreadsheetApp.openById(sheetID)
+    let sheet = spreadSheet.getSheets()[2]
+
+    // get all data as array, and without header
+    let listAll = sheet.getSheetValues(2, 1, sheet.getLastRow() - 1, 7)
+
+    // rebuild data to result
+    listAll.forEach(function (itm, idx) {
+        result.push({
+            index: idx,
+            imageURL: itm[0],
+            chineseName: itm[1],
+            englishName: itm[2],
+            price: itm[3],
+            series: itm[4],
+            remark: itm[5],
+            description: itm[6]
         })
     })
 

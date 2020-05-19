@@ -1,9 +1,10 @@
 ﻿import { Ks } from '../actions.jsx'
+import { trackingID } from '../../../asset/acGuideParams.jsx'
 
 const initialState = {
 	isBlocking: false,
 	htmlTitle: 'ac-Guide 動森圖鑑',
-	trackingID: 'UA-166623029-1'
+	trackingID: trackingID
 }
 
 const formHeaderReducer = (state = initialState, action) => {

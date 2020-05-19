@@ -1,10 +1,10 @@
 ﻿import axios from 'axios'
-import ApiConfig from '../../asset/acGuideApi.jsx'
+import { GetListUrl } from '../../asset/acGuideParams.jsx'
 
 export default {
 	// set api method
 	GetList: (args) => {
-		const url = ApiConfig['GetList']
+		const url = GetListUrl
 		return axios.get(url, { params: args })
 	}
 }
