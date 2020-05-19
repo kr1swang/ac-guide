@@ -45,7 +45,7 @@ class FormMain extends Component {
 		let index = markedLists[type].indexOf(id)
 
 		index == -1 ? markedLists[type].push(id) : markedLists[type].splice(index, 1)
-		markedLists[type].sort()
+		markedLists[type].sort((a, b) => a - b)
 
 		// assign to reduxStore
 		this.props.handleAssignFormMain({

@@ -71,7 +71,7 @@ export default class FossilGuide extends Component {
 				let index = markedPicked.indexOf(value)
 
 				index == -1 ? markedPicked.push(value) : markedPicked.splice(index, 1)
-				markedPicked.sort()
+				markedPicked.sort((a, b) => a - b)
 
 				this.setState({
 					isNoneFilter: false,
@@ -93,7 +93,7 @@ export default class FossilGuide extends Component {
 				let index = seriesPicked.indexOf(value)
 
 				index == -1 ? seriesPicked.push(value) : seriesPicked.splice(index, 1)
-				seriesPicked.sort()
+				seriesPicked.sort((a, b) => a - b)
 
 				this.setState({
 					isNoneFilter: false,

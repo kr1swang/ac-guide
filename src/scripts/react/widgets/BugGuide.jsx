@@ -101,7 +101,7 @@ export default class BugGuide extends Component {
 				let index = markedPicked.indexOf(value)
 
 				index == -1 ? markedPicked.push(value) : markedPicked.splice(index, 1)
-				markedPicked.sort()
+				markedPicked.sort((a, b) => a - b)
 
 				this.setState({
 					isNoneFilter: false,
@@ -123,7 +123,7 @@ export default class BugGuide extends Component {
 				let index = locationPicked.indexOf(value)
 
 				index == -1 ? locationPicked.push(value) : locationPicked.splice(index, 1)
-				locationPicked.sort()
+				locationPicked.sort((a, b) => a - b)
 
 				this.setState({
 					isNoneFilter: false,
@@ -136,7 +136,7 @@ export default class BugGuide extends Component {
 				let index = monthPicked.indexOf(value)
 
 				index == -1 ? monthPicked.push(value) : monthPicked.splice(index, 1)
-				monthPicked.sort()
+				monthPicked.sort((a, b) => a - b)
 
 				let dateNow = new Date()
 				let isMonthNowExitst = monthPicked.includes(dateNow.getMonth() + 1)
@@ -153,7 +153,7 @@ export default class BugGuide extends Component {
 				let index = hourPicked.indexOf(value)
 
 				index == -1 ? hourPicked.push(value) : hourPicked.splice(index, 1)
-				hourPicked.sort()
+				hourPicked.sort((a, b) => a - b)
 
 				let dateNow = new Date()
 				let isHourNowExitst = hourPicked.includes(dateNow.getHours() == 0 ? 24 : dateNow.getHours())
