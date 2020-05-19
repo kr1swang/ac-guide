@@ -36,8 +36,9 @@ hr {
     padding-top: 0px;
 }
 
-span>button {
-    margin-bottom: 5px;
+span>button,
+span>input {
+    margin: 5px 0px;
 }
 
 .media,

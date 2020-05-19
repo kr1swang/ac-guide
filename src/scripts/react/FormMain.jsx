@@ -6,6 +6,7 @@ import apiClient from './apiClient.jsx'
 import MainFilter from './widgets/MainFilter.jsx'
 import FishGuide from './widgets/FishGuide.jsx'
 import BugGuide from './widgets/BugGuide.jsx'
+import FossilGuide from './widgets/FossilGuide.jsx'
 
 class FormMain extends Component {
 	constructor(props) {
@@ -44,6 +45,7 @@ class FormMain extends Component {
 		let index = markedLists[type].indexOf(id)
 
 		index == -1 ? markedLists[type].push(id) : markedLists[type].splice(index, 1)
+		markedLists[type].sort()
 
 		// assign to reduxStore
 		this.props.handleAssignFormMain({
@@ -92,7 +94,7 @@ class FormMain extends Component {
 					let dateNow = new Date()
 
 					// check timestamp to clear localStorage (diff more than 2 hour(1000 * 60 * 60 * 2) clear) 
-					if (!storage.getItem('timestamp') || ((dateNow.getTime() - parseInt(storage.getItem('timestamp'))) > 1000 * 60 * 60 * 2)) {
+					if (!storage.getItem('timestamp') || ((dateNow.getTime() - parseInt(storage.getItem('timestamp'))) > 0)) {
 						storage.removeItem(value)
 					}
 
@@ -197,6 +199,12 @@ class FormMain extends Component {
 						'bug': <BugGuide
 							mainFilter={mainFilter}
 							hemisphere={this.props.hemisphere}
+							dataList={this.props.dataLists[this.props.type]}
+							markedList={this.props.markedLists[this.props.type]}
+							onChangeMarked={(type, id) => this.handleChangeMarked(type, id)}
+						/>,
+						'fossil': <FossilGuide
+							mainFilter={mainFilter}
 							dataList={this.props.dataLists[this.props.type]}
 							markedList={this.props.markedLists[this.props.type]}
 							onChangeMarked={(type, id) => this.handleChangeMarked(type, id)}

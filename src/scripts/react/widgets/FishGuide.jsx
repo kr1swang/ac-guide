@@ -106,6 +106,7 @@ export default class FishGuide extends Component {
 				let index = markedPicked.indexOf(value)
 
 				index == -1 ? markedPicked.push(value) : markedPicked.splice(index, 1)
+				markedPicked.sort()
 
 				this.setState({
 					isNoneFilter: false,
@@ -127,6 +128,7 @@ export default class FishGuide extends Component {
 				let index = locationPicked.indexOf(value)
 
 				index == -1 ? locationPicked.push(value) : locationPicked.splice(index, 1)
+				locationPicked.sort()
 
 				this.setState({
 					isNoneFilter: false,
@@ -139,6 +141,7 @@ export default class FishGuide extends Component {
 				let index = shadowSizePicked.indexOf(value)
 
 				index == -1 ? shadowSizePicked.push(value) : shadowSizePicked.splice(index, 1)
+				shadowSizePicked.sort()
 
 				this.setState({
 					isNoneFilter: false,
@@ -151,6 +154,7 @@ export default class FishGuide extends Component {
 				let index = monthPicked.indexOf(value)
 
 				index == -1 ? monthPicked.push(value) : monthPicked.splice(index, 1)
+				monthPicked.sort()
 
 				let dateNow = new Date()
 				let isMonthNowExitst = monthPicked.includes(dateNow.getMonth() + 1)
@@ -167,6 +171,7 @@ export default class FishGuide extends Component {
 				let index = hourPicked.indexOf(value)
 
 				index == -1 ? hourPicked.push(value) : hourPicked.splice(index, 1)
+				hourPicked.sort()
 
 				let dateNow = new Date()
 				let isHourNowExitst = hourPicked.includes(dateNow.getHours() == 0 ? 24 : dateNow.getHours())
@@ -289,30 +294,32 @@ export default class FishGuide extends Component {
 									<th style={{ width: '100px' }}>
 									</th>
 									<td>
-										<Button
-											name='isNoneFilter'
-											variant='outline-secondary'
-											size='sm'
-											active={this.state.isNoneFilter}
-											onClick={(e) => this.handleFilterClick(e.target.name, true)}
-										>{'全部清單'}</Button>{' '}
-										<Button
-											name='isTimeFilter'
-											variant='outline-secondary'
-											size='sm'
-											active={this.state.isTimeFilter}
-											onClick={(e) => this.handleFilterClick(e.target.name, true)}
-										>{'當前出沒'}</Button>{' '}
+										<span>
+											<Button
+												name='isNoneFilter'
+												variant='outline-secondary'
+												size='sm'
+												active={this.state.isNoneFilter}
+												onClick={(e) => this.handleFilterClick(e.target.name, true)}
+											>{'全部清單'}</Button>{' '}
+											<Button
+												name='isTimeFilter'
+												variant='outline-secondary'
+												size='sm'
+												active={this.state.isTimeFilter}
+												onClick={(e) => this.handleFilterClick(e.target.name, true)}
+											>{'當前出沒'}</Button>{' '}
 
-										{/* toggle more filter */}
-										<Accordion.Toggle
-											eventKey="0"
-											as={Button}
-											variant='outline-secondary'
-											size='sm'
-											style={{ float: 'right' }}
-											onClick={() => this.setState({ isCollapseShow: !this.state.isCollapseShow })}
-										><FontAwesomeIcon icon={faFilter} /></Accordion.Toggle>
+											{/* toggle more filter */}
+											<Accordion.Toggle
+												eventKey="0"
+												as={Button}
+												variant='outline-secondary'
+												size='sm'
+												style={{ float: 'right' }}
+												onClick={() => this.setState({ isCollapseShow: !this.state.isCollapseShow })}
+											><FontAwesomeIcon icon={faFilter} /></Accordion.Toggle>
+										</span>
 									</td>
 								</tr>
 							</tbody>
@@ -346,13 +353,15 @@ export default class FishGuide extends Component {
 											<FontAwesomeIcon icon={faFont} />{' 名稱 : '}
 										</th>
 										<td>
-											<input
-												name='filterName'
-												value={this.state.filterName}
-												className={'form-control form-control-sm'}
-												placeholder={'請輸入中/英文魚名...'}
-												onChange={(e) => this.handleFilterClick(e.target.name, e.target.value)}
-											/>
+											<span>
+												<input
+													name='filterName'
+													value={this.state.filterName}
+													className={'form-control form-control-sm'}
+													placeholder={'請輸入中/英文魚名...'}
+													onChange={(e) => this.handleFilterClick(e.target.name, e.target.value)}
+												/>
+											</span>
 										</td>
 									</tr>
 

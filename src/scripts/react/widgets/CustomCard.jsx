@@ -34,10 +34,13 @@ export default class CustomCard extends Component {
 	render() {
 		return (
 			<Media onClick={() => this.props.onClick()}>
-				<FontAwesomeIcon
-					icon={faCircle}
-					style={{ position: 'absolute', fontSize: 'x-small', float: 'left', color: this.handelConvertColorCode(this.props.hemisphere, this.props.object) }}
-				/>
+				{['fish', 'bug'].includes(this.props.type) ?
+					<FontAwesomeIcon
+						icon={faCircle}
+						style={{ position: 'absolute', fontSize: 'x-small', float: 'left', color: this.handelConvertColorCode(this.props.hemisphere, this.props.object) }}
+					/>
+					: <React.Fragment />
+				}
 				{this.props.isMarked ?
 					<FontAwesomeIcon
 						icon={faStar}
@@ -56,8 +59,9 @@ export default class CustomCard extends Component {
 						<Badge pill variant='secondary'>{'$ ' + this.props.object.price}</Badge>
 					</h4>
 					<p style={{ marginBottom: '0px' }}>
-						{this.props.type == 'fish' ? this.props.object.shadowSize + ' / ' : ''}
-						{this.props.object.location}
+						{['fish'].includes(this.props.type) ? this.props.object.shadowSize + ' / ' : ''}
+						{['fish', 'bug'].includes(this.props.type) ? this.props.object.location : ''}
+						{['fossil'].includes(this.props.type) ? this.props.object.series : ''}
 						{this.props.object.remark != '' ? <small><br />{'※ ' + this.props.object.remark}</small> : ''}
 					</p>
 				</Media.Body>
@@ -75,6 +79,7 @@ CustomCard.defaultProps = {
 		englishName: '',
 		price: 0,
 		location: '',
+		series: '',
 		northernMonths: [],
 		southernMonths: [],
 		appearanceTime: [],
