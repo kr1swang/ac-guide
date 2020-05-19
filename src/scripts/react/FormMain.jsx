@@ -94,7 +94,7 @@ class FormMain extends Component {
 					let dateNow = new Date()
 
 					// check timestamp to clear localStorage (diff more than 2 hour(1000 * 60 * 60 * 2) clear) 
-					if (!storage.getItem('timestamp') || ((dateNow.getTime() - parseInt(storage.getItem('timestamp'))) > 0)) {
+					if (!storage.getItem('timestamp') || ((dateNow.getTime() - parseInt(storage.getItem('timestamp'))) > 1000 * 60 * 60 * 2)) {
 						storage.removeItem(value)
 					}
 
