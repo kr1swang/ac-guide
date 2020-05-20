@@ -115,7 +115,8 @@ export default class CustomDialog extends Component {
 										<h5><FontAwesomeIcon icon={faMoneyBillAlt} />{' 價錢'}</h5>
 									</th>
 									<td>
-										<h5>{this.props.activeItem.price}
+										<h5>
+											{this.props.activeItem.price}
 											<small>{' 鈴錢'}</small>
 										</h5>
 									</td>

@@ -32,11 +32,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 	setBlocking: (flag) => {
 		dispatch(actions.setBlocking(flag))
 	},
-	handleAssignFormHeader: (FormHeader) => {
-		dispatch(actions.assignFormDataHeader({ FormHeader: FormHeader }))
+	handleAssignFormHeader: (formHeader) => {
+		dispatch(actions.assignFormDataHeader({ formHeader: formHeader }))
 	},
-	handleAssignFormMain: (FormMain) => {
-		dispatch(actions.assignFormDataMain({ FormMain: FormMain }))
+	handleAssignFormMain: (formMain) => {
+		dispatch(actions.assignFormDataMain({ formMain: formMain }))
 	},
 	handleAssignFormFoorter: (formFooter) => {
 		dispatch(actions.assignFormDataFooter({ formFooter: formFooter }))
@@ -53,5 +53,11 @@ export default connect(
 
 FormFooter.propTypes = {
 	msg: PropTypes.string,
-	githubUrl: PropTypes.string
+	githubUrl: PropTypes.string,
+
+	setBlocking: PropTypes.func,
+	handleAssignFormHeader: PropTypes.func,
+	handleAssignFormMain: PropTypes.func,
+	handleAssignFormFoorter: PropTypes.func,
+	handleAssignValue: PropTypes.func
 }

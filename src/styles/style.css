@@ -79,6 +79,10 @@ a {
     background-color: #0069d9;
 }
 
+.btn-danger:hover {
+    background-color: #C82333;
+}
+
 svg#hsbar {
     border: 1px solid #222D32;
     border-radius: 5px;
