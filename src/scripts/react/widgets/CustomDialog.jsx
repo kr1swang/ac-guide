@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Image, Modal, Button } from 'react-bootstrap'
+import Zoom from 'react-medium-image-zoom'
+import { Carousel, Table, Image, Modal, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFossil } from './CustomIcons.jsx'
 import { faCircle, faMoneyBillAlt, faMapMarkerAlt, faFish, faCalendarAlt, faClock, faStar } from '@fortawesome/free-solid-svg-icons'
@@ -55,32 +56,72 @@ export default class CustomDialog extends Component {
 				<Modal.Body>
 					<Table className={'dialog'} hover={true}>
 						<tbody>
-							<tr>
-								<th colSpan={'2'} style={{ textAlign: 'center' }} >
-									{this.props.isMarked ?
-										<FontAwesomeIcon
-											icon={faStar}
-											style={{ position: 'absolute', left: '15px', color: '#FFC107' }}
-										/>
-										: <React.Fragment />
-									}
-									<Image src={this.props.activeItem.imageURL} fluid={true} />
-									<h4 className={'font-weight-bold'}>
-										{this.props.activeItem.chineseName}<br />
-										{this.props.activeItem.englishName}
-									</h4>
-								</th>
-							</tr>
-							<tr>
-								<th style={{ width: '30%', textAlign: 'center' }}>
-									<h5><FontAwesomeIcon icon={faMoneyBillAlt} />{' 價錢'}</h5>
-								</th>
-								<td>
-									<h5>{this.props.activeItem.price}
-										<small>{' 鈴錢'}</small>
-									</h5>
-								</td>
-							</tr>
+							{['fish', 'bug', 'fossil'].includes(this.props.type) ?
+								<tr>
+									<th colSpan={'2'} style={{ textAlign: 'center' }} >
+										{this.props.isMarked ?
+											<FontAwesomeIcon
+												icon={faStar}
+												style={{ position: 'absolute', left: '15px', color: '#FFC107' }}
+											/>
+											: <React.Fragment />
+										}
+										<Zoom>
+											<Image src={this.props.activeItem.imageUrl} fluid={true} />
+										</Zoom>
+										<h4 className={'font-weight-bold'}>
+											{this.props.activeItem.chineseName}<br />
+											{this.props.activeItem.englishName}
+										</h4>
+									</th>
+								</tr>
+								: <React.Fragment />
+							}
+							{['art'].includes(this.props.type) ?
+								<tr>
+									<th colSpan={'2'} style={{ textAlign: 'center' }} >
+										{this.props.isMarked ?
+											<FontAwesomeIcon
+												icon={faStar}
+												style={{ position: 'absolute', left: '15px', color: '#FFC107' }}
+											/>
+											: <React.Fragment />
+										}
+										<Carousel>
+											<Carousel.Item>
+												<Zoom>
+													<Image src={this.props.activeItem.imageUrl} fluid={true} />
+												</Zoom>
+												<Carousel.Caption>{'真品'}</Carousel.Caption>
+											</Carousel.Item>
+											<Carousel.Item>
+												<Zoom>
+													<Image src={this.props.activeItem.imageUrlForgery} fluid={true} />
+												</Zoom>
+												<Carousel.Caption>{'贗品'}</Carousel.Caption>
+											</Carousel.Item>
+										</Carousel>
+										<h4 className={'font-weight-bold'}>
+											{this.props.activeItem.chineseName}<br />
+											{this.props.activeItem.englishName}
+										</h4>
+									</th>
+								</tr>
+								: <React.Fragment />
+							}
+							{['fish', 'bug', 'fossil'].includes(this.props.type) ?
+								<tr>
+									<th style={{ width: '30%', textAlign: 'center' }}>
+										<h5><FontAwesomeIcon icon={faMoneyBillAlt} />{' 價錢'}</h5>
+									</th>
+									<td>
+										<h5>{this.props.activeItem.price}
+											<small>{' 鈴錢'}</small>
+										</h5>
+									</td>
+								</tr>
+								: <React.Fragment />
+							}
 							{['fish', 'bug'].includes(this.props.type) ?
 								<tr>
 									<th style={{ textAlign: 'center' }}>
@@ -170,7 +211,8 @@ CustomDialog.defaultProps = {
 	onHide: () => { },
 	activeItem: {
 		index: 0,
-		imageURL: '',
+		imageUrl: '',
+		imageUrlForgery: '',
 		chineseName: '',
 		englishName: '',
 		price: 0,

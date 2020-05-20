@@ -19,7 +19,7 @@ export default class BugGuide extends Component {
 			isDialogShow: false,
 			activeItem: {
 				index: 0,
-				imageURL: '',
+				imageUrl: '',
 				chineseName: '',
 				englishName: '',
 				price: 0,
@@ -31,7 +31,7 @@ export default class BugGuide extends Component {
 			},
 			emptyItem: {
 				index: 0,
-				imageURL: '',
+				imageUrl: '',
 				chineseName: '',
 				englishName: '',
 				price: 0,

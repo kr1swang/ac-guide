@@ -50,7 +50,7 @@ export default class CustomCard extends Component {
 				}
 				<Image
 					style={{ width: '20%', maxWidth: '80px', margin: '5px 20px', backgroundColor: '#FFF8DC' }}
-					src={this.props.object.imageURL}
+					src={this.props.object.imageUrl}
 					roundedCircle={true}
 				/>
 				<Media.Body>
@@ -74,7 +74,7 @@ CustomCard.defaultProps = {
 	type: 'bug',
 	hemisphere: 'northern',
 	object: {
-		imageURL: '',
+		imageUrl: '',
 		chineseName: '',
 		englishName: '',
 		price: 0,

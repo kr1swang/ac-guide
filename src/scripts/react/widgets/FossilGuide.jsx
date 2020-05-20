@@ -17,7 +17,7 @@ export default class FossilGuide extends Component {
 			isDialogShow: false,
 			activeItem: {
 				index: 0,
-				imageURL: '',
+				imageUrl: '',
 				chineseName: '',
 				englishName: '',
 				price: 0,
@@ -26,7 +26,7 @@ export default class FossilGuide extends Component {
 			},
 			emptyItem: {
 				index: 0,
-				imageURL: '',
+				imageUrl: '',
 				chineseName: '',
 				englishName: '',
 				price: 0,
