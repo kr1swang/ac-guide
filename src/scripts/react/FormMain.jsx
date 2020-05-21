@@ -65,20 +65,10 @@ class FormMain extends Component {
 
 		if (storage.getItem('type')) {
 			type = storage.getItem('type')
-
-			// assign to reduxStore
-			this.props.handleAssignFormMain({
-				type: type
-			})
 		}
 
 		if (storage.getItem('hemisphere')) {
 			hemisphere = storage.getItem('hemisphere')
-
-			// assign to reduxStore
-			this.props.handleAssignFormMain({
-				hemisphere: hemisphere
-			})
 		}
 
 		this.handleChangeValue('type', type)
