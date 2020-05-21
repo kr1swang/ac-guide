@@ -45,6 +45,8 @@ class FormHeader extends Component {
 			type: '',
 			dataLists: emptyDataLists
 		})
+
+		alert('清除成功!!')
 	}
 
 	handleCleanMarked() {
@@ -56,6 +58,8 @@ class FormHeader extends Component {
 		this.props.handleAssignFormMain({
 			markedLists: emptyMarkedLists
 		})
+
+		alert('清除成功!!')
 	}
 
 	render() {
