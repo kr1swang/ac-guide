@@ -4,7 +4,7 @@ import { Table, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faFossil } from './CustomIcons.jsx'
-import { faBook, faFish, faBug, faGlobeAmericas, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faBook, faFish, faBug, faPalette, faGlobeAmericas, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 export default class MainFilter extends Component {
 	constructor(props) {
@@ -48,7 +48,6 @@ export default class MainFilter extends Component {
 									active={this.props.type == 'fossil' ? true : false}
 									onClick={(e) => this.props.onChangeValue(e.target.name, 'fossil')}
 								><FontAwesomeIcon icon={faFossil} />{' 化石'}</Button>{' '}
-								{/*
 								<Button
 									name='type'
 									variant="outline-secondary"
@@ -56,6 +55,7 @@ export default class MainFilter extends Component {
 									active={this.props.type == 'art' ? true : false}
 									onClick={(e) => this.props.onChangeValue(e.target.name, 'art')}
 								><FontAwesomeIcon icon={faPalette} />{' 美術品'}</Button>{' '}
+								{/*
 								<Button
 									name='type'
 									variant="outline-secondary"

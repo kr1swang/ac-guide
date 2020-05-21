@@ -27,10 +27,10 @@ export default class SettingDialog extends Component {
 								</th>
 							</tr>
 							<tr>
-								<th style={{ width: '30%', textAlign: 'center' }}>
+								<th style={{ width: '35%', textAlign: 'center' }}>
 									<label><FontAwesomeIcon icon={faList} />{' 清單快取'}</label>
 								</th>
-								<td>
+								<td style={{ width: '65%' }}>
 									<Button
 										variant='danger'
 										size='sm'
@@ -40,10 +40,10 @@ export default class SettingDialog extends Component {
 								</td>
 							</tr>
 							<tr>
-								<th style={{ textAlign: 'center' }}>
+								<th style={{ width: '35%', textAlign: 'center' }}>
 									<label><FontAwesomeIcon icon={faStar} />{' 標記紀錄'}</label>
 								</th>
-								<td>
+								<td style={{ width: '65%' }}>
 									<Button
 										variant='danger'
 										size='sm'

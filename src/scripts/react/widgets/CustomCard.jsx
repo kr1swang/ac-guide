@@ -33,7 +33,7 @@ export default class CustomCard extends Component {
 
 	render() {
 		return (
-			<Media onClick={() => this.props.onClick()}>
+			<Media onClick={() => this.props.onClick()} style={{ minHeight: '98px' }}>
 				{['fish', 'bug'].includes(this.props.type) ?
 					<FontAwesomeIcon
 						icon={faCircle}
@@ -41,28 +41,52 @@ export default class CustomCard extends Component {
 					/>
 					: <React.Fragment />
 				}
-				{this.props.isMarked ?
+				{['fish', 'bug'].includes(this.props.type) && this.props.isMarked ?
 					<FontAwesomeIcon
 						icon={faStar}
 						style={{ position: 'absolute', fontSize: 'x-small', float: 'left', marginTop: '20px', color: '#FFC107' }}
 					/>
 					: <React.Fragment />
 				}
-				<Image
-					style={{ width: '20%', maxWidth: '80px', margin: '5px 20px', backgroundColor: '#FFF8DC' }}
-					src={this.props.object.imageUrl}
-					roundedCircle={true}
-				/>
+				{['fossil', 'art'].includes(this.props.type) && this.props.isMarked ?
+					<FontAwesomeIcon
+						icon={faStar}
+						style={{ position: 'absolute', fontSize: 'x-small', float: 'left', color: '#FFC107' }}
+					/>
+					: <React.Fragment />
+				}
+				{['fish', 'bug', 'fossil'].includes(this.props.type) ?
+					<Image
+						style={{ width: '20%', maxWidth: '80px', margin: 'auto 20px', backgroundColor: '#FFF8DC' }}
+						src={this.props.object.imageUrl}
+						roundedCircle={true}
+					/>
+					: <React.Fragment />
+				}
+				{['art'].includes(this.props.type) ?
+					<Image
+						style={{ width: '20%', maxWidth: '80px', margin: 'auto 20px', backgroundColor: '#FFF8DC', verticalAlign: 'middle' }}
+						src={this.props.object.imageUrl}
+					/>
+					: <React.Fragment />
+				}
 				<Media.Body>
 					<h4>
-						<span className={'font-weight-bold'} style={{ verticalAlign: 'middle' }}>{this.props.object.chineseName}</span>{' '}
-						<Badge pill variant='secondary'>{'$ ' + this.props.object.price}</Badge>
+						{['fish', 'bug', 'fossil', 'art'].includes(this.props.type) ?
+							<span className={'font-weight-bold'} style={{ verticalAlign: 'middle' }}>{this.props.object.chineseName + ' '}</span>
+							: <React.Fragment />
+						}
+						{['fish', 'bug', 'fossil'].includes(this.props.type) ?
+							<Badge pill variant='secondary'>{'$ ' + this.props.object.price}</Badge>
+							: <React.Fragment />
+						}
 					</h4>
 					<p style={{ marginBottom: '0px' }}>
 						{['fish'].includes(this.props.type) ? this.props.object.shadowSize + ' / ' : ''}
+						{['art'].includes(this.props.type) ? (this.props.object.imageUrlForgery ? '有贗品 / ' : '無贗品 / ') : ''}
 						{['fish', 'bug'].includes(this.props.type) ? this.props.object.location : ''}
-						{['fossil'].includes(this.props.type) ? this.props.object.series : ''}
-						{this.props.object.remark != '' ? <small><br />{'※ ' + this.props.object.remark}</small> : ''}
+						{['fossil', 'art'].includes(this.props.type) ? this.props.object.series : ''}
+						{['fish', 'bug', 'fossil'].includes(this.props.type) && this.props.object.remark != '' ? <small><br />{'※ ' + this.props.object.remark}</small> : ''}
 					</p>
 				</Media.Body>
 			</Media>
@@ -75,6 +99,7 @@ CustomCard.defaultProps = {
 	hemisphere: 'northern',
 	object: {
 		imageUrl: '',
+		imageUrlForgery: '',
 		chineseName: '',
 		englishName: '',
 		price: 0,

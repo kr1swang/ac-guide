@@ -32,15 +32,6 @@ hr {
     vertical-align: middle;
 }
 
-.carousel-caption {
-    top: 0px;
-    left: 15%;
-    right: auto;
-    padding: 0px;
-    color: #212529;
-    font-weight: bold;
-}
-
 .modal-body {
     padding-top: 0px;
 }
@@ -99,4 +90,17 @@ svg#hsbar {
 
 .MuiSnackbarContent-action>button>svg {
     margin-bottom: -2px;
+}
+
+.carousel {
+    height: 250px;
+}
+
+.carousel-indicators li {
+    background-color: #222D32;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: brightness(0.5);
 }

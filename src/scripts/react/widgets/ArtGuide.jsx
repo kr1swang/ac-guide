@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Accordion, Table, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFossil } from './CustomIcons.jsx'
-import { faStar, faFilter, faFont } from '@fortawesome/free-solid-svg-icons'
+import { faStar, faFilter, faFont, faPalette } from '@fortawesome/free-solid-svg-icons'
 import CustomDialog from './CustomDialog.jsx'
 import CustomCard from './CustomCard.jsx'
 
-export default class FossilGuide extends Component {
+export default class ArtGuide extends Component {
 	constructor(props) {
 		super(props)
 
@@ -18,26 +17,25 @@ export default class FossilGuide extends Component {
 			activeItem: {
 				index: 0,
 				imageUrl: '',
+				imageUrlForgery: '',
 				chineseName: '',
 				englishName: '',
-				price: 0,
 				series: '',
 				remark: ''
 			},
 			emptyItem: {
 				index: 0,
 				imageUrl: '',
+				imageUrlForgery: '',
 				chineseName: '',
 				englishName: '',
-				price: 0,
 				series: '',
 				remark: ''
 			},
 
 			// options
 			markedOptions: ['已標記', '未標記'],
-			seriesOptions: ['獨立化石', '甲龍', '帝龜', '腕龍', '恐爪龍', '異齒龍', '梁龍', '禽龍', '長毛象', '巨角犀', '大角鹿',
-				'大眼魚龍', '厚頭龍', '副櫛龍', '雙葉鈴木龍', '無齒翼龍', '風神翼龍', '劍齒虎', '棘龍', '劍龍', '三角龍', '暴龍'],
+			seriesOptions: ['名畫', '雕像'],
 
 			// picked options
 			isNoneFilter: false,
@@ -136,7 +134,7 @@ export default class FossilGuide extends Component {
 		return (
 			<React.Fragment>
 				<CustomDialog
-					type={'fossil'}
+					type={'art'}
 					isDialogShow={this.state.isDialogShow}
 					onHide={() => this.setState({ isDialogShow: false, activeItem: this.state.emptyItem })}
 					activeItem={this.state.activeItem}
@@ -214,7 +212,7 @@ export default class FossilGuide extends Component {
 													name='filterName'
 													value={this.state.filterName}
 													className={'form-control form-control-sm'}
-													placeholder={'請輸入中/英文化石名...'}
+													placeholder={'請輸入中/英文美術品名...'}
 													onChange={(e) => this.handleFilterClick(e.target.name, e.target.value)}
 												/>
 											</span>
@@ -224,7 +222,7 @@ export default class FossilGuide extends Component {
 									{/* 系列 */}
 									<tr>
 										<th>
-											<FontAwesomeIcon icon={faFossil} />{' 系列 : '}
+											<FontAwesomeIcon icon={faPalette} />{' 系列 : '}
 										</th>
 										<td>
 											{this.state.seriesOptions.map((item, index) =>
@@ -253,7 +251,7 @@ export default class FossilGuide extends Component {
 					{targetList.map((item, index) =>
 						<CustomCard
 							key={index}
-							type={'fossil'}
+							type={'art'}
 							object={item}
 							onClick={() => this.setState({ isDialogShow: true, activeItem: item })}
 							isMarked={this.props.markedList.includes(item.index)}
@@ -265,14 +263,14 @@ export default class FossilGuide extends Component {
 	}
 }
 
-FossilGuide.defaultProps = {
+ArtGuide.defaultProps = {
 	mainFilter: <React.Fragment />,
 	dataList: [],
 	markedList: [],
 	onChangeMarked: () => { }
 }
 
-FossilGuide.propTypes = {
+ArtGuide.propTypes = {
 	mainFilter: PropTypes.element,
 	dataList: PropTypes.array,
 	markedList: PropTypes.array,

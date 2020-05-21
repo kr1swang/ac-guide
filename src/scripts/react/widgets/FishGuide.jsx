@@ -471,7 +471,7 @@ export default class FishGuide extends Component {
 }
 
 FishGuide.defaultProps = {
-	mainFilter: <br />,
+	mainFilter: <React.Fragment />,
 	hemisphere: 'northern',
 	dataList: [],
 	markedList: [],

@@ -7,6 +7,7 @@ import MainFilter from './widgets/MainFilter.jsx'
 import FishGuide from './widgets/FishGuide.jsx'
 import BugGuide from './widgets/BugGuide.jsx'
 import FossilGuide from './widgets/FossilGuide.jsx'
+import ArtGuide from './widgets/ArtGuide.jsx'
 
 class FormMain extends Component {
 	constructor(props) {
@@ -204,6 +205,12 @@ class FormMain extends Component {
 							onChangeMarked={(type, id) => this.handleChangeMarked(type, id)}
 						/>,
 						'fossil': <FossilGuide
+							mainFilter={mainFilter}
+							dataList={this.props.dataLists[this.props.type]}
+							markedList={this.props.markedLists[this.props.type]}
+							onChangeMarked={(type, id) => this.handleChangeMarked(type, id)}
+						/>,
+						'art': <ArtGuide
 							mainFilter={mainFilter}
 							dataList={this.props.dataLists[this.props.type]}
 							markedList={this.props.markedLists[this.props.type]}

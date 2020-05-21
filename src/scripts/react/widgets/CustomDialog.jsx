@@ -4,12 +4,16 @@ import Zoom from 'react-medium-image-zoom'
 import { Carousel, Table, Image, Modal, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFossil } from './CustomIcons.jsx'
-import { faCircle, faMoneyBillAlt, faMapMarkerAlt, faFish, faCalendarAlt, faClock, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faMoneyBillAlt, faMapMarkerAlt, faFish, faPalette, faInfoCircle, faCalendarAlt, faClock, faStar } from '@fortawesome/free-solid-svg-icons'
 import TimeBar from './TimeBar.jsx'
 
 export default class CustomDialog extends Component {
 	constructor(props) {
 		super(props)
+
+		this.state = {
+			carouselIndex: 0
+		}
 
 		this.handelConvertColorCode = this.handelConvertColorCode.bind(this)
 	}
@@ -35,8 +39,11 @@ export default class CustomDialog extends Component {
 	}
 
 	render() {
+		// for creat carousel item
+		let carouselList = this.props.activeItem.imageUrlForgery ? ['imageUrl', 'imageUrlForgery'] : ['imageUrl']
+
 		return (
-			<Modal show={this.props.isDialogShow} onHide={() => this.props.onHide()}>
+			<Modal show={this.props.isDialogShow} onHide={() => { this.props.onHide(), this.setState({ carouselIndex: 0 }) }}>
 				<Modal.Header closeButton>
 					<Modal.Title>
 						{['fish', 'bug'].includes(this.props.type) ?
@@ -49,7 +56,19 @@ export default class CustomDialog extends Component {
 									<FontAwesomeIcon icon={faCircle} style={{ verticalAlign: 'middle', fontSize: 'x-small' }} />{' 南半球'}
 								</span>
 							</React.Fragment>
-							: '　'
+							: ''
+						}
+						{['fossil'].includes(this.props.type) ?
+							<span style={{ color: '#000000' }}>
+								{this.props.activeItem.chineseName}
+							</span>
+							: ''
+						}
+						{['art'].includes(this.props.type) ?
+							<span style={{ color: '#000000' }}>
+								{this.props.activeItem.chineseName + ' - ' + (this.state.carouselIndex == 0 ? '真品' : '贗品')}
+							</span>
+							: ''
 						}
 					</Modal.Title>
 				</Modal.Header>
@@ -67,7 +86,7 @@ export default class CustomDialog extends Component {
 											: <React.Fragment />
 										}
 										<Zoom>
-											<Image src={this.props.activeItem.imageUrl} fluid={true} />
+											<Image src={this.props.activeItem.imageUrl} />
 										</Zoom>
 										<h4 className={'font-weight-bold'}>
 											{this.props.activeItem.chineseName}<br />
@@ -87,19 +106,22 @@ export default class CustomDialog extends Component {
 											/>
 											: <React.Fragment />
 										}
-										<Carousel>
-											<Carousel.Item>
-												<Zoom>
-													<Image src={this.props.activeItem.imageUrl} fluid={true} />
-												</Zoom>
-												<Carousel.Caption>{'真品'}</Carousel.Caption>
-											</Carousel.Item>
-											<Carousel.Item>
-												<Zoom>
-													<Image src={this.props.activeItem.imageUrlForgery} fluid={true} />
-												</Zoom>
-												<Carousel.Caption>{'贗品'}</Carousel.Caption>
-											</Carousel.Item>
+										<Carousel
+											activeIndex={this.state.carouselIndex}
+											onSelect={(index) => this.setState({ carouselIndex: index })}
+											interval={null}
+										>
+											{carouselList.map((item, index) =>
+												<Carousel.Item key={index}>
+													<Zoom>
+														<Image
+															style={{ maxWidth: '100%' }}
+															height='200'
+															src={this.props.activeItem[item]}
+														/>
+													</Zoom>
+												</Carousel.Item>
+											)}
 										</Carousel>
 										<h4 className={'font-weight-bold'}>
 											{this.props.activeItem.chineseName}<br />
@@ -114,7 +136,7 @@ export default class CustomDialog extends Component {
 									<th style={{ width: '30%', textAlign: 'center' }}>
 										<h5><FontAwesomeIcon icon={faMoneyBillAlt} />{' 價錢'}</h5>
 									</th>
-									<td>
+									<td style={{ width: '70%' }}>
 										<h5>
 											{this.props.activeItem.price}
 											<small>{' 鈴錢'}</small>
@@ -125,10 +147,10 @@ export default class CustomDialog extends Component {
 							}
 							{['fish', 'bug'].includes(this.props.type) ?
 								<tr>
-									<th style={{ textAlign: 'center' }}>
+									<th style={{ width: '30%', textAlign: 'center' }}>
 										<h5><FontAwesomeIcon icon={faMapMarkerAlt} />{' 地點'}</h5>
 									</th>
-									<td>
+									<td style={{ width: '70%' }}>
 										<h5>{this.props.activeItem.location}</h5>
 										{this.props.activeItem.remark != '' ? <small>{'※ ' + this.props.activeItem.remark}</small> : ''}
 									</td>
@@ -137,22 +159,43 @@ export default class CustomDialog extends Component {
 							}
 							{['fossil'].includes(this.props.type) ?
 								<tr>
-									<th style={{ textAlign: 'center' }}>
+									<th style={{ width: '30%', textAlign: 'center' }}>
 										<h5><FontAwesomeIcon icon={faFossil} />{' 系列'}</h5>
 									</th>
-									<td>
+									<td style={{ width: '70%' }}>
 										<h5>{this.props.activeItem.series}</h5>
-										{this.props.activeItem.remark != '' ? <small>{'※ ' + this.props.activeItem.remark}</small> : ''}
+									</td>
+								</tr>
+								: <React.Fragment />
+							}
+							{['art'].includes(this.props.type) ?
+								<tr>
+									<th style={{ width: '30%', textAlign: 'center' }}>
+										<h5><FontAwesomeIcon icon={faPalette} />{' 系列'}</h5>
+									</th>
+									<td style={{ width: '70%' }}>
+										<h5>{this.props.activeItem.series}</h5>
+									</td>
+								</tr>
+								: <React.Fragment />
+							}
+							{['art'].includes(this.props.type) ?
+								<tr>
+									<th style={{ width: '30%', textAlign: 'center' }}>
+										<h5><FontAwesomeIcon icon={faInfoCircle} />{' 備註'}</h5>
+									</th>
+									<td style={{ width: '70%' }}>
+										<h5>{this.props.activeItem.remark}</h5>
 									</td>
 								</tr>
 								: <React.Fragment />
 							}
 							{['fish'].includes(this.props.type) ?
 								<tr>
-									<th style={{ textAlign: 'center' }}>
+									<th style={{ width: '30%', textAlign: 'center' }}>
 										<h5><FontAwesomeIcon icon={faFish} />{' 魚影'}</h5>
 									</th>
-									<td>
+									<td style={{ width: '70%' }}>
 										<h5>{this.props.activeItem.shadowSize}</h5>
 									</td>
 								</tr>
@@ -160,10 +203,10 @@ export default class CustomDialog extends Component {
 							}
 							{['fish', 'bug'].includes(this.props.type) ?
 								<tr>
-									<th style={{ textAlign: 'center' }}>
+									<th style={{ width: '30%', textAlign: 'center' }}>
 										<label><FontAwesomeIcon icon={faCalendarAlt} />{' 北半球月份'}</label>
 									</th>
-									<td>
+									<td style={{ width: '70%' }}>
 										<TimeBar type={'month'} data={this.props.activeItem.northernMonths} />
 									</td>
 								</tr>
@@ -171,10 +214,10 @@ export default class CustomDialog extends Component {
 							}
 							{['fish', 'bug'].includes(this.props.type) ?
 								<tr>
-									<th style={{ textAlign: 'center' }}>
+									<th style={{ width: '30%', textAlign: 'center' }}>
 										<label><FontAwesomeIcon icon={faCalendarAlt} />{' 南半球月份'}</label>
 									</th>
-									<td>
+									<td style={{ width: '70%' }}>
 										<TimeBar type={'month'} data={this.props.activeItem.southernMonths} />
 									</td>
 								</tr>
@@ -182,10 +225,10 @@ export default class CustomDialog extends Component {
 							}
 							{['fish', 'bug'].includes(this.props.type) ?
 								<tr>
-									<th style={{ textAlign: 'center' }}>
+									<th style={{ width: '30%', textAlign: 'center' }}>
 										<h5><FontAwesomeIcon icon={faClock} />{' 時間'}</h5>
 									</th>
-									<td>
+									<td style={{ width: '70%' }}>
 										<TimeBar type={'hour'} data={this.props.activeItem.appearanceTime} />
 									</td>
 								</tr>
@@ -197,6 +240,7 @@ export default class CustomDialog extends Component {
 				<Modal.Footer>
 					<Button
 						variant='primary'
+						size='sm'
 						active={this.props.isMarked}
 						onClick={() => this.props.onChangeMarked(this.props.type, this.props.activeItem.index)}
 					><FontAwesomeIcon icon={faStar} />{this.props.isMarked ? ' 取消標記' : ' 標記'}</Button>

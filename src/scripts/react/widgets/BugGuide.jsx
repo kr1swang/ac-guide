@@ -428,7 +428,7 @@ export default class BugGuide extends Component {
 }
 
 BugGuide.defaultProps = {
-	mainFilter: <br />,
+	mainFilter: <React.Fragment />,
 	hemisphere: 'northern',
 	dataList: [],
 	markedList: [],
