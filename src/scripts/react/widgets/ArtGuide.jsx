@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Accordion, Table, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar, faFilter, faFont, faPalette } from '@fortawesome/free-solid-svg-icons'
+import { faStar, faFilter, faFont, faPalette, faSearch } from '@fortawesome/free-solid-svg-icons'
 import CustomDialog from './CustomDialog.jsx'
 import CustomCard from './CustomCard.jsx'
 
@@ -36,12 +36,14 @@ export default class ArtGuide extends Component {
 			// options
 			markedOptions: ['已標記', '未標記'],
 			seriesOptions: ['名畫', '雕像'],
+			forgeryOptions: ['無贗品', '有贗品'],
 
 			// picked options
 			isNoneFilter: false,
 			markedPicked: [],
 			filterName: '',
-			seriesPicked: []
+			seriesPicked: [],
+			forgeryPicked: []
 		}
 
 		this.handleFilterClick = this.handleFilterClick.bind(this)
@@ -99,6 +101,19 @@ export default class ArtGuide extends Component {
 				})
 				break
 			}
+			case 'forgeryPicked': {
+				let forgeryPicked = JSON.parse(JSON.stringify(this.state.forgeryPicked))
+				let index = forgeryPicked.indexOf(value)
+
+				index == -1 ? forgeryPicked.push(value) : forgeryPicked.splice(index, 1)
+				forgeryPicked.sort((a, b) => a - b)
+
+				this.setState({
+					isNoneFilter: false,
+					forgeryPicked: forgeryPicked
+				})
+				break
+			}
 			default: {
 				break
 			}
@@ -122,6 +137,12 @@ export default class ArtGuide extends Component {
 		// series
 		if (this.state.seriesPicked.length > 0) {
 			result = result.filter(x => this.state.seriesPicked.some(y => x.series.indexOf(y) != -1))
+		}
+
+		// forgery
+		if (this.state.forgeryPicked.length > 0) {
+			result = result.filter(x => !x.imageUrlForgery && this.state.forgeryPicked.includes('無贗品')
+				|| x.imageUrlForgery && this.state.forgeryPicked.includes('有贗品'))
 		}
 
 		return result
@@ -232,6 +253,26 @@ export default class ArtGuide extends Component {
 														variant='outline-secondary'
 														size='sm'
 														active={this.state.seriesPicked.includes(item)}
+														onClick={(e) => this.handleFilterClick(e.target.name, e.target.textContent)}
+													>{item}</Button>{' '}
+												</span>
+											)}
+										</td>
+									</tr>
+
+									{/* 真偽 */}
+									<tr>
+										<th>
+											<FontAwesomeIcon icon={faSearch} />{' 真偽 : '}
+										</th>
+										<td>
+											{this.state.forgeryOptions.map((item, index) =>
+												<span key={index}>
+													<Button
+														name='forgeryPicked'
+														variant='outline-secondary'
+														size='sm'
+														active={this.state.forgeryPicked.includes(item)}
 														onClick={(e) => this.handleFilterClick(e.target.name, e.target.textContent)}
 													>{item}</Button>{' '}
 												</span>
