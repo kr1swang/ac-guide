@@ -79,7 +79,6 @@ class FormMain extends Component {
 		switch (name) {
 			case 'type': {
 				if (value) {
-
 					let dataLists = JSON.parse(JSON.stringify(this.props.dataLists))
 					let storage = window.localStorage
 					let dateNow = new Date()
