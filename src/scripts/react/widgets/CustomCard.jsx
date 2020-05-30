@@ -48,14 +48,14 @@ export default class CustomCard extends Component {
 					/>
 					: <React.Fragment />
 				}
-				{['fossil', 'art'].includes(this.props.type) && this.props.isMarked ?
+				{['fossil', 'art', 'song'].includes(this.props.type) && this.props.isMarked ?
 					<FontAwesomeIcon
 						icon={faStar}
 						style={{ position: 'absolute', fontSize: 'x-small', float: 'left', color: '#FFC107' }}
 					/>
 					: <React.Fragment />
 				}
-				{['fish', 'bug', 'fossil'].includes(this.props.type) ?
+				{['fish', 'bug', 'fossil', 'song'].includes(this.props.type) ?
 					<Image
 						style={{ width: '20%', maxWidth: '80px', margin: 'auto 20px', backgroundColor: '#FFF8DC' }}
 						src={this.props.object.imageUrl}
@@ -72,7 +72,7 @@ export default class CustomCard extends Component {
 				}
 				<Media.Body>
 					<h4>
-						{['fish', 'bug', 'fossil', 'art'].includes(this.props.type) ?
+						{['fish', 'bug', 'fossil', 'art', 'song'].includes(this.props.type) ?
 							<span className={'font-weight-bold'} style={{ verticalAlign: 'middle' }}>{this.props.object.chineseName + ' '}</span>
 							: <React.Fragment />
 						}
@@ -87,6 +87,7 @@ export default class CustomCard extends Component {
 						{['fish', 'bug'].includes(this.props.type) ? this.props.object.location : ''}
 						{['fossil', 'art'].includes(this.props.type) ? this.props.object.series : ''}
 						{['fish', 'bug', 'fossil'].includes(this.props.type) && this.props.object.remark != '' ? <small><br />{'※ ' + this.props.object.remark}</small> : ''}
+						{['song'].includes(this.props.type) ? this.props.object.remark : ''}
 					</p>
 				</Media.Body>
 			</Media>
@@ -102,7 +103,7 @@ CustomCard.defaultProps = {
 		imageUrlForgery: '',
 		chineseName: '',
 		englishName: '',
-		price: 0,
+		price: '',
 		location: '',
 		series: '',
 		northernMonths: [],

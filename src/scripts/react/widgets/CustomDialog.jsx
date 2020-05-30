@@ -58,7 +58,7 @@ export default class CustomDialog extends Component {
 							</React.Fragment>
 							: ''
 						}
-						{['fossil'].includes(this.props.type) ?
+						{['fossil', 'song'].includes(this.props.type) ?
 							<span style={{ color: '#000000' }}>
 								{this.props.activeItem.chineseName}
 							</span>
@@ -75,7 +75,7 @@ export default class CustomDialog extends Component {
 				<Modal.Body>
 					<Table className={'dialog'} hover={true}>
 						<tbody>
-							{['fish', 'bug', 'fossil'].includes(this.props.type) ?
+							{['fish', 'bug', 'fossil', 'song'].includes(this.props.type) ?
 								<tr>
 									<th colSpan={'2'} style={{ textAlign: 'center' }} >
 										{this.props.isMarked ?
@@ -131,7 +131,7 @@ export default class CustomDialog extends Component {
 								</tr>
 								: <React.Fragment />
 							}
-							{['fish', 'bug', 'fossil'].includes(this.props.type) ?
+							{['fish', 'bug', 'fossil', 'song'].includes(this.props.type) ?
 								<tr>
 									<th style={{ width: '30%', textAlign: 'center' }}>
 										<h5><FontAwesomeIcon icon={faMoneyBillAlt} />{' 價錢'}</h5>
@@ -179,7 +179,7 @@ export default class CustomDialog extends Component {
 								</tr>
 								: <React.Fragment />
 							}
-							{['art'].includes(this.props.type) ?
+							{['art', 'song'].includes(this.props.type) ?
 								<tr>
 									<th style={{ width: '30%', textAlign: 'center' }}>
 										<h5><FontAwesomeIcon icon={faInfoCircle} />{' 備註'}</h5>
@@ -260,7 +260,7 @@ CustomDialog.defaultProps = {
 		imageUrlForgery: '',
 		chineseName: '',
 		englishName: '',
-		price: 0,
+		price: '',
 		location: '',
 		series: '',
 		northernMonths: [],

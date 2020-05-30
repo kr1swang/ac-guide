@@ -8,6 +8,7 @@ import FishGuide from './widgets/FishGuide.jsx'
 import BugGuide from './widgets/BugGuide.jsx'
 import FossilGuide from './widgets/FossilGuide.jsx'
 import ArtGuide from './widgets/ArtGuide.jsx'
+import SongGuide from './widgets/SongGuide.jsx'
 
 class FormMain extends Component {
 	constructor(props) {
@@ -83,8 +84,8 @@ class FormMain extends Component {
 					let storage = window.localStorage
 					let dateNow = new Date()
 
-					// check timestamp to clear localStorage (diff more than 2 hour(1000 * 60 * 60 * 2) clear) 
-					if (!storage.getItem('timestamp') || ((dateNow.getTime() - parseInt(storage.getItem('timestamp'))) > 1000 * 60 * 60 * 2)) {
+					// check timestamp to clear localStorage (diff more than 2 days(1000 * 60 * 60 * 24 * 2) clear) 
+					if (!storage.getItem('timestamp') || ((dateNow.getTime() - parseInt(storage.getItem('timestamp'))) > 1000 * 60 * 60 * 24 * 2)) {
 						storage.removeItem(value)
 					}
 
@@ -200,6 +201,12 @@ class FormMain extends Component {
 							onChangeMarked={(type, id) => this.handleChangeMarked(type, id)}
 						/>,
 						'art': <ArtGuide
+							mainFilter={mainFilter}
+							dataList={this.props.dataLists[this.props.type]}
+							markedList={this.props.markedLists[this.props.type]}
+							onChangeMarked={(type, id) => this.handleChangeMarked(type, id)}
+						/>,
+						'song': <SongGuide
 							mainFilter={mainFilter}
 							dataList={this.props.dataLists[this.props.type]}
 							markedList={this.props.markedLists[this.props.type]}
