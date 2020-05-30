@@ -33,12 +33,12 @@ hr {
 }
 
 .modal-body {
-    padding-top: 0px;
+    padding-top: 0;
 }
 
 span>button,
 span>input {
-    margin: 5px 0px;
+    margin: 5px 0;
 }
 
 .media,
@@ -74,14 +74,14 @@ a {
     background-color: #C82333;
 }
 
-svg#hsbar {
+.timeBar>div {
+    text-align: center;
+}
+
+.timeBar>svg {
     border: 1px solid #222D32;
     border-radius: 5px;
     margin-top: -15px;
-}
-
-#hsbar_text>div {
-    text-align: center;
 }
 
 .MuiSnackbarContent-action {

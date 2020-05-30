@@ -47,13 +47,15 @@ export default class TimeBar extends Component {
 
 	render() {
 		return (
-			<HSBar
-				data={this.handleConverter(this.props.type, this.props.data)}
-				height={12}
-				showTextUp={true}
-				fontColor='#282c34'
-				outlineWidth={0.5}
-			/>
+			<div className={'timeBar'}>
+				<HSBar
+					data={this.handleConverter(this.props.type, this.props.data)}
+					height={12}
+					showTextUp={true}
+					fontColor='#282c34'
+					outlineWidth={0.5}
+				/>
+			</div>
 		)
 	}
 }
