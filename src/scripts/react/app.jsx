@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import React, { Component, lazy, Suspense, Fragment } from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { Container } from 'react-bootstrap'
 import store from './reducers/store.jsx'
-import FormHeader from './FormHeader.jsx'
-import FormMain from './FormMain.jsx'
-import FormFooter from './FormFooter.jsx'
+
+const FormHeader = lazy(() => import('./FormHeader.jsx'))
+const FormMain = lazy(() => import('./FormMain.jsx'))
+const FormFooter = lazy(() => import('./FormFooter.jsx'))
 
 class App extends Component {
 	constructor(props) {
@@ -16,11 +17,13 @@ class App extends Component {
 		return (
 			<Provider store={store}>
 				<Container>
-					<FormHeader />
-					<hr />
-					<FormMain />
-					<hr />
-					<FormFooter />
+					<Suspense fallback={<Fragment />}>
+						<FormHeader />
+						<hr />
+						<FormMain />
+						<hr />
+						<FormFooter />
+					</Suspense>
 				</Container>
 			</Provider>
 		)

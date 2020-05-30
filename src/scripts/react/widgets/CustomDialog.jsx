@@ -86,7 +86,10 @@ export default class CustomDialog extends Component {
 											: <Fragment />
 										}
 										<Zoom>
-											<Image src={this.props.activeItem.imageUrl} />
+											<Image
+												src={this.props.activeItem.imageUrl}
+												loading='lazy'
+											/>
 										</Zoom>
 										<h4 className={'font-weight-bold'}>
 											{this.props.activeItem.chineseName}<br />
@@ -118,6 +121,7 @@ export default class CustomDialog extends Component {
 															style={{ maxWidth: '100%' }}
 															height='200'
 															src={this.props.activeItem[item]}
+															loading='lazy'
 														/>
 													</Zoom>
 												</Carousel.Item>

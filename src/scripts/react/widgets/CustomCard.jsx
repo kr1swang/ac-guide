@@ -60,6 +60,7 @@ export default class CustomCard extends Component {
 						style={{ width: '20%', maxWidth: '80px', margin: 'auto 20px', backgroundColor: '#FFF8DC' }}
 						src={this.props.object.imageUrl}
 						roundedCircle={true}
+						loading='lazy'
 					/>
 					: <Fragment />
 				}
@@ -67,6 +68,7 @@ export default class CustomCard extends Component {
 					<Image
 						style={{ width: '20%', maxWidth: '80px', margin: 'auto 20px', backgroundColor: '#FFF8DC', verticalAlign: 'middle' }}
 						src={this.props.object.imageUrl}
+						loading='lazy'
 					/>
 					: <Fragment />
 				}
