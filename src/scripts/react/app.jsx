@@ -1,9 +1,9 @@
 import React, { Component, lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
+import UIBlocker from 'react-ui-blocker'
 import { Provider } from 'react-redux'
 import { Container } from 'react-bootstrap'
 import store from './reducers/store.jsx'
-import UIBlocker from 'react-ui-blocker'
 
 const FormHeader = lazy(() => import('./FormHeader.jsx'))
 const FormMain = lazy(() => import('./FormMain.jsx'))
@@ -16,17 +16,17 @@ class App extends Component {
 
 	render() {
 		return (
-			<Provider store={store}>
-				<Container>
-					<Suspense fallback={<UIBlocker theme="cubeGrid" isVisible={true} message="Loading..."/>}>
+			<Suspense fallback={<UIBlocker theme="cubeGrid" isVisible={true} message="Loading..." />}>
+				<Provider store={store}>
+					<Container>
 						<FormHeader />
 						<hr />
 						<FormMain />
 						<hr />
 						<FormFooter />
-					</Suspense>
-				</Container>
-			</Provider>
+					</Container>
+				</Provider>
+			</Suspense>
 		)
 	}
 }
