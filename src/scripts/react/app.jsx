@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense, Fragment } from 'react'
+import React, { Component, lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { Container } from 'react-bootstrap'
