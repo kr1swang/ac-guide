@@ -167,14 +167,14 @@ class FormMain extends Component {
 			onChangeValue={(name, value) => this.handleChangeValue(name, value)}
 		/>
 
-		let defaultView = <React.Fragment>
+		let defaultView = <Fragment>
 			<div className={'accordion'}>{mainFilter}</div>
 			<hr />
 			<h5>{'Hello!!'}</h5>
 			<p>{'歡迎使用 ac-Guide 動森圖鑑, '}</p>
 			<p>{'點選上方種類, 及選擇預設地區開始!'}</p>
 			<p>{'點擊查詢結果會顯示詳細資料, 並可添加標記~'}</p>
-		</React.Fragment>
+		</Fragment>
 
 		return (
 			<div className={'main'}>

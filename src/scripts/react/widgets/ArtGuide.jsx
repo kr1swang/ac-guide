@@ -153,7 +153,7 @@ export default class ArtGuide extends Component {
 		let targetList = this.handleConvertFilter(this.props.dataList)
 
 		return (
-			<React.Fragment>
+			<Fragment>
 				<CustomDialog
 					type={'art'}
 					isDialogShow={this.state.isDialogShow}
@@ -299,13 +299,13 @@ export default class ArtGuide extends Component {
 						/>
 					)}
 				</span>
-			</React.Fragment>
+			</Fragment>
 		)
 	}
 }
 
 ArtGuide.defaultProps = {
-	mainFilter: <React.Fragment />,
+	mainFilter: <Fragment />,
 	dataList: [],
 	markedList: [],
 	onChangeMarked: () => { }

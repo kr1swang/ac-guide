@@ -130,7 +130,7 @@ export default class SongGuide extends Component {
 		let targetList = this.handleConvertFilter(this.props.dataList)
 
 		return (
-			<React.Fragment>
+			<Fragment>
 				<CustomDialog
 					type={'song'}
 					isDialogShow={this.state.isDialogShow}
@@ -256,13 +256,13 @@ export default class SongGuide extends Component {
 						/>
 					)}
 				</span>
-			</React.Fragment>
+			</Fragment>
 		)
 	}
 }
 
 SongGuide.defaultProps = {
-	mainFilter: <React.Fragment />,
+	mainFilter: <Fragment />,
 	dataList: [],
 	markedList: [],
 	onChangeMarked: () => { }

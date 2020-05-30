@@ -47,7 +47,7 @@ export default class CustomDialog extends Component {
 				<Modal.Header closeButton>
 					<Modal.Title>
 						{['fish', 'bug'].includes(this.props.type) ?
-							<React.Fragment>
+							<Fragment>
 								<span style={{ color: this.handelConvertColorCode('northern', this.props.activeItem) }}>
 									<FontAwesomeIcon icon={faCircle} style={{ verticalAlign: 'middle', fontSize: 'x-small' }} />{' 北半球'}
 								</span>
@@ -55,7 +55,7 @@ export default class CustomDialog extends Component {
 								<span style={{ color: this.handelConvertColorCode('southern', this.props.activeItem) }}>
 									<FontAwesomeIcon icon={faCircle} style={{ verticalAlign: 'middle', fontSize: 'x-small' }} />{' 南半球'}
 								</span>
-							</React.Fragment>
+							</Fragment>
 							: ''
 						}
 						{['fossil', 'song'].includes(this.props.type) ?
@@ -83,7 +83,7 @@ export default class CustomDialog extends Component {
 												icon={faStar}
 												style={{ position: 'absolute', left: '15px', color: '#FFC107' }}
 											/>
-											: <React.Fragment />
+											: <Fragment />
 										}
 										<Zoom>
 											<Image src={this.props.activeItem.imageUrl} />
@@ -94,7 +94,7 @@ export default class CustomDialog extends Component {
 										</h4>
 									</th>
 								</tr>
-								: <React.Fragment />
+								: <Fragment />
 							}
 							{['art'].includes(this.props.type) ?
 								<tr>
@@ -104,7 +104,7 @@ export default class CustomDialog extends Component {
 												icon={faStar}
 												style={{ position: 'absolute', left: '15px', color: '#FFC107' }}
 											/>
-											: <React.Fragment />
+											: <Fragment />
 										}
 										<Carousel
 											activeIndex={this.state.carouselIndex}
@@ -129,7 +129,7 @@ export default class CustomDialog extends Component {
 										</h4>
 									</th>
 								</tr>
-								: <React.Fragment />
+								: <Fragment />
 							}
 							{['fish', 'bug', 'fossil', 'song'].includes(this.props.type) ?
 								<tr>
@@ -143,7 +143,7 @@ export default class CustomDialog extends Component {
 										</h5>
 									</td>
 								</tr>
-								: <React.Fragment />
+								: <Fragment />
 							}
 							{['fish', 'bug'].includes(this.props.type) ?
 								<tr>
@@ -155,7 +155,7 @@ export default class CustomDialog extends Component {
 										{this.props.activeItem.remark != '' ? <small>{'※ ' + this.props.activeItem.remark}</small> : ''}
 									</td>
 								</tr>
-								: <React.Fragment />
+								: <Fragment />
 							}
 							{['fossil'].includes(this.props.type) ?
 								<tr>
@@ -166,7 +166,7 @@ export default class CustomDialog extends Component {
 										<h5>{this.props.activeItem.series}</h5>
 									</td>
 								</tr>
-								: <React.Fragment />
+								: <Fragment />
 							}
 							{['art'].includes(this.props.type) ?
 								<tr>
@@ -177,7 +177,7 @@ export default class CustomDialog extends Component {
 										<h5>{this.props.activeItem.series}</h5>
 									</td>
 								</tr>
-								: <React.Fragment />
+								: <Fragment />
 							}
 							{['art', 'song'].includes(this.props.type) ?
 								<tr>
@@ -188,7 +188,7 @@ export default class CustomDialog extends Component {
 										<h5>{this.props.activeItem.remark}</h5>
 									</td>
 								</tr>
-								: <React.Fragment />
+								: <Fragment />
 							}
 							{['fish'].includes(this.props.type) ?
 								<tr>
@@ -199,7 +199,7 @@ export default class CustomDialog extends Component {
 										<h5>{this.props.activeItem.shadowSize}</h5>
 									</td>
 								</tr>
-								: <React.Fragment />
+								: <Fragment />
 							}
 							{['fish', 'bug'].includes(this.props.type) ?
 								<tr>
@@ -210,7 +210,7 @@ export default class CustomDialog extends Component {
 										<TimeBar type={'month'} data={this.props.activeItem.northernMonths} />
 									</td>
 								</tr>
-								: <React.Fragment />
+								: <Fragment />
 							}
 							{['fish', 'bug'].includes(this.props.type) ?
 								<tr>
@@ -221,7 +221,7 @@ export default class CustomDialog extends Component {
 										<TimeBar type={'month'} data={this.props.activeItem.southernMonths} />
 									</td>
 								</tr>
-								: <React.Fragment />
+								: <Fragment />
 							}
 							{['fish', 'bug'].includes(this.props.type) ?
 								<tr>
@@ -232,7 +232,7 @@ export default class CustomDialog extends Component {
 										<TimeBar type={'hour'} data={this.props.activeItem.appearanceTime} />
 									</td>
 								</tr>
-								: <React.Fragment />
+								: <Fragment />
 							}
 						</tbody>
 					</Table>

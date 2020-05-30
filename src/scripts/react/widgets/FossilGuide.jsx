@@ -134,7 +134,7 @@ export default class FossilGuide extends Component {
 		let targetList = this.handleConvertFilter(this.props.dataList)
 
 		return (
-			<React.Fragment>
+			<Fragment>
 				<CustomDialog
 					type={'fossil'}
 					isDialogShow={this.state.isDialogShow}
@@ -260,13 +260,13 @@ export default class FossilGuide extends Component {
 						/>
 					)}
 				</span>
-			</React.Fragment>
+			</Fragment>
 		)
 	}
 }
 
 FossilGuide.defaultProps = {
-	mainFilter: <React.Fragment />,
+	mainFilter: <Fragment />,
 	dataList: [],
 	markedList: [],
 	onChangeMarked: () => { }

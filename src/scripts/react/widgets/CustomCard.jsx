@@ -39,21 +39,21 @@ export default class CustomCard extends Component {
 						icon={faCircle}
 						style={{ position: 'absolute', fontSize: 'x-small', float: 'left', color: this.handelConvertColorCode(this.props.hemisphere, this.props.object) }}
 					/>
-					: <React.Fragment />
+					: <Fragment />
 				}
 				{['fish', 'bug'].includes(this.props.type) && this.props.isMarked ?
 					<FontAwesomeIcon
 						icon={faStar}
 						style={{ position: 'absolute', fontSize: 'x-small', float: 'left', marginTop: '20px', color: '#FFC107' }}
 					/>
-					: <React.Fragment />
+					: <Fragment />
 				}
 				{['fossil', 'art', 'song'].includes(this.props.type) && this.props.isMarked ?
 					<FontAwesomeIcon
 						icon={faStar}
 						style={{ position: 'absolute', fontSize: 'x-small', float: 'left', color: '#FFC107' }}
 					/>
-					: <React.Fragment />
+					: <Fragment />
 				}
 				{['fish', 'bug', 'fossil', 'song'].includes(this.props.type) ?
 					<Image
@@ -61,24 +61,24 @@ export default class CustomCard extends Component {
 						src={this.props.object.imageUrl}
 						roundedCircle={true}
 					/>
-					: <React.Fragment />
+					: <Fragment />
 				}
 				{['art'].includes(this.props.type) ?
 					<Image
 						style={{ width: '20%', maxWidth: '80px', margin: 'auto 20px', backgroundColor: '#FFF8DC', verticalAlign: 'middle' }}
 						src={this.props.object.imageUrl}
 					/>
-					: <React.Fragment />
+					: <Fragment />
 				}
 				<Media.Body>
 					<h4>
 						{['fish', 'bug', 'fossil', 'art', 'song'].includes(this.props.type) ?
 							<span className={'font-weight-bold'} style={{ verticalAlign: 'middle' }}>{this.props.object.chineseName + ' '}</span>
-							: <React.Fragment />
+							: <Fragment />
 						}
 						{['fish', 'bug', 'fossil'].includes(this.props.type) ?
 							<Badge pill variant='secondary'>{'$ ' + this.props.object.price}</Badge>
-							: <React.Fragment />
+							: <Fragment />
 						}
 					</h4>
 					<p style={{ marginBottom: '0px' }}>

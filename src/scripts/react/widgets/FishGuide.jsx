@@ -254,21 +254,21 @@ export default class FishGuide extends Component {
 		let targetList = this.handleConvertFilter(this.props.dataList)
 
 		return (
-			<React.Fragment>
+			<Fragment>
 				<Snackbar
 					open={this.state.isSnackbarShow}
 					onClose={() => this.setState({ isSnackbarShow: false })}
 					autoHideDuration={1000 * 10}
 					message={this.state.snackbarMsg}
 					action={
-						<React.Fragment>
+						<Fragment>
 							<Button
 								variant='outline-secondary'
 								size='sm'
 								style={{ float: 'right' }}
 								onClick={() => this.setState({ isSnackbarShow: false })}
 							><FontAwesomeIcon icon={faTimes} /></Button>
-						</React.Fragment>
+						</Fragment>
 					}
 				/>
 
@@ -465,13 +465,13 @@ export default class FishGuide extends Component {
 						/>
 					)}
 				</span>
-			</React.Fragment>
+			</Fragment>
 		)
 	}
 }
 
 FishGuide.defaultProps = {
-	mainFilter: <React.Fragment />,
+	mainFilter: <Fragment />,
 	hemisphere: 'northern',
 	dataList: [],
 	markedList: [],
