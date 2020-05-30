@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Zoom from 'react-medium-image-zoom'
 import { Carousel, Table, Image, Modal, Button } from 'react-bootstrap'
