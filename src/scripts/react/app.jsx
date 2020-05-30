@@ -1,6 +1,5 @@
-import React, { Component, lazy, Suspense } from 'react'
+import React, { Component, lazy, Suspense, Fragment } from 'react'
 import ReactDOM from 'react-dom'
-import UIBlocker from 'react-ui-blocker'
 import { Provider } from 'react-redux'
 import { Container } from 'react-bootstrap'
 import store from './reducers/store.jsx'
@@ -16,7 +15,7 @@ class App extends Component {
 
 	render() {
 		return (
-			<Suspense fallback={<UIBlocker theme="cubeGrid" isVisible={true} message="Loading..." />}>
+			<Suspense fallback={<Fragment />}>
 				<Provider store={store}>
 					<Container>
 						<FormHeader />
