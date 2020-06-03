@@ -118,7 +118,7 @@ export default class FossilGuide extends Component {
 
 		// name (chineseName / englishName)
 		if (this.state.filterName.length > 0) {
-			result = result.filter(x => x.chineseName.indexOf(this.state.filterName) != -1 || x.englishName.indexOf(this.state.filterName) != -1)
+			result = result.filter(x => x.chineseName.indexOf(this.state.filterName) != -1 || x.englishName.toLowerCase().indexOf(this.state.filterName.toLowerCase()) != -1)
 		}
 
 		// series
