@@ -36,7 +36,7 @@ export default class SettingDialog extends Component {
 										size='sm'
 										onClick={() => { confirm('是否確認清除快取?') ? this.props.onCleanCacheData() : {} }}
 									><FontAwesomeIcon icon={faExclamationTriangle} />{' 清除'}</Button><br />
-									<small>{'※ 預設為2小時自動清除, 清除後請重新點選種類.'}</small>
+									<small>{'※ 預設為保存兩天, 清除後請重新點選種類.'}</small>
 								</td>
 							</tr>
 							<tr>
