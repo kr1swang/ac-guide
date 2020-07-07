@@ -46,7 +46,7 @@ class FormMain extends Component {
 		// creat mirror obj and update value
 		let markedLists = JSON.parse(JSON.stringify(this.props.markedLists))
 
-		if (markedLists[type]) {
+		if (!markedLists[type]) {
 			markedLists[type] = []
 		}
 
