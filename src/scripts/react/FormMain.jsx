@@ -47,11 +47,11 @@ class FormMain extends Component {
 		let markedLists = JSON.parse(JSON.stringify(this.props.markedLists))
 
 		try {
-			markedLists[type]
+			markedLists[type].indexOf(id)
 		} catch{
 			markedLists[type] = []
 		}
-		
+
 		let index = markedLists[type].indexOf(id)
 
 		index == -1 ? markedLists[type].push(id) : markedLists[type].splice(index, 1)
