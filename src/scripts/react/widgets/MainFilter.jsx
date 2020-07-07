@@ -4,7 +4,7 @@ import { Table, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faFossil } from './CustomIcons.jsx'
-import { faBook, faFish, faBug, faPalette, faCompactDisc, faGlobeAmericas, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faBook, faBug, faFish, faDisease, faPalette, faCompactDisc, faGlobeAmericas, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 export default class MainFilter extends Component {
 	constructor(props) {
@@ -31,6 +31,13 @@ export default class MainFilter extends Component {
 									name='type'
 									variant="outline-secondary"
 									size="sm"
+									active={this.props.type == 'bug' ? true : false}
+									onClick={(e) => this.props.onChangeValue(e.target.name, 'bug')}
+								><FontAwesomeIcon icon={faBug} />{' 蟲類'}</Button>{' '}
+								<Button
+									name='type'
+									variant="outline-secondary"
+									size="sm"
 									active={this.props.type == 'fish' ? true : false}
 									onClick={(e) => this.props.onChangeValue(e.target.name, 'fish')}
 								><FontAwesomeIcon icon={faFish} />{' 魚類'}</Button>{' '}
@@ -38,9 +45,9 @@ export default class MainFilter extends Component {
 									name='type'
 									variant="outline-secondary"
 									size="sm"
-									active={this.props.type == 'bug' ? true : false}
-									onClick={(e) => this.props.onChangeValue(e.target.name, 'bug')}
-								><FontAwesomeIcon icon={faBug} />{' 蟲類'}</Button>{' '}
+									active={this.props.type == 'seaCreatures' ? true : false}
+									onClick={(e) => this.props.onChangeValue(e.target.name, 'seaCreatures')}
+								><FontAwesomeIcon icon={faDisease} />{' 海洋生物'}</Button>{' '}
 								<Button
 									name='type'
 									variant="outline-secondary"

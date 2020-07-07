@@ -32,8 +32,8 @@ class FormHeader extends Component {
 
 	handleCleanCacheData() {
 		let storage = window.localStorage
-		const type = ['fish', 'bug', 'fossil', 'art', 'song']
-		const emptyDataLists = { fish: [], bug: [], fossil: [], art: [], song: [] }
+		const type = ['bug', 'fish', 'seaCreatures', 'fossil', 'art', 'song']
+		const emptyDataLists = { bug: [], fish: [], seaCreatures: [], fossil: [], art: [], song: [] }
 
 		type.forEach(x => {
 			if (storage.getItem(x)) {
@@ -51,7 +51,7 @@ class FormHeader extends Component {
 
 	handleCleanMarked() {
 		let storage = window.localStorage
-		const emptyMarkedLists = { fish: [], bug: [], fossil: [], art: [], song: [] }
+		const emptyMarkedLists = { bug: [], fish: [], seaCreatures: [], fossil: [], art: [], song: [] }
 
 		storage.setItem('markedLists', JSON.stringify(emptyMarkedLists))
 

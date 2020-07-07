@@ -34,14 +34,14 @@ export default class CustomCard extends Component {
 	render() {
 		return (
 			<Media onClick={() => this.props.onClick()} style={{ minHeight: '98px' }}>
-				{['fish', 'bug'].includes(this.props.type) ?
+				{['bug', 'fish', 'seaCreatures'].includes(this.props.type) ?
 					<FontAwesomeIcon
 						icon={faCircle}
 						style={{ position: 'absolute', fontSize: 'x-small', float: 'left', color: this.handelConvertColorCode(this.props.hemisphere, this.props.object) }}
 					/>
 					: <Fragment />
 				}
-				{['fish', 'bug'].includes(this.props.type) && this.props.isMarked ?
+				{['bug', 'fish', 'seaCreatures'].includes(this.props.type) && this.props.isMarked ?
 					<FontAwesomeIcon
 						icon={faStar}
 						style={{ position: 'absolute', fontSize: 'x-small', float: 'left', marginTop: '20px', color: '#FFC107' }}
@@ -55,7 +55,7 @@ export default class CustomCard extends Component {
 					/>
 					: <Fragment />
 				}
-				{['fish', 'bug', 'fossil', 'song'].includes(this.props.type) ?
+				{['bug', 'fish', 'seaCreatures', 'fossil', 'song'].includes(this.props.type) ?
 					<Image
 						style={{ width: '20%', maxWidth: '80px', margin: 'auto 20px', backgroundColor: '#FFF8DC' }}
 						src={this.props.object.imageUrl}
@@ -74,21 +74,22 @@ export default class CustomCard extends Component {
 				}
 				<Media.Body>
 					<h4>
-						{['fish', 'bug', 'fossil', 'art', 'song'].includes(this.props.type) ?
+						{['bug', 'fish', 'seaCreatures', 'fossil', 'art', 'song'].includes(this.props.type) ?
 							<span className={'font-weight-bold'} style={{ verticalAlign: 'middle' }}>{this.props.object.chineseName + ' '}</span>
 							: <Fragment />
 						}
-						{['fish', 'bug', 'fossil'].includes(this.props.type) ?
+						{['bug', 'fish', 'seaCreatures', 'fossil'].includes(this.props.type) ?
 							<Badge pill variant='secondary'>{'$ ' + this.props.object.price}</Badge>
 							: <Fragment />
 						}
 					</h4>
 					<p style={{ marginBottom: '0px' }}>
-						{['fish'].includes(this.props.type) ? this.props.object.shadowSize + ' / ' : ''}
+						{['fish', 'seaCreatures'].includes(this.props.type) ? this.props.object.shadowSize + ' / ' : ''}
 						{['art'].includes(this.props.type) ? (this.props.object.imageUrlForgery ? '有贗品 / ' : '無贗品 / ') : ''}
-						{['fish', 'bug'].includes(this.props.type) ? this.props.object.location : ''}
+						{['bug', 'fish'].includes(this.props.type) ? this.props.object.location : ''}
+						{['seaCreatures'].includes(this.props.type) ? this.props.object.speed : ''}
 						{['fossil', 'art'].includes(this.props.type) ? this.props.object.series : ''}
-						{['fish', 'bug', 'fossil'].includes(this.props.type) && this.props.object.remark != '' ? <small><br />{'※ ' + this.props.object.remark}</small> : ''}
+						{['bug', 'fish', 'seaCreatures', 'fossil'].includes(this.props.type) && this.props.object.remark != '' ? <small><br />{'※ ' + this.props.object.remark}</small> : ''}
 						{['song'].includes(this.props.type) ? this.props.object.remark : ''}
 					</p>
 				</Media.Body>
@@ -108,6 +109,8 @@ CustomCard.defaultProps = {
 		price: '',
 		location: '',
 		series: '',
+		shadowSize: '',
+		speed: '',
 		northernMonths: [],
 		southernMonths: [],
 		appearanceTime: [],

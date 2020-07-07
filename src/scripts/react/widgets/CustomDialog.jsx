@@ -4,7 +4,7 @@ import Zoom from 'react-medium-image-zoom'
 import { Carousel, Table, Image, Modal, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFossil } from './CustomIcons.jsx'
-import { faCircle, faMoneyBillAlt, faMapMarkerAlt, faFish, faPalette, faInfoCircle, faCalendarAlt, faClock, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faMoneyBillAlt, faMapMarkerAlt, faFish, faDisease, faTachometerAlt, faPalette, faInfoCircle, faCalendarAlt, faClock, faStar } from '@fortawesome/free-solid-svg-icons'
 import TimeBar from './TimeBar.jsx'
 
 export default class CustomDialog extends Component {
@@ -46,7 +46,7 @@ export default class CustomDialog extends Component {
 			<Modal show={this.props.isDialogShow} onHide={() => { this.props.onHide(), this.setState({ carouselIndex: 0 }) }}>
 				<Modal.Header closeButton>
 					<Modal.Title>
-						{['fish', 'bug'].includes(this.props.type) ?
+						{['bug', 'fish', 'seaCreatures'].includes(this.props.type) ?
 							<Fragment>
 								<span style={{ color: this.handelConvertColorCode('northern', this.props.activeItem) }}>
 									<FontAwesomeIcon icon={faCircle} style={{ verticalAlign: 'middle', fontSize: 'x-small' }} />{' 北半球'}
@@ -75,7 +75,7 @@ export default class CustomDialog extends Component {
 				<Modal.Body>
 					<Table className={'dialog'} hover={true}>
 						<tbody>
-							{['fish', 'bug', 'fossil', 'song'].includes(this.props.type) ?
+							{['bug', 'fish', 'seaCreatures', 'fossil', 'song'].includes(this.props.type) ?
 								<tr>
 									<th colSpan={'2'} style={{ textAlign: 'center' }} >
 										{this.props.isMarked ?
@@ -135,7 +135,7 @@ export default class CustomDialog extends Component {
 								</tr>
 								: <Fragment />
 							}
-							{['fish', 'bug', 'fossil', 'song'].includes(this.props.type) ?
+							{['bug', 'fish', 'seaCreatures', 'fossil', 'song'].includes(this.props.type) ?
 								<tr>
 									<th style={{ width: '30%', textAlign: 'center' }}>
 										<h5><FontAwesomeIcon icon={faMoneyBillAlt} />{' 價錢'}</h5>
@@ -149,7 +149,7 @@ export default class CustomDialog extends Component {
 								</tr>
 								: <Fragment />
 							}
-							{['fish', 'bug'].includes(this.props.type) ?
+							{['bug', 'fish'].includes(this.props.type) ?
 								<tr>
 									<th style={{ width: '30%', textAlign: 'center' }}>
 										<h5><FontAwesomeIcon icon={faMapMarkerAlt} />{' 地點'}</h5>
@@ -205,7 +205,29 @@ export default class CustomDialog extends Component {
 								</tr>
 								: <Fragment />
 							}
-							{['fish', 'bug'].includes(this.props.type) ?
+							{['seaCreatures'].includes(this.props.type) ?
+								<tr>
+									<th style={{ width: '30%', textAlign: 'center' }}>
+										<h5><FontAwesomeIcon icon={faDisease} />{' 影子'}</h5>
+									</th>
+									<td style={{ width: '70%' }}>
+										<h5>{this.props.activeItem.shadowSize}</h5>
+									</td>
+								</tr>
+								: <Fragment />
+							}
+							{['seaCreatures'].includes(this.props.type) ?
+								<tr>
+									<th style={{ width: '30%', textAlign: 'center' }}>
+										<h5><FontAwesomeIcon icon={faTachometerAlt} />{' 速度'}</h5>
+									</th>
+									<td style={{ width: '70%' }}>
+										<h5>{this.props.activeItem.speed}</h5>
+									</td>
+								</tr>
+								: <Fragment />
+							}
+							{['fish', 'bug', 'seaCreatures'].includes(this.props.type) ?
 								<tr>
 									<th style={{ width: '30%', textAlign: 'center' }}>
 										<label><FontAwesomeIcon icon={faCalendarAlt} />{' 北半球月份'}</label>
@@ -216,7 +238,7 @@ export default class CustomDialog extends Component {
 								</tr>
 								: <Fragment />
 							}
-							{['fish', 'bug'].includes(this.props.type) ?
+							{['fish', 'bug', 'seaCreatures'].includes(this.props.type) ?
 								<tr>
 									<th style={{ width: '30%', textAlign: 'center' }}>
 										<label><FontAwesomeIcon icon={faCalendarAlt} />{' 南半球月份'}</label>
@@ -227,7 +249,7 @@ export default class CustomDialog extends Component {
 								</tr>
 								: <Fragment />
 							}
-							{['fish', 'bug'].includes(this.props.type) ?
+							{['fish', 'bug', 'seaCreatures'].includes(this.props.type) ?
 								<tr>
 									<th style={{ width: '30%', textAlign: 'center' }}>
 										<h5><FontAwesomeIcon icon={faClock} />{' 時間'}</h5>
@@ -267,6 +289,8 @@ CustomDialog.defaultProps = {
 		price: '',
 		location: '',
 		series: '',
+		shadowSize: '',
+		speed: '',
 		northernMonths: [],
 		southernMonths: [],
 		appearanceTime: [],

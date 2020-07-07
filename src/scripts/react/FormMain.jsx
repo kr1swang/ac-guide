@@ -4,8 +4,9 @@ import { connect } from 'react-redux'
 import actions from './actions.jsx'
 import apiClient from './apiClient.jsx'
 import MainFilter from './widgets/MainFilter.jsx'
-import FishGuide from './widgets/FishGuide.jsx'
 import BugGuide from './widgets/BugGuide.jsx'
+import FishGuide from './widgets/FishGuide.jsx'
+import SeaCreaturesGuide from './widgets/SeaCreaturesGuide.jsx'
 import FossilGuide from './widgets/FossilGuide.jsx'
 import ArtGuide from './widgets/ArtGuide.jsx'
 import SongGuide from './widgets/SongGuide.jsx'
@@ -180,6 +181,13 @@ class FormMain extends Component {
 			<div className={'main'}>
 				{
 					{
+						'bug': <BugGuide
+							mainFilter={mainFilter}
+							hemisphere={this.props.hemisphere}
+							dataList={this.props.dataLists[this.props.type]}
+							markedList={this.props.markedLists[this.props.type]}
+							onChangeMarked={(type, id) => this.handleChangeMarked(type, id)}
+						/>,
 						'fish': <FishGuide
 							mainFilter={mainFilter}
 							hemisphere={this.props.hemisphere}
@@ -187,7 +195,7 @@ class FormMain extends Component {
 							markedList={this.props.markedLists[this.props.type]}
 							onChangeMarked={(type, id) => this.handleChangeMarked(type, id)}
 						/>,
-						'bug': <BugGuide
+						'seaCreatures': <SeaCreaturesGuide
 							mainFilter={mainFilter}
 							hemisphere={this.props.hemisphere}
 							dataList={this.props.dataLists[this.props.type]}
